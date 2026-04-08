@@ -1,11 +1,21 @@
 import { notFound } from 'next/navigation'
-import { client } from '@/sanity/sanity.client'
+import { sanityFetch } from '@/sanity/sanity.client'
 import { landingPageQuery, allLandingPagesQuery } from '@/sanity/lib/queries'
-import { PortableText } from '@portabletext/react'
+import { PortableText, type PortableTextBlock } from '@portabletext/react'
+
+interface LandingPage {
+  title: string
+  heroHeading?: string
+  heroSubtext?: string
+  body?: PortableTextBlock[]
+  ctaType?: string
+  ctaUrl?: string
+  ctaText?: string
+}
 
 export async function generateStaticParams() {
-  const pages = await client.fetch(allLandingPagesQuery)
-  return pages.map((page: { slug: { current: string } }) => ({
+  const pages = await sanityFetch<{ slug: { current: string } }[]>(allLandingPagesQuery)
+  return pages.map((page) => ({
     slug: page.slug.current,
   }))
 }
@@ -16,7 +26,7 @@ export default async function EventLandingPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const page = await client.fetch(landingPageQuery, { slug })
+  const page = await sanityFetch<LandingPage | null>(landingPageQuery, { slug })
   if (!page) notFound()
 
   return (

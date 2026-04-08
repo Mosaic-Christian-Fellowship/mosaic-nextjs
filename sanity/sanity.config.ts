@@ -7,7 +7,7 @@ import { projectId, dataset } from './env'
 export default defineConfig({
   name: 'mosaic-studio',
   title: 'Mosaic Church',
-  projectId,
+  projectId: projectId || 'placeholder',
   dataset,
   plugins: [structureTool(), visionTool()],
   schema: {
