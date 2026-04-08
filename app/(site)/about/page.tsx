@@ -1,0 +1,168 @@
+import Link from 'next/link'
+import SectionHeader from '@/components/SectionHeader'
+import PlaceholderImage from '@/components/PlaceholderImage'
+import CTASection from '@/components/CTASection'
+
+const beliefs = [
+  { heading: 'The Bible', text: 'We believe the Bible is the inspired, authoritative Word of God — our foundation for faith and practice.' },
+  { heading: 'The Trinity', text: 'We believe in one God, eternally existing in three persons: Father, Son, and Holy Spirit.' },
+  { heading: 'Salvation', text: 'We believe salvation is by grace alone through faith alone in Christ alone.' },
+  { heading: 'The Church', text: "We believe the local church is God's primary vehicle for discipleship, community, and mission in the world." },
+]
+
+export default function About() {
+  return (
+    <div>
+      {/* Page Hero */}
+      <section className="bg-[#1E3A5F] text-white py-24 px-6">
+        <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#2A9D8F]">Who We Are</span>
+          <h1 className="text-4xl md:text-5xl font-bold">Built on faith. Rooted in community.</h1>
+          <p className="text-white/70 text-lg">
+            Mosaic Christian Fellowship has been a home for seekers, believers, and everyone in between
+            for over [X] years in northern New Jersey.
+          </p>
+        </div>
+      </section>
+
+      {/* Mission & Values */}
+      <section className="py-20 px-6 bg-[#FFFFFF]">
+        <div className="max-w-6xl mx-auto flex flex-col gap-12">
+          <SectionHeader overline="Our Mission" heading="Reach. Embrace. Disciple." centered />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { word: 'Reach', description: 'We actively pursue those who are far from God — through relationships, outreach, and a culture of welcome.' },
+              { word: 'Embrace', description: 'Everyone who walks through our doors is met with genuine warmth and a place at the table, regardless of background.' },
+              { word: 'Disciple', description: 'We are committed to helping people grow in their faith through teaching, community, and intentional formation.' },
+            ].map(({ word, description }) => (
+              <div key={word} className="flex flex-col gap-3 p-6 rounded-2xl border border-[#E2E8F0]">
+                <span className="text-2xl font-bold text-[#2A9D8F]">{word}</span>
+                <p className="text-[#64748B]">{description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col gap-6">
+            <SectionHeader overline="Our Story" heading="How Mosaic Began" />
+            <p className="text-[#64748B] leading-relaxed">
+              [Placeholder: Church founding story. When it started, who started it, what the vision was,
+              how it grew. 2-3 paragraphs that tell a human story about the church&apos;s history and identity.]
+            </p>
+            <p className="text-[#64748B] leading-relaxed">
+              [Placeholder: Where the church is today — congregation size, ministries, campus location,
+              community impact.]
+            </p>
+          </div>
+          <PlaceholderImage label="Church History Photo" aspectRatio="aspect-[4/3]" />
+        </div>
+      </section>
+
+      {/* Meet Our Team — Simple grid linking to staff page */}
+      <section className="py-20 px-6 bg-[#FFFFFF]">
+        <div className="max-w-6xl mx-auto flex flex-col gap-12">
+          <SectionHeader overline="Our People" heading="Meet Our Team" centered />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: 'Lead Pastor', label: 'Photo' },
+              { name: 'Associate Pastor', label: 'Photo' },
+              { name: 'Worship Director', label: 'Photo' },
+              { name: 'Children & Family Director', label: 'Photo' },
+            ].map((person) => (
+              <div key={person.name} className="flex flex-col gap-3 text-center">
+                <PlaceholderImage label={person.label} aspectRatio="aspect-square" className="rounded-2xl" />
+                <span className="font-medium text-sm text-[#2D3748]">{person.name}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <Link
+              href="/about/staff"
+              className="text-[#2A9D8F] font-semibold hover:text-[#1E7A6E] transition-colors"
+            >
+              View all staff →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* What We Believe */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col gap-12">
+          <SectionHeader overline="Our Beliefs" heading="What We Believe" centered />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {beliefs.map(({ heading, text }) => (
+              <div key={heading} className="p-6 rounded-2xl border border-[#E2E8F0] bg-[#FFFFFF]">
+                <h3 className="font-bold text-lg mb-2">{heading}</h3>
+                <p className="text-[#64748B]">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mosaic Name — What It Means */}
+      <section className="py-20 px-6 bg-[#FFFFFF]">
+        <div className="max-w-3xl mx-auto text-center flex flex-col gap-6">
+          <SectionHeader overline="Why Mosaic?" heading="Broken Pieces, Beautiful Together" centered />
+          <p className="text-[#64748B] text-lg leading-relaxed">
+            A mosaic is made from broken fragments — different colors, shapes, and textures — pieced
+            together to form something beautiful. That&apos;s who we are. We&apos;re not a church for people
+            who have it all together. We&apos;re a community of ordinary, imperfect people who believe
+            that God takes the broken pieces of our lives and makes something meaningful.
+          </p>
+          <p className="text-[#64748B] text-lg leading-relaxed">
+            No matter where you&apos;ve been or what you carry, there&apos;s a place for you in this picture.
+          </p>
+        </div>
+      </section>
+
+      {/* Affiliation / Denomination */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col gap-6">
+            <SectionHeader overline="Our Family" heading="Where We Belong" />
+            <p className="text-[#64748B] leading-relaxed">
+              [Placeholder: Denomination or network affiliation. What larger body the church is
+              connected to, what that means for governance, accountability, and shared mission.
+              If non-denominational, explain the church&apos;s approach to autonomy and partnership.]
+            </p>
+          </div>
+          <div className="flex flex-col gap-4 p-8 rounded-2xl border border-[#E2E8F0] bg-[#FFFFFF]">
+            <h3 className="font-bold text-lg text-[#2D3748]">Quick Facts</h3>
+            <div className="flex flex-col gap-3 text-[#64748B] text-sm">
+              <div className="flex justify-between py-2 border-b border-[#E2E8F0]">
+                <span>Founded</span>
+                <span className="font-medium text-[#2D3748]">[Year]</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-[#E2E8F0]">
+                <span>Location</span>
+                <span className="font-medium text-[#2D3748]">Northvale, NJ</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-[#E2E8F0]">
+                <span>Sunday Attendance</span>
+                <span className="font-medium text-[#2D3748]">[Number]</span>
+              </div>
+              <div className="flex justify-between py-2">
+                <span>Affiliation</span>
+                <span className="font-medium text-[#2D3748]">[TBD]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <CTASection
+        overline="Ready to Visit?"
+        heading="Come as you are."
+        subtext="We'd love to meet you on a Sunday. Here's everything you need to know before your first visit."
+        cta="Plan Your Visit"
+        href="/im-new"
+      />
+    </div>
+  )
+}
