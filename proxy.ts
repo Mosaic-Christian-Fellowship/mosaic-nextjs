@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const PASSWORD = process.env.NEXT_PUBLIC_SITE_PASSWORD || ''
 const COOKIE_NAME = 'mosaic-unlocked'
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // Skip password for API routes, Studio, and static files
   if (
     req.nextUrl.pathname.startsWith('/api') ||
