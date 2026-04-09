@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const returnPath = (formData.get('returnPath') as string) || '/'
 
   if (password === process.env.NEXT_PUBLIC_SITE_PASSWORD) {
-    const res = NextResponse.redirect(new URL(returnPath, req.url))
+    const res = NextResponse.redirect(new URL(returnPath, req.url), 303)
     res.cookies.set('mosaic-unlocked', 'true', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -16,5 +16,5 @@ export async function POST(req: NextRequest) {
     return res
   }
 
-  return NextResponse.redirect(new URL(`${returnPath}?error=1`, req.url))
+  return NextResponse.redirect(new URL(`${returnPath}?error=1`, req.url), 303)
 }
