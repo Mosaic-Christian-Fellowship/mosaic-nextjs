@@ -11,7 +11,7 @@
   --color-cta-dark: #3E7BA6;
   --color-dark: #1E3A5F;
   --color-border: #E2E8F0;
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: var(--font-inter), 'Inter', sans-serif;
 }
 
 body {

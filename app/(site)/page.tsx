@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative min-h-[600px] md:min-h-[700px] flex items-center overflow-hidden">
+      <section data-hero className="relative min-h-[600px] md:min-h-[700px] flex items-center overflow-hidden">
         {/* Video Background */}
         <video
           autoPlay
