@@ -1,6 +1,23 @@
 @import "tailwindcss";
 
+/*
+  Design tokens distilled from the Framer reference site
+  (mosaicnj.framer.website) via raw HTML/CSS extraction.
+  Source: docs/research/framer-tokens.md
+*/
 @theme {
+  /* Fonts — Framer uses Poppins for body/sections, Inter for UI chrome (nav) */
+  --font-sans: var(--next-poppins), system-ui, sans-serif;
+  --font-inter: var(--next-inter), system-ui, sans-serif;
+
+  /* Framer-source colors (pixel-verified) */
+  --color-framer-ink: #1E2024;
+  --color-framer-deep-blue: #0041A2;
+  --color-framer-blue: #0066FF;
+  --color-framer-lime: #D2F944;
+  --color-framer-grey: #7F838A;
+
+  /* Legacy wireframe palette (used by pre-port pages) */
   --color-bg: #F5F7FA;
   --color-surface: #FFFFFF;
   --color-text: #2D3748;
@@ -11,12 +28,11 @@
   --color-cta-dark: #3E7BA6;
   --color-dark: #1E3A5F;
   --color-border: #E2E8F0;
-  --font-sans: var(--font-inter), 'Inter', sans-serif;
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--color-surface);
+  color: var(--color-framer-ink);
   font-family: var(--font-sans);
 }
 
@@ -26,4 +42,18 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/*
+  Framer marquee — infinite horizontal scroll used in stage-of-life section
+*/
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

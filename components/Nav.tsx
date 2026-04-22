@@ -138,7 +138,7 @@ export default function Nav() {
   return (
     <header
       ref={navRef}
-      className={`sticky top-0 z-50 transition-[background-color,border-color] duration-200 ${headerBg}`}
+      className={`sticky top-0 z-50 font-inter transition-[background-color,border-color] duration-200 ${headerBg}`}
     >
       <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-5 px-5 md:px-10 py-5">
         <Link href="/" className="flex items-center gap-2 text-[#1E2024]">
