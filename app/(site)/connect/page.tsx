@@ -21,15 +21,15 @@ export default function Connect() {
       </section>
 
       {/* Community Groups */}
-      <section className="py-20 px-6 bg-white">
+      <section id="Community-Groups" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Community Groups" heading="Find Your People" />
+          <SectionHeader overline="Community Groups" heading="Find Your People"/>
           <GroupFinder />
         </div>
       </section>
 
       {/* Events */}
-      <section className="py-20 px-6">
+      <section id="Whats-Coming-Up" className="py-20 px-6">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader overline="What's Coming Up" heading="Events Calendar" />
           <EventsList />
@@ -37,7 +37,7 @@ export default function Connect() {
       </section>
 
       {/* Serve Teams */}
-      <section className="py-20 px-6 bg-white">
+      <section id="Ways-To-Serve" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader overline="Ways to Serve" heading="Join a Serve Team" />
           <ServeTeamCarousel />
@@ -45,7 +45,7 @@ export default function Connect() {
       </section>
 
       {/* Contact */}
-      <section className="py-20 px-6">
+      <section id="Get-In-Touch" className="py-20 px-6">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="Get in Touch" heading="Contact Us" centered />
           <p className="text-[#64748B] text-center">
