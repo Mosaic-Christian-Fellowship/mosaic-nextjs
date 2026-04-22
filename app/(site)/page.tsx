@@ -133,13 +133,15 @@ export default function Home() {
               More info for first-time visitors →
             </Link>
           </div>
-          <PlaceholderImage label="Sunday Service" aspectRatio="aspect-[4/3]" />
+          <div className="md:mt-42">
+            <PlaceholderImage label="Sunday Service" aspectRatio="aspect-[4/3]" />
+          </div>
         </div>
       </section>
 
       {/* Get Involved — Carousel */}
-      <section className="py-20 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col gap-12">
+      <section className="py-20 px-6 overflow-hidden">
+        <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <div className="flex items-end justify-between">
             <SectionHeader
               overline="Get Involved"
@@ -303,8 +305,7 @@ export default function Home() {
           <SectionHeader
             overline="Find Us"
             heading="We'd Love to Meet You"
-            subtext="Here's everything you need to know before you show up on a Sunday."
-            centered
+            subtext="Here's everything you need to know before you show up on a Sunday."            
           />
           <div className="grid md:grid-cols-5 gap-8 items-start">
             <div className="md:col-span-3 aspect-[16/10] rounded-2xl overflow-hidden">
