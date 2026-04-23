@@ -20,15 +20,15 @@ function EventTile({ event, size = 'default' }: { event: EventData; size?: 'defa
     : 'aspect-[3/4]'
 
   return (
-    <div className={`${aspectClass} rounded-2xl bg-[#1E3A5F] relative overflow-hidden flex flex-col justify-between p-6`}>
+    <div className={`${aspectClass} rounded-2xl bg-[#1E2024] relative overflow-hidden flex flex-col justify-between p-6`}>
       {/* Background visual placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1E3A5F] via-[#1E3A5F]/60 to-transparent z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1E2024] via-[#1E2024]/60 to-transparent z-[1]" />
       <div className="absolute inset-0 bg-slate-300/20" />
 
       {/* Date badge */}
       <div className="relative z-[2]">
         <div className="w-14 h-14 rounded-xl bg-white/15 backdrop-blur-sm flex flex-col items-center justify-center">
-          <span className="text-[10px] font-bold text-[#2A9D8F]">{month}</span>
+          <span className="text-[10px] font-bold text-[#0066FF]">{month}</span>
           <span className="text-lg font-bold text-white">{day}</span>
         </div>
       </div>
@@ -54,10 +54,10 @@ function EventCard({ event, featured = false }: { event: EventData; featured?: b
 
   if (featured) {
     return (
-      <div className="flex flex-col justify-end p-8 rounded-2xl border border-[#E2E8F0] bg-[#1E3A5F] h-full min-h-[320px] relative overflow-hidden">
+      <div className="flex flex-col justify-end p-8 rounded-2xl border border-[#E5E7EB] bg-[#1E2024] h-full min-h-[320px] relative overflow-hidden">
         <div className="absolute top-6 left-8">
           <div className="w-16 h-16 rounded-xl bg-white/10 flex flex-col items-center justify-center">
-            <span className="text-xs font-bold text-[#2A9D8F]">{month}</span>
+            <span className="text-xs font-bold text-[#0066FF]">{month}</span>
             <span className="text-xl font-bold text-white">{day}</span>
           </div>
         </div>
@@ -78,18 +78,18 @@ function EventCard({ event, featured = false }: { event: EventData; featured?: b
   }
 
   return (
-    <div className="flex gap-4 p-5 rounded-2xl border border-[#E2E8F0] bg-white h-full">
-      <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-[#4E8EBE]/10 flex flex-col items-center justify-center">
-        <span className="text-xs font-bold text-[#2A9D8F]">{month}</span>
-        <span className="text-lg font-bold text-[#2D3748]">{day}</span>
+    <div className="flex gap-4 p-5 rounded-2xl border border-[#E5E7EB] bg-white h-full">
+      <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-[#0066FF]/10 flex flex-col items-center justify-center">
+        <span className="text-xs font-bold text-[#0066FF]">{month}</span>
+        <span className="text-lg font-bold text-[#1E2024]">{day}</span>
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="text-base font-bold text-[#2D3748]">{event.name}</h3>
-        <p className="text-sm text-[#64748B] mt-0.5">
+        <h3 className="text-base font-bold text-[#1E2024]">{event.name}</h3>
+        <p className="text-sm text-[#7F838A] mt-0.5">
           {formatDate(event.startsAt)} · {formatEventTime(event.startsAt, event.endsAt)}
         </p>
         {event.location && (
-          <p className="text-sm text-[#64748B] line-clamp-1">{event.location}</p>
+          <p className="text-sm text-[#7F838A] line-clamp-1">{event.location}</p>
         )}
       </div>
     </div>
@@ -123,7 +123,7 @@ export default function EventsList({ limit, layout = 'list' }: Props) {
   }
 
   if (events.length === 0) {
-    return <p className="text-center text-[#64748B] py-8">No upcoming events.</p>
+    return <p className="text-center text-[#7F838A] py-8">No upcoming events.</p>
   }
 
   if (layout === 'bento') {
@@ -150,7 +150,7 @@ export default function EventsList({ limit, layout = 'list' }: Props) {
           ))}
           <Link
             href="/connect"
-            className="aspect-[4/3] rounded-2xl bg-[#1E3A5F] flex flex-col items-center justify-center gap-3 hover:bg-[#1E3A5F]/90 transition-colors group"
+            className="aspect-[4/3] rounded-2xl bg-[#1E2024] flex flex-col items-center justify-center gap-3 hover:bg-[#1E2024]/90 transition-colors group"
           >
             <span className="text-white font-semibold text-sm">Browse all events →</span>
           </Link>
@@ -168,12 +168,12 @@ export default function EventsList({ limit, layout = 'list' }: Props) {
         {/* "All Events" CTA tile */}
         <Link
           href="/connect"
-          className="aspect-[3/4] rounded-2xl border-2 border-dashed border-[#E2E8F0] flex flex-col items-center justify-center gap-4 hover:border-[#2A9D8F] hover:bg-[#2A9D8F]/5 transition-colors group"
+          className="aspect-[3/4] rounded-2xl border-2 border-dashed border-[#E5E7EB] flex flex-col items-center justify-center gap-4 hover:border-[#0066FF] hover:bg-[#0066FF]/5 transition-colors group"
         >
-          <div className="w-14 h-14 rounded-full bg-[#4E8EBE]/10 flex items-center justify-center text-[#2A9D8F] text-2xl group-hover:bg-[#2A9D8F]/20 transition-colors">
+          <div className="w-14 h-14 rounded-full bg-[#0066FF]/10 flex items-center justify-center text-[#0066FF] text-2xl group-hover:bg-[#0066FF]/20 transition-colors">
             →
           </div>
-          <span className="text-[#2D3748] font-semibold text-sm">All Upcoming Events</span>
+          <span className="text-[#1E2024] font-semibold text-sm">All Upcoming Events</span>
         </Link>
       </div>
     )

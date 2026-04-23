@@ -42,16 +42,16 @@ export default function ContactForm() {
   if (success) {
     return (
       <div className="text-center py-8">
-        <p className="text-xl font-bold text-[#2D3748] mb-2">Message sent!</p>
-        <p className="text-[#64748B]">We'll get back to you soon.</p>
+        <p className="text-xl font-bold text-[#1E2024] mb-2">Message sent!</p>
+        <p className="text-[#7F838A]">We'll get back to you soon.</p>
       </div>
     )
   }
 
   const inputClass = (field: string) =>
     `w-full px-4 py-3 rounded-xl border text-sm ${
-      errors[field] ? 'border-red-400' : 'border-[#E2E8F0]'
-    } focus:outline-none focus:border-[#2A9D8F]`
+      errors[field] ? 'border-red-400' : 'border-[#E5E7EB]'
+    } focus:outline-none focus:border-[#0066FF]`
 
   return (
     <form onSubmit={submit} className="space-y-4">
@@ -102,7 +102,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 bg-[#4E8EBE] text-white font-semibold rounded-full hover:bg-[#3E7BA6] transition-colors disabled:opacity-50"
+        className="w-full py-3 bg-[#0066FF] text-white font-semibold rounded-full hover:bg-[#0041A2] transition-colors disabled:opacity-50"
       >
         {submitting ? 'Sending...' : 'Send Message'}
       </button>

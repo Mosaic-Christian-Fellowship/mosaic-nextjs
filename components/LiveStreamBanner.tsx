@@ -39,7 +39,7 @@ export default function LiveStreamBanner() {
   return (
     <Link
       href="/messages"
-      className="inline-flex items-center gap-2 px-6 py-3 bg-[#4E8EBE] text-white text-sm font-semibold rounded-full hover:bg-[#3E7BA6] transition-colors"
+      className="inline-flex items-center gap-2 px-6 py-3 bg-[#0066FF] text-white text-sm font-semibold rounded-full hover:bg-[#0041A2] transition-colors"
     >
       Watch Sermons
     </Link>

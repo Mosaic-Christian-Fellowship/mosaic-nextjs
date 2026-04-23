@@ -9,9 +9,9 @@ export default function Connect() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-[#1E3A5F] text-white py-24 px-6">
+      <section className="bg-[#1E2024] text-white py-24 px-6">
         <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#2A9D8F]">Get Involved</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Get Involved</span>
           <h1 className="text-4xl md:text-5xl font-bold">Your Community Is Here</h1>
           <p className="text-white/70 text-lg">
             Connection at Mosaic happens in groups, at events, and through serving together.
@@ -48,7 +48,7 @@ export default function Connect() {
       <section id="Get-In-Touch" className="py-20 px-6">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="Get in Touch" heading="Contact Us" centered />
-          <p className="text-[#64748B] text-center">
+          <p className="text-[#7F838A] text-center">
             Have a question or want to connect? Drop us a message and we&apos;ll get back to you.
           </p>
           <ContactForm />

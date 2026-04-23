@@ -99,16 +99,16 @@ export default function PlanVisitForm() {
   if (success) {
     return (
       <div className="text-center py-12">
-        <p className="text-2xl font-bold text-[#2D3748] mb-2">We can't wait to meet you!</p>
-        <p className="text-[#64748B]">We've received your information and our welcome team will be ready for you.</p>
+        <p className="text-2xl font-bold text-[#1E2024] mb-2">We can't wait to meet you!</p>
+        <p className="text-[#7F838A]">We've received your information and our welcome team will be ready for you.</p>
       </div>
     )
   }
 
   const inputClass = (field: string) =>
     `w-full px-4 py-3 rounded-xl border text-sm ${
-      errors[field] ? 'border-red-400' : 'border-[#E2E8F0]'
-    } focus:outline-none focus:border-[#2A9D8F]`
+      errors[field] ? 'border-red-400' : 'border-[#E5E7EB]'
+    } focus:outline-none focus:border-[#0066FF]`
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -156,13 +156,13 @@ export default function PlanVisitForm() {
       </div>
 
       <fieldset>
-        <legend className="text-sm font-semibold text-[#2D3748] mb-2">I am a... *</legend>
+        <legend className="text-sm font-semibold text-[#1E2024] mb-2">I am a... *</legend>
         <div className="flex gap-2" role="group">
           {VISITOR_TYPES.map((t) => (
             <button key={t} type="button" onClick={() => setForm({ ...form, visitorType: t })}
               aria-pressed={form.visitorType === t}
               className={`px-4 py-2 rounded-full text-sm ${
-                form.visitorType === t ? 'bg-[#4E8EBE] text-white' : 'border border-[#E2E8F0]'
+                form.visitorType === t ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
               }`}>
               {t}
             </button>
@@ -172,13 +172,13 @@ export default function PlanVisitForm() {
       </fieldset>
 
       <fieldset>
-        <legend className="text-sm font-semibold text-[#2D3748] mb-2">Age range *</legend>
+        <legend className="text-sm font-semibold text-[#1E2024] mb-2">Age range *</legend>
         <div className="flex flex-wrap gap-2" role="group">
           {AGE_RANGES.map((a) => (
             <button key={a} type="button" onClick={() => setForm({ ...form, ageRange: a })}
               aria-pressed={form.ageRange === a}
               className={`px-4 py-2 rounded-full text-sm ${
-                form.ageRange === a ? 'bg-[#4E8EBE] text-white' : 'border border-[#E2E8F0]'
+                form.ageRange === a ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
               }`}>
               {a}
             </button>
@@ -188,13 +188,13 @@ export default function PlanVisitForm() {
       </fieldset>
 
       <fieldset>
-        <legend className="text-sm font-semibold text-[#2D3748] mb-2">Service time *</legend>
+        <legend className="text-sm font-semibold text-[#1E2024] mb-2">Service time *</legend>
         <div className="flex flex-wrap gap-2" role="group">
           {SERVICES.map((s) => (
             <button key={s} type="button" onClick={() => setForm({ ...form, service: s })}
               aria-pressed={form.service === s}
               className={`px-4 py-2 rounded-full text-sm ${
-                form.service === s ? 'bg-[#4E8EBE] text-white' : 'border border-[#E2E8F0]'
+                form.service === s ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
               }`}>
               {s}
             </button>
@@ -204,13 +204,13 @@ export default function PlanVisitForm() {
       </fieldset>
 
       <fieldset>
-        <legend className="text-sm font-semibold text-[#2D3748] mb-2">I have children (optional)</legend>
+        <legend className="text-sm font-semibold text-[#1E2024] mb-2">I have children (optional)</legend>
         <div className="flex flex-wrap gap-2" role="group">
           {CHILDREN_OPTIONS.map((c) => (
             <button key={c} type="button" onClick={() => toggleChild(c)}
               aria-pressed={form.children.includes(c)}
               className={`px-4 py-2 rounded-full text-sm ${
-                form.children.includes(c) ? 'bg-[#4E8EBE] text-white' : 'border border-[#E2E8F0]'
+                form.children.includes(c) ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
               }`}>
               {c}
             </button>
@@ -238,7 +238,7 @@ export default function PlanVisitForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 bg-[#4E8EBE] text-white font-semibold rounded-full hover:bg-[#3E7BA6] transition-colors disabled:opacity-50"
+        className="w-full py-3 bg-[#0066FF] text-white font-semibold rounded-full hover:bg-[#0041A2] transition-colors disabled:opacity-50"
       >
         {submitting ? 'Submitting...' : 'Plan My Visit'}
       </button>

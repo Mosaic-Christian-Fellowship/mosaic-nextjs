@@ -14,9 +14,9 @@ export default function Staff() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-[#1E3A5F] text-white py-24 px-6">
+      <section className="bg-[#1E2024] text-white py-24 px-6">
         <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#2A9D8F]">Our Team</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Our Team</span>
           <h1 className="text-4xl md:text-5xl font-bold">Meet Our Staff</h1>
           <p className="text-white/70 text-lg">
             The people who lead, serve, and care for the Mosaic community every day.
@@ -31,9 +31,9 @@ export default function Staff() {
             <div key={person.name} className="flex flex-col gap-4">
               <PlaceholderImage label="Photo" aspectRatio="aspect-[3/4]" className="rounded-2xl" />
               <div>
-                <h3 className="font-bold text-lg text-[#2D3748]">{person.name}</h3>
-                <span className="text-[#2A9D8F] text-sm font-medium">{person.title}</span>
-                <p className="text-[#64748B] text-sm mt-2 leading-relaxed">{person.bio}</p>
+                <h3 className="font-bold text-lg text-[#1E2024]">{person.name}</h3>
+                <span className="text-[#0066FF] text-sm font-medium">{person.title}</span>
+                <p className="text-[#7F838A] text-sm mt-2 leading-relaxed">{person.bio}</p>
               </div>
             </div>
           ))}
