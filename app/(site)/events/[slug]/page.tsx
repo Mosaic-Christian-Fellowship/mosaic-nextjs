@@ -6,6 +6,7 @@ import { landingPageQuery, allLandingPagesQuery } from '@/sanity/lib/queries'
 import { PortableText, type PortableTextBlock } from '@portabletext/react'
 import { kvGet } from '@/lib/kv'
 import { formatDate, formatEventTime, type EventData } from '@/lib/api'
+import SanitizedRichText from '@/components/SanitizedRichText'
 
 export const revalidate = 600
 
@@ -101,8 +102,9 @@ function SanityLandingView({ page }: { page: LandingPage }) {
 }
 
 function PcoEventView({ event }: { event: EventData }) {
-  const description = event.description ? stripHtml(event.description) : ''
-  const summary = event.summary && event.summary !== description ? event.summary : null
+  const descriptionPlain = event.description ? stripHtml(event.description) : ''
+  const summary = event.summary && event.summary !== descriptionPlain ? event.summary : null
+  const showDescription = descriptionPlain && descriptionPlain !== summary
 
   return (
     <div className="bg-white">
@@ -134,10 +136,11 @@ function PcoEventView({ event }: { event: EventData }) {
               )}
             </div>
 
-            {description && description !== summary && (
-              <div className="text-[15px] leading-[1.7] text-[#1E2024]">
-                {description}
-              </div>
+            {showDescription && (
+              <SanitizedRichText
+                html={event.description}
+                className="text-[15px] leading-[1.7] text-[#1E2024] [&_p]:my-3 [&_a]:text-[#0066FF] [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:no-underline [&_ul]:my-3 [&_ul]:pl-5 [&_ul]:list-disc [&_ol]:my-3 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:my-1 [&_strong]:font-semibold [&_b]:font-semibold [&_h2]:text-[20px] [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:text-[17px] [&_h3]:font-semibold [&_h3]:mt-5 [&_h3]:mb-2 [&_blockquote]:border-l-2 [&_blockquote]:border-[#E5E7EB] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#4B4F56]"
+              />
             )}
 
             <div className="flex flex-wrap gap-3 pt-2">
@@ -149,16 +152,6 @@ function PcoEventView({ event }: { event: EventData }) {
                   className="inline-flex items-center h-[48px] px-7 bg-[#0066FF] text-white text-[15px] font-semibold rounded-[10px] hover:brightness-110 transition-[filter]"
                 >
                   Register
-                </a>
-              )}
-              {event.churchCenterUrl && (
-                <a
-                  href={event.churchCenterUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center h-[48px] px-7 border border-[#E5E7EB] text-[#1E2024] text-[15px] font-semibold rounded-[10px] hover:bg-[#F5F5F7] transition-colors"
-                >
-                  View on Church Center
                 </a>
               )}
             </div>
