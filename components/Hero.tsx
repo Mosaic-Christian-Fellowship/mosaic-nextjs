@@ -42,14 +42,13 @@ export default function Hero() {
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
               href="/im-new"
-              className="inline-flex items-center h-[50px] px-8 bg-[#0066FF] text-white text-[15px] font-semibold rounded-full border border-[rgba(19,21,23,0.1)] hover:brightness-110 transition-[filter]"
-              style={{ boxShadow: 'inset 0px 2px 1px 0px rgba(255, 255, 255, 0.2)' }}
+              className="inline-flex items-center h-[50px] px-8 bg-[#0066FF] text-white text-[15px] font-semibold rounded-[10px] hover:brightness-110 transition-[filter]"
             >
               Plan your visit
             </Link>
             <Link
               href="/messages"
-              className="inline-flex items-center h-[50px] px-8 bg-white/10 backdrop-blur-sm text-white text-[15px] font-semibold rounded-full border border-white/20 hover:bg-white/20 transition-colors"
+              className="inline-flex items-center h-[50px] px-8 bg-white/10 backdrop-blur-sm text-white text-[15px] font-semibold rounded-[10px] border border-white/20 hover:bg-white/20 transition-colors"
             >
               Watch past sermons
             </Link>

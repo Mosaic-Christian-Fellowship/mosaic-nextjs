@@ -61,8 +61,7 @@ export default function MeetYou() {
 
             <Link
               href="/im-new"
-              className="inline-flex items-center h-[50px] px-7 bg-[#0066FF] text-white text-[15px] font-semibold rounded-full w-fit hover:brightness-110 transition-[filter]"
-              style={{ boxShadow: 'inset 0px 2px 1px 0px rgba(255, 255, 255, 0.2)' }}
+              className="inline-flex items-center h-[50px] px-7 bg-[#0066FF] text-white text-[15px] font-semibold rounded-[10px] w-fit hover:brightness-110 transition-[filter]"
             >
               Plan Your Visit
             </Link>

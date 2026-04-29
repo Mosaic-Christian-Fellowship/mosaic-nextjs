@@ -21,8 +21,7 @@ export default function FullWidthBanner() {
         </h2>
         <Link
           href="/about"
-          className="inline-flex items-center h-[50px] px-8 bg-[#0066FF] text-white text-[15px] font-semibold rounded-full border border-[rgba(19,21,23,0.1)] hover:brightness-110 transition-[filter]"
-          style={{ boxShadow: 'inset 0px 2px 1px 0px rgba(255, 255, 255, 0.2)' }}
+          className="inline-flex items-center h-[50px] px-8 bg-[#0066FF] text-white text-[15px] font-semibold rounded-[10px] hover:brightness-110 transition-[filter]"
         >
           Get to know us
         </Link>

@@ -21,7 +21,7 @@ export default function CTASection({ overline, heading, subtext, cta, href }: Pr
         {subtext && <p className="text-white/80 text-lg">{subtext}</p>}
         <Link
           href={href}
-          className="bg-white text-[#1E2024] font-semibold px-8 py-3 rounded-full hover:bg-slate-100 transition-colors"
+          className="bg-white text-[#1E2024] font-semibold px-8 py-3 rounded-[10px] hover:bg-slate-100 transition-colors"
         >
           {cta}
         </Link>

@@ -60,8 +60,7 @@ export default function FeaturedSermon({ showDescription = true }: Props) {
             href={`https://youtube.com/watch?v=${sermon.youtubeId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center h-10 px-5 bg-[#0066FF] text-white text-sm font-semibold rounded-full hover:brightness-110 transition-[filter]"
-            style={{ boxShadow: 'inset 0px 2px 1px 0px rgba(255, 255, 255, 0.2)' }}
+            className="inline-flex items-center h-10 px-5 bg-[#0066FF] text-white text-sm font-semibold rounded-[10px] hover:brightness-110 transition-[filter]"
           >
             Watch
           </a>
@@ -70,7 +69,7 @@ export default function FeaturedSermon({ showDescription = true }: Props) {
               href={sermon.spotifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center h-10 px-5 border border-[#E5E7EB] text-[#1E2024] text-sm font-semibold rounded-full hover:bg-[#F5F5F7] transition-colors"
+              className="inline-flex items-center h-10 px-5 border border-[#E5E7EB] text-[#1E2024] text-sm font-semibold rounded-[10px] hover:bg-[#F5F5F7] transition-colors"
             >
               Listen on Spotify
             </a>
