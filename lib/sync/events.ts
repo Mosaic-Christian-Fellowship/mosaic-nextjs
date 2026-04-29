@@ -15,6 +15,9 @@ export interface EventData {
   featured: boolean
   visibleInChurchCenter: boolean
   hasRegistration: boolean
+  churchCenterUrl: string | null
+  registrationUrl: string | null
+  recurrenceDescription: string | null
 }
 
 export async function syncEvents(): Promise<EventData[]> {
@@ -55,6 +58,8 @@ export async function syncEvents(): Promise<EventData[]> {
     // Filter: only public events
     if (!event.attributes.visible_in_church_center) continue
 
+    const registrationUrl = (event.attributes.registration_url as string) || null
+
     events.push({
       id: inst.id,
       eventId,
@@ -69,7 +74,10 @@ export async function syncEvents(): Promise<EventData[]> {
       imageUrl: (event.attributes.image_url as string) || null,
       featured: (event.attributes.featured as boolean) || false,
       visibleInChurchCenter: true,
-      hasRegistration: false,
+      hasRegistration: registrationUrl !== null,
+      churchCenterUrl: (inst.attributes.church_center_url as string) || null,
+      registrationUrl,
+      recurrenceDescription: (inst.attributes.compact_recurrence_description as string) || null,
     })
   }
 

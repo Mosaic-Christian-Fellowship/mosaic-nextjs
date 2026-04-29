@@ -24,6 +24,7 @@ export interface SeriesData {
 export interface EventData {
   id: string
   eventId: string
+  recurringEventId?: string
   name: string
   description: string
   summary: string
@@ -33,7 +34,11 @@ export interface EventData {
   location: string | null
   imageUrl: string | null
   featured: boolean
+  visibleInChurchCenter?: boolean
   hasRegistration: boolean
+  churchCenterUrl: string | null
+  registrationUrl: string | null
+  recurrenceDescription: string | null
 }
 
 export interface GroupData {

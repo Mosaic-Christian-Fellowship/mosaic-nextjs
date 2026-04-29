@@ -150,7 +150,7 @@ export default function ServeTeamCarousel() {
                       <button
                         type="submit"
                         disabled={submitting}
-                        className="px-4 py-2 bg-[#0066FF] text-white text-sm font-semibold rounded-full disabled:opacity-50"
+                        className="px-4 py-2 bg-[#0066FF] text-white text-sm font-semibold rounded-[10px] disabled:opacity-50"
                       >
                         {submitting ? '...' : 'Join'}
                       </button>
@@ -166,7 +166,7 @@ export default function ServeTeamCarousel() {
                 ) : (
                   <button
                     onClick={() => setInterestForm(team.id)}
-                    className="mt-3 px-5 py-2 bg-[#0066FF] text-white text-sm font-semibold rounded-full hover:bg-[#0041A2] transition-colors"
+                    className="mt-3 px-5 py-2 bg-[#0066FF] text-white text-sm font-semibold rounded-[10px] hover:bg-[#0041A2] transition-colors"
                   >
                     Join This Team
                   </button>
