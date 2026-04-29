@@ -52,7 +52,7 @@ async function getHomepageEvents(): Promise<Event[]> {
       title: e.name,
       description: e.summary || '',
       image: e.imageUrl,
-      href: '/events',
+      href: `/events/${e.id}`,
     }))
   } catch {
     return PLACEHOLDER_EVENTS

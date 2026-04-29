@@ -7,6 +7,8 @@ import FeaturedSermonSection from '@/components/FeaturedSermonSection'
 import ExtendedCut from '@/components/ExtendedCut'
 import MeetYou from '@/components/MeetYou'
 
+export const revalidate = 600
+
 export default function Home() {
   return (
     <>
