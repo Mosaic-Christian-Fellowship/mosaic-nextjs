@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import ProgressiveBlur from '@/components/ProgressiveBlur'
+import MoreLink from '@/components/MoreLink'
 
 type Event = {
   title: string
@@ -43,7 +44,7 @@ function BentoCard({
   return (
     <Link
       href={event.href}
-      className="group relative block overflow-hidden rounded-[12px] bg-black h-full"
+      className="group relative block h-full overflow-hidden rounded-[12px] bg-black"
     >
       <Image
         src={event.image}
@@ -57,37 +58,29 @@ function BentoCard({
       <ProgressiveBlur direction="to left" />
 
       <div
-        className="absolute inset-0 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-        style={{ backgroundColor: '#002E74' }}
+        className="absolute inset-0 z-10 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
         aria-hidden
       />
 
-      <div
-        className={`relative z-20 flex h-full flex-col justify-end ${
-          isLarge ? 'p-8' : 'p-6'
-        }`}
-      >
-        {isLarge && event.tag && (
+      <div className="relative z-20 flex h-full translate-y-2 flex-col justify-end gap-3 p-6 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        {event.tag && (
           <span
-            className="inline-flex self-start mb-3 px-2.5 py-1 text-[12px] font-medium text-[#1E2024]"
+            className="inline-flex self-start px-2.5 py-1 text-[12px] font-medium text-[#1E2024]"
             style={{ backgroundColor: '#D2F944' }}
           >
             {event.tag}
           </span>
         )}
         <h3
-          className={`font-semibold tracking-[-0.04em] text-[#F3F4F5] leading-[1.1] ${
-            isLarge ? 'text-[38px] md:text-[48px]' : 'text-[24px] md:text-[28px]'
+          className={`font-semibold tracking-[-0.04em] text-white leading-[1.15] ${
+            isLarge ? 'text-[32px]' : 'text-[22px]'
           }`}
           style={{ fontFamily: 'var(--font-sans)' }}
         >
           {event.title}
         </h3>
-        <p
-          className={`mt-2 max-w-[36ch] text-[#F3F4F5]/85 leading-[1.5] ${
-            isLarge ? 'text-[15px]' : 'text-[14px]'
-          }`}
-        >
+        <p className="max-w-[36ch] text-[13px] leading-[1.5] text-white/85">
           {event.description}
         </p>
       </div>
@@ -98,37 +91,33 @@ function BentoCard({
 export default function CommunityEvents() {
   const [hero, ...rest] = events
   return (
-    <section className="bg-white py-20 md:py-24 px-4 md:px-8">
+    <section className="bg-white py-20 md:py-24 px-6 md:px-8">
       <div className="mx-auto max-w-[1200px]">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <h2 className="text-[36px] md:text-[48px] font-semibold tracking-[-0.04em] text-[#1E2024] leading-[1.1]">
+        <div className="mb-10 flex items-end justify-between gap-4">
+          <h2 className="text-[28px] md:text-[34px] font-semibold leading-[1.2] text-[#1E2024]">
             Upcoming Community Events
           </h2>
-          <Link
-            href="/events"
-            className="hidden md:inline-flex items-center gap-1.5 rounded-[10px] border border-[#F3F4F5] bg-white px-3 py-2 text-[14px] font-semibold text-[#131517] hover:border-[#D2D5DA] transition-colors shrink-0"
-          >
-            Browse all events
-          </Link>
+          <div className="hidden md:block">
+            <MoreLink href="/events">Browse all events</MoreLink>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 md:auto-rows-[280px]">
-          <div className="md:col-span-8 md:row-span-2 h-[360px] md:h-auto">
+        <div className="grid grid-cols-1 gap-[10px] md:grid-cols-12 md:auto-rows-[200px]">
+          <div className="h-[360px] md:col-span-8 md:row-span-2 md:h-auto">
             <BentoCard event={hero} size="large" />
           </div>
           {rest.map((event) => (
-            <div key={event.title} className="md:col-span-4 h-[260px] md:h-auto">
+            <div key={event.title} className="h-[200px] md:col-span-4 md:h-auto">
               <BentoCard event={event} size="small" />
             </div>
           ))}
         </div>
 
-        <Link
-          href="/events"
-          className="mt-6 md:hidden inline-flex w-full items-center justify-center gap-1.5 rounded-[10px] border border-[#F3F4F5] bg-white px-3 py-2 text-[14px] font-semibold text-[#131517]"
-        >
-          Browse all events
-        </Link>
+        <div className="mt-6 md:hidden">
+          <MoreLink href="/events" className="w-full justify-center">
+            Browse all events
+          </MoreLink>
+        </div>
       </div>
     </section>
   )
