@@ -44,11 +44,14 @@ async function getHomepageEvents(): Promise<Event[]> {
     const upcoming = all
       .filter((e) => e.startsAt >= now)
       .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
-      .slice(0, 3)
 
-    if (upcoming.length === 0) return PLACEHOLDER_EVENTS
+    const featured = upcoming.filter((e) => e.featured)
+    const rest = upcoming.filter((e) => !e.featured)
+    const selected = [...featured, ...rest].slice(0, 3)
 
-    return upcoming.map((e) => ({
+    if (selected.length === 0) return PLACEHOLDER_EVENTS
+
+    return selected.map((e) => ({
       title: e.name,
       description: e.summary || '',
       image: e.imageUrl,
