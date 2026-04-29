@@ -59,7 +59,7 @@ function BentoCard({
 
       <div
         className="absolute inset-0 z-10 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        style={{ backgroundColor: 'rgba(0, 46, 116, 0.6)' }}
         aria-hidden
       />
 
