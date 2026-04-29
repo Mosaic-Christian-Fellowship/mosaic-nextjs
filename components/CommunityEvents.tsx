@@ -2,16 +2,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ProgressiveBlur from '@/components/ProgressiveBlur'
 import MoreLink from '@/components/MoreLink'
+import { kvGet } from '@/lib/kv'
+import type { EventData } from '@/lib/api'
 
 type Event = {
   title: string
   description: string
-  image: string
+  image: string | null
   href: string
   tag?: string
 }
 
-const events: Event[] = [
+const PLACEHOLDER_EVENTS: Event[] = [
   {
     title: 'Community Groups',
     description: 'Add a short description to explain this card.',
@@ -33,29 +35,56 @@ const events: Event[] = [
   },
 ]
 
-function BentoCard({
-  event,
-  size,
-}: {
-  event: Event
-  size: 'large' | 'small'
-}) {
+async function getHomepageEvents(): Promise<Event[]> {
+  try {
+    const all = await kvGet<EventData[]>('events:all')
+    if (!all || all.length === 0) return PLACEHOLDER_EVENTS
+
+    const now = new Date().toISOString()
+    const upcoming = all
+      .filter((e) => e.startsAt >= now)
+      .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
+      .slice(0, 3)
+
+    if (upcoming.length === 0) return PLACEHOLDER_EVENTS
+
+    return upcoming.map((e) => ({
+      title: e.name,
+      description: e.summary || '',
+      image: e.imageUrl,
+      href: '/events',
+    }))
+  } catch {
+    return PLACEHOLDER_EVENTS
+  }
+}
+
+function BentoCard({ event, size }: { event: Event; size: 'large' | 'small' }) {
   const isLarge = size === 'large'
   return (
     <Link
       href={event.href}
       className="group relative block h-full overflow-hidden rounded-[12px] bg-black"
     >
-      <Image
-        src={event.image}
-        alt={event.title}
-        fill
-        sizes={isLarge ? '(min-width: 810px) 66vw, 100vw' : '(min-width: 810px) 33vw, 100vw'}
-        className="object-cover object-top"
-        priority={isLarge}
-      />
-
-      <ProgressiveBlur direction="to left" />
+      {event.image ? (
+        <>
+          <Image
+            src={event.image}
+            alt={event.title}
+            fill
+            sizes={isLarge ? '(min-width: 810px) 66vw, 100vw' : '(min-width: 810px) 33vw, 100vw'}
+            className="object-cover object-top"
+            priority={isLarge}
+          />
+          <ProgressiveBlur direction="to left" />
+        </>
+      ) : (
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(135deg, #0066FF 0%, #0041A2 100%)' }}
+        />
+      )}
 
       <div
         className="absolute inset-0 z-10 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
@@ -80,16 +109,20 @@ function BentoCard({
         >
           {event.title}
         </h3>
-        <p className="max-w-[36ch] text-[13px] leading-[1.5] text-white/85">
-          {event.description}
-        </p>
+        {event.description && (
+          <p className="max-w-[36ch] text-[13px] leading-[1.5] text-white/85">
+            {event.description}
+          </p>
+        )}
       </div>
     </Link>
   )
 }
 
-export default function CommunityEvents() {
+export default async function CommunityEvents() {
+  const events = await getHomepageEvents()
   const [hero, ...rest] = events
+
   return (
     <section className="bg-white py-20 md:py-24 px-6 md:px-8">
       <div className="mx-auto max-w-[1200px]">
