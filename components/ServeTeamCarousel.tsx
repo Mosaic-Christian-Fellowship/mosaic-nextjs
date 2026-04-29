@@ -60,7 +60,7 @@ export default function ServeTeamCarousel() {
           onClick={() => setScrollIndex((i) => Math.max(0, i - 1))}
           disabled={scrollIndex === 0}
           aria-label="Previous teams"
-          className="w-10 h-10 rounded-full border border-[#E2E8F0] flex items-center justify-center disabled:opacity-30"
+          className="w-10 h-10 rounded-full border border-[#E5E7EB] flex items-center justify-center disabled:opacity-30"
         >
           ←
         </button>
@@ -68,7 +68,7 @@ export default function ServeTeamCarousel() {
           onClick={() => setScrollIndex((i) => Math.min(maxIndex, i + 1))}
           disabled={scrollIndex >= maxIndex}
           aria-label="Next teams"
-          className="w-10 h-10 rounded-full border border-[#E2E8F0] flex items-center justify-center disabled:opacity-30"
+          className="w-10 h-10 rounded-full border border-[#E5E7EB] flex items-center justify-center disabled:opacity-30"
         >
           →
         </button>
@@ -83,7 +83,7 @@ export default function ServeTeamCarousel() {
           {teams.map((team) => (
             <div
               key={team.id}
-              className="flex-shrink-0 w-[calc(33.333%-1rem)] rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden"
+              className="flex-shrink-0 w-[calc(33.333%-1rem)] rounded-2xl border border-[#E5E7EB] bg-white overflow-hidden"
             >
               <div className="aspect-[3/4] bg-slate-200 relative">
                 {team.headerImage ? (
@@ -95,13 +95,13 @@ export default function ServeTeamCarousel() {
                 )}
               </div>
               <div className="p-5">
-                <h3 className="text-base font-bold text-[#2D3748]">{team.name}</h3>
+                <h3 className="text-base font-bold text-[#1E2024]">{team.name}</h3>
                 {team.description && (
-                  <p className="text-sm text-[#64748B] mt-1 line-clamp-2">{team.description}</p>
+                  <p className="text-sm text-[#7F838A] mt-1 line-clamp-2">{team.description}</p>
                 )}
 
                 {submitted.has(team.name) ? (
-                  <p className="mt-3 text-sm font-semibold text-[#2A9D8F]">Interest submitted!</p>
+                  <p className="mt-3 text-sm font-semibold text-[#0066FF]">Interest submitted!</p>
                 ) : interestForm === team.id ? (
                   <form
                     onSubmit={(e) => {
@@ -120,7 +120,7 @@ export default function ServeTeamCarousel() {
                       required
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-[#E2E8F0] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm"
                     />
                     <label htmlFor={`serve-lastName-${team.id}`} className="sr-only">
                       Last name
@@ -132,7 +132,7 @@ export default function ServeTeamCarousel() {
                       required
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-[#E2E8F0] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm"
                     />
                     <label htmlFor={`serve-email-${team.id}`} className="sr-only">
                       Email
@@ -144,20 +144,20 @@ export default function ServeTeamCarousel() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-[#E2E8F0] text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm"
                     />
                     <div className="flex gap-2">
                       <button
                         type="submit"
                         disabled={submitting}
-                        className="px-4 py-2 bg-[#4E8EBE] text-white text-sm font-semibold rounded-full disabled:opacity-50"
+                        className="px-4 py-2 bg-[#0066FF] text-white text-sm font-semibold rounded-full disabled:opacity-50"
                       >
                         {submitting ? '...' : 'Join'}
                       </button>
                       <button
                         type="button"
                         onClick={() => setInterestForm(null)}
-                        className="px-4 py-2 text-sm text-[#64748B]"
+                        className="px-4 py-2 text-sm text-[#7F838A]"
                       >
                         Cancel
                       </button>
@@ -166,7 +166,7 @@ export default function ServeTeamCarousel() {
                 ) : (
                   <button
                     onClick={() => setInterestForm(team.id)}
-                    className="mt-3 px-5 py-2 bg-[#4E8EBE] text-white text-sm font-semibold rounded-full hover:bg-[#3E7BA6] transition-colors"
+                    className="mt-3 px-5 py-2 bg-[#0066FF] text-white text-sm font-semibold rounded-full hover:bg-[#0041A2] transition-colors"
                   >
                     Join This Team
                   </button>

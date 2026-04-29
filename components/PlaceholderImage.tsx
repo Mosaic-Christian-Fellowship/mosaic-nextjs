@@ -13,7 +13,7 @@ export default function PlaceholderImage({
     <div
       className={`${aspectRatio} bg-slate-200 rounded-2xl flex items-center justify-center ${className}`}
     >
-      <span className="text-sm font-medium text-[#64748B]">[ {label} ]</span>
+      <span className="text-sm font-medium text-[#7F838A]">[ {label} ]</span>
     </div>
   )
 }

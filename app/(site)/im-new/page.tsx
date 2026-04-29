@@ -18,7 +18,7 @@ export default function ImNew() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-[#2A9D8F] text-white py-24 px-6">
+      <section className="bg-[#0066FF] text-white py-24 px-6">
         <div className="max-w-3xl mx-auto text-center flex flex-col gap-5">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">Broken pieces. Different stories.<br />One beautiful mosaic.</h1>
           <p className="text-white/80 text-lg max-w-xl mx-auto">
@@ -40,20 +40,20 @@ export default function ImNew() {
                 { time: '1:30 PM', note: 'General service · No children\'s or education programming' },
               ].map(({ time, note }) => (
                 <div key={time} className="flex gap-4 items-start">
-                  <span className="font-bold text-[#2A9D8F] w-20 shrink-0">{time}</span>
-                  <span className="text-[#64748B]">{note}</span>
+                  <span className="font-bold text-[#0066FF] w-20 shrink-0">{time}</span>
+                  <span className="text-[#7F838A]">{note}</span>
                 </div>
               ))}
             </div>
             <div className="mt-4 flex flex-col gap-3">
-              <div className="p-4 bg-slate-100 rounded-xl text-sm text-[#64748B]">
+              <div className="p-4 bg-[#F5F5F7] rounded-xl text-sm text-[#7F838A]">
                 119 Rockland Ave · Northvale, NJ 07647
               </div>
-              <div className="p-4 bg-slate-100 rounded-xl text-sm text-[#64748B]">
+              <div className="p-4 bg-[#F5F5F7] rounded-xl text-sm text-[#7F838A]">
                 Parking at 147 Walnut St, Northvale (our new lot — it&apos;s right next door)
               </div>
-              <p className="text-sm text-[#64748B]">
-                <strong className="text-[#2D3748]">First time?</strong> Arrive about 10 minutes early. Look for greeters outside — they&apos;ll show you where to go, help you check in your kids, and point you to coffee.
+              <p className="text-sm text-[#7F838A]">
+                <strong className="text-[#1E2024]">First time?</strong> Arrive about 10 minutes early. Look for greeters outside — they&apos;ll show you where to go, help you check in your kids, and point you to coffee.
               </p>
             </div>
           </div>
@@ -74,12 +74,12 @@ export default function ImNew() {
               { step: '5', heading: 'Stay & Connect', detail: "Don't rush out. Some of the best conversations happen after the service. Stick around." },
             ].map(({ step, heading, detail }) => (
               <div key={step} className="flex gap-6 items-start">
-                <span className="w-10 h-10 rounded-full bg-[#2A9D8F] text-white font-bold flex items-center justify-center shrink-0">
+                <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center shrink-0">
                   {step}
                 </span>
                 <div>
                   <h3 className="font-bold text-lg">{heading}</h3>
-                  <p className="text-[#64748B]">{detail}</p>
+                  <p className="text-[#7F838A]">{detail}</p>
                 </div>
               </div>
             ))}
@@ -93,15 +93,15 @@ export default function ImNew() {
           <PlaceholderImage label="Kids Ministry Photo" aspectRatio="aspect-[4/3]" />
           <div className="flex flex-col gap-6">
             <SectionHeader overline="Families Welcome" heading="Your Kids Are in Good Hands" />
-            <p className="text-[#64748B]">
+            <p className="text-[#7F838A]">
               We have dedicated programming for every age group during the 9:30 and 11:30 AM services —
               from the nursery through 5th grade. All children&apos;s workers are background-checked and trained.
             </p>
             <div className="flex flex-col gap-2">
               {['Nursery (0-18 months)', 'Toddlers (18 months - 3 years)', 'Preschool (3-5 years)', 'Elementary (Grades 1-5)'].map((group) => (
                 <div key={group} className="flex gap-3 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#2A9D8F]" />
-                  <span className="text-[#64748B]">{group}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
+                  <span className="text-[#7F838A]">{group}</span>
                 </div>
               ))}
             </div>
@@ -113,11 +113,11 @@ export default function ImNew() {
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
           <SectionHeader overline="Common Questions" heading="FAQ" centered />
-          <div className="flex flex-col divide-y divide-[#E2E8F0]">
+          <div className="flex flex-col divide-y divide-[#E5E7EB]">
             {faqs.map(({ q, a }) => (
               <div key={q} className="py-6 flex flex-col gap-2">
                 <h3 className="font-bold text-lg">{q}</h3>
-                <p className="text-[#64748B]">{a}</p>
+                <p className="text-[#7F838A]">{a}</p>
               </div>
             ))}
           </div>
@@ -128,7 +128,7 @@ export default function ImNew() {
       <section className="py-20 px-6 bg-[#FFFFFF]">
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
           <SectionHeader overline="Your Journey" heading="What Getting Involved Looks Like" centered />
-          <p className="text-[#64748B] text-center">There&apos;s no formula and no pressure. But if you&apos;re wondering what a path forward might look like, here&apos;s how most people find their way in.</p>
+          <p className="text-[#7F838A] text-center">There&apos;s no formula and no pressure. But if you&apos;re wondering what a path forward might look like, here&apos;s how most people find their way in.</p>
           <div className="grid md:grid-cols-4 gap-6">
             {[
               { step: 'Show Up', desc: 'Come to a Sunday service. Grab coffee. See if it feels right.' },
@@ -137,9 +137,9 @@ export default function ImNew() {
               { step: 'Reach', desc: 'Once Mosaic feels like home, help someone else find theirs.' },
             ].map(({ step, desc }, i) => (
               <div key={step} className="flex flex-col gap-3 text-center">
-                <span className="w-10 h-10 rounded-full bg-[#2A9D8F] text-white font-bold flex items-center justify-center mx-auto">{i + 1}</span>
-                <h3 className="font-bold text-[#2D3748]">{step}</h3>
-                <p className="text-sm text-[#64748B]">{desc}</p>
+                <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center mx-auto">{i + 1}</span>
+                <h3 className="font-bold text-[#1E2024]">{step}</h3>
+                <p className="text-sm text-[#7F838A]">{desc}</p>
               </div>
             ))}
           </div>
@@ -147,10 +147,10 @@ export default function ImNew() {
       </section>
 
       {/* Plan Your Visit */}
-      <section className="py-20 px-6 bg-[#F5F7FA]">
+      <section className="py-20 px-6 bg-[#F5F5F7]">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="We'd Love to Hear From You" heading="Plan Your Visit" centered />
-          <p className="text-[#64748B] text-center">
+          <p className="text-[#7F838A] text-center">
             Let us know you&apos;re coming and we&apos;ll make sure someone&apos;s there to welcome you personally.
           </p>
           <PlanVisitForm />

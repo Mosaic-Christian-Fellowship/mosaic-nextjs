@@ -65,14 +65,14 @@ export default function SermonArchive() {
           placeholder="Search sermons..."
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-          className="flex-1 px-4 py-2.5 rounded-full border border-[#E2E8F0] text-sm focus:outline-none focus:border-[#2A9D8F]"
+          className="flex-1 px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm focus:outline-none focus:border-[#0066FF]"
         />
         <label htmlFor="sermon-series-filter" className="sr-only">Filter by series</label>
         <select
           id="sermon-series-filter"
           value={selectedSeries}
           onChange={(e) => { setSelectedSeries(e.target.value); setPage(1) }}
-          className="px-4 py-2.5 rounded-full border border-[#E2E8F0] text-sm bg-white"
+          className="px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
         >
           <option value="">All Series</option>
           {series.map((s) => (
@@ -84,7 +84,7 @@ export default function SermonArchive() {
           id="sermon-speaker-filter"
           value={selectedSpeaker}
           onChange={(e) => { setSelectedSpeaker(e.target.value); setPage(1) }}
-          className="px-4 py-2.5 rounded-full border border-[#E2E8F0] text-sm bg-white"
+          className="px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
         >
           <option value="">All Speakers</option>
           {speakers.map((s) => (
@@ -101,7 +101,7 @@ export default function SermonArchive() {
           ))}
         </div>
       ) : sermons.length === 0 ? (
-        <p className="text-center text-[#64748B] py-12">No sermons found.</p>
+        <p className="text-center text-[#7F838A] py-12">No sermons found.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sermons.map((sermon) => (
@@ -110,7 +110,7 @@ export default function SermonArchive() {
               href={`https://youtube.com/watch?v=${sermon.youtubeId}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-2xl border border-[#E2E8F0] overflow-hidden bg-white hover:shadow-md transition-shadow"
+              className="group rounded-2xl border border-[#E5E7EB] overflow-hidden bg-white hover:shadow-md transition-shadow"
             >
               <img
                 src={sermon.thumbnail}
@@ -119,14 +119,14 @@ export default function SermonArchive() {
               />
               <div className="p-4">
                 {sermon.seriesName && (
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[#2A9D8F] mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-[#0066FF] mb-1">
                     {sermon.seriesName}
                   </p>
                 )}
-                <h3 className="text-sm font-bold text-[#2D3748] group-hover:text-[#2A9D8F] transition-colors line-clamp-2">
+                <h3 className="text-sm font-bold text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
                   {sermon.title}
                 </h3>
-                <p className="text-xs text-[#64748B] mt-1">
+                <p className="text-xs text-[#7F838A] mt-1">
                   {sermon.speaker && `${sermon.speaker} · `}
                   {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
                 </p>
@@ -143,18 +143,18 @@ export default function SermonArchive() {
             aria-label="Previous page"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-4 py-2 rounded-full border border-[#E2E8F0] text-sm disabled:opacity-40"
+            className="px-4 py-2 rounded-full border border-[#E5E7EB] text-sm disabled:opacity-40"
           >
             Previous
           </button>
-          <span className="px-4 py-2 text-sm text-[#64748B]">
+          <span className="px-4 py-2 text-sm text-[#7F838A]">
             Page {page} of {totalPages}
           </span>
           <button
             aria-label="Next page"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="px-4 py-2 rounded-full border border-[#E2E8F0] text-sm disabled:opacity-40"
+            className="px-4 py-2 rounded-full border border-[#E5E7EB] text-sm disabled:opacity-40"
           >
             Next
           </button>

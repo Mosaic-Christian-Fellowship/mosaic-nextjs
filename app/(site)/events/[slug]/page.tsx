@@ -31,7 +31,7 @@ export default async function EventLandingPage({
 
   return (
     <div>
-      <section className="bg-[#1E3A5F] text-white py-24 px-6">
+      <section className="bg-[#1E2024] text-white py-24 px-6">
         <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
           <h1 className="text-4xl md:text-5xl font-bold">{page.heroHeading || page.title}</h1>
           {page.heroSubtext && <p className="text-white/70 text-lg">{page.heroSubtext}</p>}
@@ -43,11 +43,11 @@ export default async function EventLandingPage({
         </div>
       </section>
       {page.ctaType && page.ctaType !== 'none' && (
-        <section className="py-20 px-6 bg-[#F5F7FA]">
+        <section className="py-20 px-6 bg-[#F5F5F7]">
           <div className="max-w-lg mx-auto text-center">
             {page.ctaType === 'external-link' && page.ctaUrl && (
               <a href={page.ctaUrl} target="_blank" rel="noopener noreferrer"
-                className="bg-[#4E8EBE] text-white font-semibold px-10 py-4 rounded-full text-lg hover:bg-[#3E7BA6] transition-colors inline-block">
+                className="bg-[#0066FF] text-white font-semibold px-10 py-4 rounded-full text-lg hover:bg-[#0041A2] transition-colors inline-block">
                 {page.ctaText || 'Learn More'}
               </a>
             )}
