@@ -10,7 +10,23 @@ type Event = {
   description: string
   image: string | null
   href: string
-  tag?: string
+  date?: string
+  location?: string
+}
+
+const FALLBACK_LOCATION = 'Mosaic Christian Fellowship'
+
+function formatBentoDate(iso: string): string {
+  const d = new Date(iso)
+  const month = d.toLocaleDateString('en-US', { month: 'short' })
+  const day = String(d.getDate()).padStart(2, '0')
+  const weekday = d.toLocaleDateString('en-US', { weekday: 'long' })
+  return `${month} ${day}, ${weekday}`
+}
+
+function venueFromLocation(loc: string | null): string {
+  if (!loc) return FALLBACK_LOCATION
+  return loc.split(' - ')[0].trim() || FALLBACK_LOCATION
 }
 
 const PLACEHOLDER_EVENTS: Event[] = [
@@ -19,7 +35,6 @@ const PLACEHOLDER_EVENTS: Event[] = [
     description: 'Add a short description to explain this card.',
     image: '/framer/events/DZe6dlJCd284zYdtTrAhEeA0Eko.png',
     href: '#',
-    tag: 'Tag',
   },
   {
     title: 'Bible Study',
@@ -63,6 +78,8 @@ async function getHomepageEvents(): Promise<Event[]> {
       description: e.summary || '',
       image: e.imageUrl,
       href: `/events/${e.id}`,
+      date: formatBentoDate(e.startsAt),
+      location: venueFromLocation(e.location),
     }))
   } catch {
     return PLACEHOLDER_EVENTS
@@ -103,13 +120,12 @@ function BentoCard({ event, size }: { event: Event; size: 'large' | 'small' }) {
       />
 
       <div className="relative z-20 flex h-full translate-y-2 flex-col justify-end gap-3 p-6 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-        {event.tag && (
-          <span
-            className="inline-flex self-start px-2.5 py-1 text-[12px] font-medium text-[#1E2024]"
-            style={{ backgroundColor: '#D2F944' }}
-          >
-            {event.tag}
-          </span>
+        {(event.date || event.location) && (
+          <div className="flex flex-wrap items-baseline gap-x-2 text-[14px] font-medium leading-tight">
+            {event.date && <span className="text-[#22D3EE]">{event.date}</span>}
+            {event.date && event.location && <span aria-hidden className="text-white/40">|</span>}
+            {event.location && <span className="text-white/70">{event.location}</span>}
+          </div>
         )}
         <h3
           className={`font-semibold tracking-[-0.04em] text-white leading-[1.15] ${
