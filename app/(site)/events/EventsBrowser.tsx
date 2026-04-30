@@ -220,7 +220,7 @@ function EventCard({ event }: { event: EventData }) {
         href={`/events/${event.id}`}
         className="group flex flex-col h-full rounded-[12px] border border-[#E5E7EB] bg-white overflow-hidden transition-colors hover:border-[#0066FF]/40"
       >
-        <div className="relative aspect-[16/9] bg-[#F5F5F7]">
+        <div className="relative aspect-[5/3] bg-[#F5F5F7]">
           {event.imageUrl ? (
             <Image
               src={event.imageUrl}
