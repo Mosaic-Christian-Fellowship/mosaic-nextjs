@@ -45,8 +45,15 @@ async function getHomepageEvents(): Promise<Event[]> {
       .filter((e) => e.startsAt >= now)
       .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
 
-    const featured = upcoming.filter((e) => e.featured)
-    const rest = upcoming.filter((e) => !e.featured)
+    const seen = new Set<string>()
+    const dedupedByParent = upcoming.filter((e) => {
+      if (seen.has(e.eventId)) return false
+      seen.add(e.eventId)
+      return true
+    })
+
+    const featured = dedupedByParent.filter((e) => e.featured)
+    const rest = dedupedByParent.filter((e) => !e.featured)
     const selected = [...featured, ...rest].slice(0, 3)
 
     if (selected.length === 0) return PLACEHOLDER_EVENTS
