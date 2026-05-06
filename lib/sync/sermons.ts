@@ -67,11 +67,19 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
   const details = await fetchVideoDetails(videoIds)
   const detailMap = new Map(details.map((d) => [d.id, d]))
 
-  // 4. Build sermon records
-  const sermons: SermonData[] = masterItems.map((item) => {
-    const detail = detailMap.get(item.videoId)
-    const rawTitle = detail?.title ?? item.title
-    const parsed = parseSermonTitle(rawTitle)
+  // 4. Drop private/deleted items. videos.list silently omits videos the API key
+  // can't read (private, deleted, region-blocked), so absence from detailMap is
+  // a reliable signal that the playlist item should not be surfaced publicly.
+  const accessibleItems = masterItems.filter((item) => detailMap.has(item.videoId))
+  const dropped = masterItems.length - accessibleItems.length
+  if (dropped > 0) {
+    console.log(`syncSermons: dropped ${dropped} private/deleted playlist items`)
+  }
+
+  // 5. Build sermon records
+  const sermons: SermonData[] = accessibleItems.map((item) => {
+    const detail = detailMap.get(item.videoId)!
+    const parsed = parseSermonTitle(detail.title)
     const series = videoToSeries.get(item.videoId)
 
     return {
@@ -81,16 +89,16 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
       seriesId: series?.id ?? null,
       seriesName: series?.name ?? null,
       date: item.publishedAt.split('T')[0],
-      duration: detail?.durationSeconds ?? 0,
-      thumbnail: detail?.thumbnail ?? '',
+      duration: detail.durationSeconds,
+      thumbnail: detail.thumbnail,
       youtubeId: item.videoId,
       spotifyUrl: null, // Matched in a separate step
       applePodcastUrl: null,
-      description: detail?.description ?? '',
+      description: detail.description,
     }
   })
 
-  // 5. Build series records (only series that have sermons in the master list)
+  // 6. Build series records (only series that have sermons in the master list)
   const activeSeries = new Set(sermons.filter((s) => s.seriesId).map((s) => s.seriesId!))
   const series: SeriesData[] = seriesPlaylists
     .filter((sp) => activeSeries.has(sp.id))
