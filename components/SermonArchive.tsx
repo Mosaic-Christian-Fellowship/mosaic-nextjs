@@ -9,9 +9,15 @@ import {
   type SeriesData,
 } from '@/lib/api'
 
+interface SpeakerEntry {
+  name: string
+  count: number
+}
+
 export default function SermonArchive() {
   const [sermons, setSermons] = useState<SermonData[]>([])
   const [series, setSeries] = useState<SeriesData[]>([])
+  const [speakerOptions, setSpeakerOptions] = useState<SpeakerEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [selectedSeries, setSelectedSeries] = useState('')
@@ -57,9 +63,11 @@ export default function SermonArchive() {
     apiFetch<SeriesData[]>('/api/series')
       .then((res) => setSeries(res.data))
       .catch(console.error)
+    apiFetch<SpeakerEntry[]>('/api/speakers')
+      .then((res) => setSpeakerOptions(res.data))
+      .catch(console.error)
   }, [])
 
-  const speakers = [...new Set(sermons.map((s) => s.speaker).filter(Boolean))] as string[]
   const isDefaultView = !search && !selectedSeries && !selectedSpeaker
   const hasMore = sermons.length < total
 
@@ -115,8 +123,8 @@ export default function SermonArchive() {
           className="px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
         >
           <option value="">All Speakers</option>
-          {speakers.map((s) => (
-            <option key={s} value={s}>{s}</option>
+          {speakerOptions.map((s) => (
+            <option key={s.name} value={s.name}>{s.name} ({s.count})</option>
           ))}
         </select>
       </div>

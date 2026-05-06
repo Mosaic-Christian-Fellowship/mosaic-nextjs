@@ -23,12 +23,11 @@ export async function GET(req: NextRequest) {
 
     let filtered = [...allSermons]
 
-    // Filter by speaker
+    // Filter by speaker (exact match, case-insensitive — values come from /api/speakers dropdown)
     const speaker = req.nextUrl.searchParams.get('speaker')
     if (speaker) {
-      filtered = filtered.filter((s) =>
-        s.speaker?.toLowerCase().includes(speaker.toLowerCase())
-      )
+      const target = speaker.toLowerCase()
+      filtered = filtered.filter((s) => s.speaker?.toLowerCase() === target)
     }
 
     // Filter by series

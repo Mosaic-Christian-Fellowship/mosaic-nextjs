@@ -45,6 +45,50 @@ describe('parseSermonTitle', () => {
     expect(result.title).toBe('True Blessing in the New Year')
     expect(result.speaker).toBe('Pastor Gene Joo')
   })
+
+  it('captures speaker from "by:" with colon', () => {
+    const result = parseSermonTitle('"From Idolatry to Promise" by: Pastor Dave Park')
+    expect(result.title).toBe('From Idolatry to Promise')
+    expect(result.speaker).toBe('Pastor Dave Park')
+  })
+
+  it('captures guest speakers without "Pastor" prefix', () => {
+    const result = parseSermonTitle('Mosaic Christian Fellowship Live | "Work as a Holy Calling" by Bill Merrifield | July 16')
+    expect(result.title).toBe('Work as a Holy Calling')
+    expect(result.speaker).toBe('Bill Merrifield')
+  })
+
+  it('takes the LAST "by" match when title contains mid-phrase "by"', () => {
+    const result = parseSermonTitle('Mosaic Christian Fellowship: "Thriving by Making Disciples" by Pastor Andre Choi')
+    expect(result.title).toBe('Thriving by Making Disciples')
+    expect(result.speaker).toBe('Pastor Andre Choi')
+  })
+
+  it('captures speaker from arbitrary prefix series with "by" tail', () => {
+    const result = parseSermonTitle('Mosaic Family Series: Revolutionary Marriage: by Pastor Dave Park')
+    expect(result.speaker).toBe('Pastor Dave Park')
+    expect(result.title).toBe('Mosaic Family Series: Revolutionary Marriage')
+  })
+
+  it('captures speaker from unquoted title ending in "by Pastor Name"', () => {
+    const result = parseSermonTitle('The Benefit that Outweighs the Cost by Pastor Sam An')
+    expect(result.title).toBe('The Benefit that Outweighs the Cost')
+    expect(result.speaker).toBe('Pastor Sam An')
+  })
+
+  it('returns null speaker when title has no attribution', () => {
+    const result = parseSermonTitle('Wrestling with Promise')
+    expect(result.title).toBe('Wrestling with Promise')
+    expect(result.speaker).toBeNull()
+    expect(result.parsed).toBe(false)
+  })
+
+  it('parses 2-digit-year date prefix', () => {
+    const result = parseSermonTitle('3/15/26 Genesis: "Jacob’s Favoritism" by: Andre Choi')
+    expect(result.seriesHint).toBe('Genesis')
+    expect(result.speaker).toBe('Andre Choi')
+    expect(result.title).toBe('Jacob’s Favoritism')
+  })
 })
 
 describe('parseGroupName', () => {

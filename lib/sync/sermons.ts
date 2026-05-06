@@ -1,15 +1,18 @@
-import { fetchPlaylistItems, fetchVideoDetails } from '../youtube'
-import { parseSermonTitle } from '../parsers'
+import { fetchPlaylistItems, fetchVideoDetails, type PlaylistItem } from '../youtube'
+import { parseSermonTitle, UNATTRIBUTED_SPEAKER } from '../parsers'
+
+export type PlaylistKind = 'master' | 'series' | 'excluded'
 
 export interface PlaylistConfig {
   id: string
   name: string
+  kind: PlaylistKind
 }
 
 export interface SermonData {
   id: string
   title: string
-  speaker: string | null
+  speaker: string // always set; UNATTRIBUTED_SPEAKER ('Undefined') when title parsing finds none
   seriesId: string | null
   seriesName: string | null
   date: string
@@ -35,22 +38,21 @@ export interface SyncSermonsResult {
 }
 
 export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSermonsResult> {
-  const masterPlaylist = playlists.find((p) => p.name === 'Sunday Service')
-  const seriesPlaylists = playlists.filter((p) => p.name !== 'Sunday Service')
+  const masterPlaylist = playlists.find((p) => p.kind === 'master')
+  const seriesPlaylists = playlists.filter((p) => p.kind === 'series')
+  const excludedPlaylists = playlists.filter((p) => p.kind === 'excluded')
 
-  if (!masterPlaylist) {
-    return { sermons: [], series: [] }
-  }
+  if (!masterPlaylist) return { sermons: [], series: [] }
 
-  // 1. Fetch master playlist to get all sermon video IDs
-  const masterItems = await fetchPlaylistItems(masterPlaylist.id)
-  if (masterItems.length === 0) {
-    return { sermons: [], series: [] }
-  }
-
-  // 2. Fetch series playlists to build videoId → series mapping
+  // 1. Build the union of master + all series playlist items, deduped by videoId.
+  //    Master items take precedence; series mapping uses first-encountered series.
+  const allItemsMap = new Map<string, PlaylistItem>()
   const videoToSeries = new Map<string, { id: string; name: string }>()
-  const seriesCounts = new Map<string, number>()
+
+  const masterItems = await fetchPlaylistItems(masterPlaylist.id)
+  for (const item of masterItems) {
+    allItemsMap.set(item.videoId, item)
+  }
 
   for (const sp of seriesPlaylists) {
     const items = await fetchPlaylistItems(sp.id)
@@ -58,34 +60,51 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
       if (!videoToSeries.has(item.videoId)) {
         videoToSeries.set(item.videoId, { id: sp.id, name: sp.name })
       }
-      seriesCounts.set(sp.id, (seriesCounts.get(sp.id) ?? 0) + 1)
+      if (!allItemsMap.has(item.videoId)) {
+        allItemsMap.set(item.videoId, item)
+      }
     }
   }
 
-  // 3. Fetch full video details
-  const videoIds = masterItems.map((i) => i.videoId)
+  // 2. Drop anything that appears in an excluded playlist (clips, highlights, testimonies).
+  const excludedIds = new Set<string>()
+  for (const ep of excludedPlaylists) {
+    const items = await fetchPlaylistItems(ep.id)
+    for (const item of items) excludedIds.add(item.videoId)
+  }
+  let droppedExcluded = 0
+  for (const id of excludedIds) {
+    if (allItemsMap.delete(id)) droppedExcluded++
+    videoToSeries.delete(id)
+  }
+  if (droppedExcluded > 0) {
+    console.log(`syncSermons: dropped ${droppedExcluded} items present in excluded playlists`)
+  }
+
+  if (allItemsMap.size === 0) return { sermons: [], series: [] }
+
+  // 3. Fetch full video details for the union.
+  const allItems = Array.from(allItemsMap.values())
+  const videoIds = allItems.map((i) => i.videoId)
   const details = await fetchVideoDetails(videoIds)
   const detailMap = new Map(details.map((d) => [d.id, d]))
 
-  // 4. Drop private/deleted items. videos.list silently omits videos the API key
-  // can't read (private, deleted, region-blocked), so absence from detailMap is
-  // a reliable signal that the playlist item should not be surfaced publicly.
-  const accessibleItems = masterItems.filter((item) => detailMap.has(item.videoId))
-  const dropped = masterItems.length - accessibleItems.length
-  if (dropped > 0) {
-    console.log(`syncSermons: dropped ${dropped} private/deleted playlist items`)
+  // 4. Drop private/deleted (videos.list silently omits these).
+  const accessibleItems = allItems.filter((item) => detailMap.has(item.videoId))
+  const droppedPrivate = allItems.length - accessibleItems.length
+  if (droppedPrivate > 0) {
+    console.log(`syncSermons: dropped ${droppedPrivate} private/deleted playlist items`)
   }
 
-  // 5. Build sermon records
+  // 5. Build sermon records.
   const sermons: SermonData[] = accessibleItems.map((item) => {
     const detail = detailMap.get(item.videoId)!
     const parsed = parseSermonTitle(detail.title)
     const series = videoToSeries.get(item.videoId)
-
     return {
       id: item.videoId,
       title: parsed.title,
-      speaker: parsed.speaker,
+      speaker: parsed.speaker ?? UNATTRIBUTED_SPEAKER,
       seriesId: series?.id ?? null,
       seriesName: series?.name ?? null,
       date: item.publishedAt.split('T')[0],
@@ -98,19 +117,18 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
     }
   })
 
-  // 6. Build series records (only series that have sermons in the master list)
+  // 6. Build series records — only series that ended up with at least one sermon.
   const activeSeries = new Set(sermons.filter((s) => s.seriesId).map((s) => s.seriesId!))
   const series: SeriesData[] = seriesPlaylists
     .filter((sp) => activeSeries.has(sp.id))
     .map((sp) => {
-      const count = sermons.filter((s) => s.seriesId === sp.id).length
-      const firstSermon = sermons.find((s) => s.seriesId === sp.id)
+      const seriesSermons = sermons.filter((s) => s.seriesId === sp.id)
       return {
         id: sp.id,
         name: sp.name,
         playlistId: sp.id,
-        thumbnail: firstSermon?.thumbnail ?? null,
-        sermonCount: count,
+        thumbnail: seriesSermons[0]?.thumbnail ?? null,
+        sermonCount: seriesSermons.length,
       }
     })
 
