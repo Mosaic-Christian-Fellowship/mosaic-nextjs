@@ -53,6 +53,7 @@ export default function SermonArchive() {
 
   const speakers = [...new Set(sermons.map((s) => s.speaker).filter(Boolean))] as string[]
   const totalPages = Math.ceil(total / limit)
+  const isDefaultView = page === 1 && !search && !selectedSeries && !selectedSpeaker
 
   return (
     <div>
@@ -104,35 +105,48 @@ export default function SermonArchive() {
         <p className="text-center text-[#7F838A] py-12">No sermons found.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sermons.map((sermon) => (
-            <a
-              key={sermon.id}
-              href={`https://youtube.com/watch?v=${sermon.youtubeId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl border border-[#E5E7EB] overflow-hidden bg-white hover:shadow-md transition-shadow"
-            >
-              <img
-                src={sermon.thumbnail}
-                alt={sermon.title}
-                className="w-full aspect-video object-cover"
-              />
-              <div className="p-4">
-                {sermon.seriesName && (
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[#0066FF] mb-1">
-                    {sermon.seriesName}
+          {sermons.map((sermon, idx) => {
+            const isLatest = isDefaultView && idx === 0
+            return (
+              <a
+                key={sermon.id}
+                href={`https://youtube.com/watch?v=${sermon.youtubeId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group rounded-2xl border overflow-hidden bg-white hover:shadow-md transition-shadow ${
+                  isLatest ? 'border-[#0066FF] ring-1 ring-[#0066FF]' : 'border-[#E5E7EB]'
+                }`}
+              >
+                <div className="relative">
+                  <img
+                    src={sermon.thumbnail}
+                    alt={sermon.title}
+                    className="w-full aspect-video object-cover"
+                  />
+                  {isLatest && (
+                    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-[#0066FF] text-white text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white" aria-hidden />
+                      Latest
+                    </span>
+                  )}
+                </div>
+                <div className="p-4">
+                  {sermon.seriesName && (
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[#0066FF] mb-1">
+                      {sermon.seriesName}
+                    </p>
+                  )}
+                  <h3 className="text-sm font-bold text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
+                    {sermon.title}
+                  </h3>
+                  <p className="text-xs text-[#7F838A] mt-1">
+                    {sermon.speaker && `${sermon.speaker} · `}
+                    {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
                   </p>
-                )}
-                <h3 className="text-sm font-bold text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
-                  {sermon.title}
-                </h3>
-                <p className="text-xs text-[#7F838A] mt-1">
-                  {sermon.speaker && `${sermon.speaker} · `}
-                  {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
-                </p>
-              </div>
-            </a>
-          ))}
+                </div>
+              </a>
+            )
+          })}
         </div>
       )}
 
