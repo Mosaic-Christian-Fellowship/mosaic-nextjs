@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { syncSermons, type SermonData, type SeriesData } from '@/lib/sync/sermons'
+import { syncSermons, type PlaylistConfig } from '@/lib/sync/sermons'
+import { UNATTRIBUTED_SPEAKER } from '@/lib/parsers'
 import * as youtube from '@/lib/youtube'
 
 vi.mock('@/lib/youtube')
@@ -7,14 +8,13 @@ const mockedYt = vi.mocked(youtube)
 
 beforeEach(() => vi.clearAllMocks())
 
-const PLAYLISTS = [
-  { id: 'PLmaster', name: 'Sunday Service' },
-  { id: 'PLseries1', name: 'God of Promise Series' },
+const PLAYLISTS: PlaylistConfig[] = [
+  { id: 'PLmaster', name: 'Sunday Service', kind: 'master' },
+  { id: 'PLseries1', name: 'God of Promise Series', kind: 'series' },
 ]
 
 describe('syncSermons', () => {
   it('fetches playlist items, video details, and returns structured sermon + series data', async () => {
-    // Sunday Service master playlist has 2 videos
     mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
       if (plId === 'PLmaster') {
         return [
@@ -41,9 +41,9 @@ describe('syncSermons', () => {
     expect(result.sermons[0].seriesId).toBe('PLseries1')
     expect(result.sermons[0].seriesName).toBe('God of Promise Series')
 
-    expect(result.sermons[1].seriesId).toBeNull() // not in any series playlist
+    expect(result.sermons[1].seriesId).toBeNull()
 
-    expect(result.series).toHaveLength(1) // only non-master playlists with videos
+    expect(result.series).toHaveLength(1)
     expect(result.series[0].name).toBe('God of Promise Series')
     expect(result.series[0].sermonCount).toBe(1)
   })
@@ -53,6 +53,86 @@ describe('syncSermons', () => {
     mockedYt.fetchVideoDetails.mockResolvedValue([])
 
     const result = await syncSermons(PLAYLISTS)
+    expect(result.sermons).toHaveLength(0)
+    expect(result.series).toHaveLength(0)
+  })
+
+  it('includes series-only videos that are not in master', async () => {
+    mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
+      if (plId === 'PLmaster') {
+        return [
+          { videoId: 'v1', title: 'Sermon 1', publishedAt: '2026-01-04T00:00:00Z', position: 0 },
+        ]
+      }
+      if (plId === 'PLseries1') {
+        return [
+          { videoId: 'v2', title: 'Series only video', publishedAt: '2026-01-11T00:00:00Z', position: 0 },
+        ]
+      }
+      return []
+    })
+
+    mockedYt.fetchVideoDetails.mockResolvedValue([
+      { id: 'v1', title: 'Sermon 1', description: '', thumbnail: 't1', durationSeconds: 1000 },
+      { id: 'v2', title: 'Series only video', description: '', thumbnail: 't2', durationSeconds: 1500 },
+    ])
+
+    const result = await syncSermons(PLAYLISTS)
+    expect(result.sermons).toHaveLength(2)
+    const v2 = result.sermons.find((s) => s.id === 'v2')
+    expect(v2?.seriesId).toBe('PLseries1')
+    expect(result.series).toHaveLength(1)
+    expect(result.series[0].sermonCount).toBe(1)
+  })
+
+  it('drops videos that appear in excluded playlists', async () => {
+    const playlists: PlaylistConfig[] = [
+      ...PLAYLISTS,
+      { id: 'PLclips', name: 'Sermon Clips', kind: 'excluded' },
+    ]
+
+    mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
+      if (plId === 'PLmaster') {
+        return [
+          { videoId: 'v1', title: 'Sermon 1', publishedAt: '2026-01-04T00:00:00Z', position: 0 },
+          { videoId: 'v2', title: 'Sermon 2', publishedAt: '2026-01-11T00:00:00Z', position: 1 },
+        ]
+      }
+      if (plId === 'PLclips') {
+        return [{ videoId: 'v2', title: '', publishedAt: '', position: 0 }]
+      }
+      return []
+    })
+    mockedYt.fetchVideoDetails.mockResolvedValue([
+      { id: 'v1', title: 'Sermon 1', description: '', thumbnail: 't1', durationSeconds: 1000 },
+    ])
+
+    const result = await syncSermons(playlists)
+    expect(result.sermons).toHaveLength(1)
+    expect(result.sermons[0].id).toBe('v1')
+  })
+
+  it('tags unattributed sermons as Undefined', async () => {
+    mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
+      if (plId === 'PLmaster') {
+        return [
+          { videoId: 'v1', title: 'Wrestling with Promise', publishedAt: '2026-01-04T00:00:00Z', position: 0 },
+        ]
+      }
+      return []
+    })
+    mockedYt.fetchVideoDetails.mockResolvedValue([
+      { id: 'v1', title: 'Wrestling with Promise', description: '', thumbnail: 't1', durationSeconds: 1000 },
+    ])
+
+    const result = await syncSermons(PLAYLISTS)
+    expect(result.sermons[0].speaker).toBe(UNATTRIBUTED_SPEAKER)
+  })
+
+  it('returns empty result when no master playlist is configured', async () => {
+    const result = await syncSermons([
+      { id: 'PLseries1', name: 'God of Promise Series', kind: 'series' },
+    ])
     expect(result.sermons).toHaveLength(0)
     expect(result.series).toHaveLength(0)
   })
