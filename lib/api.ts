@@ -56,8 +56,9 @@ export interface GroupData {
 }
 
 export interface LiveStreamStatus {
-  live: boolean
-  videoId?: string
+  isLive: boolean
+  videoId: string | null
+  title: string | null
 }
 
 export interface ApiResponse<T> {

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { apiFetch, type LiveStreamStatus } from '@/lib/api'
 
 export default function LiveStreamBanner() {
-  const [status, setStatus] = useState<LiveStreamStatus>({ live: false })
+  const [status, setStatus] = useState<LiveStreamStatus>({ isLive: false, videoId: null, title: null })
 
   useEffect(() => {
     apiFetch<LiveStreamStatus>('/api/youtube-live')
@@ -22,7 +22,7 @@ export default function LiveStreamBanner() {
     return () => clearInterval(interval)
   }, [])
 
-  if (status.live) {
+  if (status.isLive) {
     return (
       <a
         href={`https://youtube.com/watch?v=${status.videoId}`}
