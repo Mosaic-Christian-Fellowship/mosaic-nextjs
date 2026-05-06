@@ -78,13 +78,45 @@ export default function Messages() {
     <div>
       {/* Hero */}
       <section className="bg-[#1E2024] text-white py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Teaching</span>
-          <h1 className="text-4xl md:text-5xl font-bold">Messages</h1>
-          <p className="text-white/70 text-lg">
-            Explore our sermon archive — every message rooted in Scripture and grounded in the context
-            that makes it come alive.
-          </p>
+        <div className="max-w-3xl mx-auto text-center flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Teaching</span>
+            <h1 className="text-4xl md:text-5xl font-bold">Messages</h1>
+            <p className="text-white/70 text-lg">
+              Explore our sermon archive — every message rooted in Scripture and grounded in the context
+              that makes it come alive.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-3 pt-2">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/50">Subscribe &amp; follow</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <a
+                href="https://www.youtube.com/channel/UCgI1-OGVDlM5cXy0xhllT_w?sub_confirmation=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-white/30 text-white text-sm font-semibold px-5 py-2.5 min-h-11 rounded-full hover:bg-white/10 hover:border-white/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E2024]"
+              >
+                YouTube
+              </a>
+              <a
+                href="https://open.spotify.com/show/7AZydPQgOQOqdvpiXLGyRR"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-white/30 text-white text-sm font-semibold px-5 py-2.5 min-h-11 rounded-full hover:bg-white/10 hover:border-white/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E2024]"
+              >
+                Spotify
+              </a>
+              <a
+                href="https://podcasts.apple.com/us/podcast/nj-mosaic-christian-fellowship/id1440078295"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-white/30 text-white text-sm font-semibold px-5 py-2.5 min-h-11 rounded-full hover:bg-white/10 hover:border-white/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E2024]"
+              >
+                Apple Podcasts
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -100,20 +132,6 @@ export default function Messages() {
         </div>
       </section>
 
-      {/* Subscribe */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-6">
-          <SectionHeader overline="Never Miss a Message" heading="Subscribe & Follow" centered />
-          <p className="text-[#7F838A]">Listen wherever you get your podcasts or subscribe on YouTube to get notified of new messages every week.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {['YouTube', 'Spotify', 'Apple Podcasts'].map((platform) => (
-              <button key={platform} className="border border-[#E5E7EB] px-6 py-3 rounded-full font-medium text-sm hover:border-[#0066FF] hover:text-[#0066FF] transition-colors">
-                {platform}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   )
 }
