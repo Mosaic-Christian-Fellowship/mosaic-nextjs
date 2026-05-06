@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   apiFetch,
   formatDuration,
@@ -19,25 +19,33 @@ export default function SermonArchive() {
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const limit = 12
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const abortRef = useRef<AbortController | null>(null)
 
   const fetchSermons = useCallback(async () => {
+    abortRef.current?.abort()
+    const ac = new AbortController()
+    abortRef.current = ac
     setLoading(true)
     try {
-      const params: Record<string, string> = {
-        page: String(page),
-        limit: String(limit),
-      }
-      if (search) params.search = search
-      if (selectedSeries) params.series = selectedSeries
-      if (selectedSpeaker) params.speaker = selectedSpeaker
+      const url = new URL('/api/sermons', window.location.origin)
+      url.searchParams.set('page', String(page))
+      url.searchParams.set('limit', String(limit))
+      if (search) url.searchParams.set('search', search)
+      if (selectedSeries) url.searchParams.set('series', selectedSeries)
+      if (selectedSpeaker) url.searchParams.set('speaker', selectedSpeaker)
 
-      const res = await apiFetch<SermonData[]>('/api/sermons', params)
-      setSermons(res.data)
-      setTotal(res.meta?.total ?? 0)
+      const res = await fetch(url.toString(), { signal: ac.signal })
+      if (!res.ok) throw new Error(`API error: ${res.status}`)
+      const json = await res.json()
+
+      setSermons((prev) => (page === 1 ? json.data : [...prev, ...json.data]))
+      setTotal(json.meta?.total ?? 0)
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return
       console.error('Failed to fetch sermons:', err)
     } finally {
-      setLoading(false)
+      if (!ac.signal.aborted) setLoading(false)
     }
   }, [page, search, selectedSeries, selectedSpeaker])
 
@@ -52,8 +60,27 @@ export default function SermonArchive() {
   }, [])
 
   const speakers = [...new Set(sermons.map((s) => s.speaker).filter(Boolean))] as string[]
-  const totalPages = Math.ceil(total / limit)
-  const isDefaultView = page === 1 && !search && !selectedSeries && !selectedSpeaker
+  const isDefaultView = !search && !selectedSeries && !selectedSpeaker
+  const hasMore = sermons.length < total
+
+  // Auto-trigger Load More when sentinel scrolls into view
+  useEffect(() => {
+    if (!hasMore || loading) return
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((p) => p + 1)
+        }
+      },
+      { rootMargin: '300px' }
+    )
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [hasMore, loading])
+
+  const showInitialSkeleton = sermons.length === 0 && loading
 
   return (
     <div>
@@ -95,7 +122,7 @@ export default function SermonArchive() {
       </div>
 
       {/* Results */}
-      {loading ? (
+      {showInitialSkeleton ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="animate-pulse rounded-2xl bg-slate-200 aspect-video" />
@@ -104,75 +131,71 @@ export default function SermonArchive() {
       ) : sermons.length === 0 ? (
         <p className="text-center text-[#7F838A] py-12">No sermons found.</p>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sermons.map((sermon, idx) => {
-            const isLatest = isDefaultView && idx === 0
-            return (
-              <a
-                key={sermon.id}
-                href={`https://youtube.com/watch?v=${sermon.youtubeId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group rounded-2xl border overflow-hidden bg-white hover:shadow-md transition-shadow ${
-                  isLatest ? 'border-[#0066FF] ring-1 ring-[#0066FF]' : 'border-[#E5E7EB]'
-                }`}
-              >
-                <div className="relative">
-                  <img
-                    src={sermon.thumbnail}
-                    alt={sermon.title}
-                    className="w-full aspect-video object-cover"
-                  />
-                  {isLatest && (
-                    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-[#0066FF] text-white text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-white" aria-hidden />
-                      Latest
-                    </span>
-                  )}
-                </div>
-                <div className="p-4">
-                  {sermon.seriesName && (
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#0066FF] mb-1">
-                      {sermon.seriesName}
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" aria-live="polite" aria-busy={loading}>
+            {sermons.map((sermon, idx) => {
+              const isLatest = isDefaultView && idx === 0
+              return (
+                <a
+                  key={sermon.id}
+                  href={`https://youtube.com/watch?v=${sermon.youtubeId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group rounded-2xl border overflow-hidden bg-white hover:shadow-md transition-shadow ${
+                    isLatest ? 'border-[#0066FF] ring-1 ring-[#0066FF]' : 'border-[#E5E7EB]'
+                  }`}
+                >
+                  <div className="relative">
+                    <img
+                      src={sermon.thumbnail}
+                      alt={sermon.title}
+                      className="w-full aspect-video object-cover"
+                    />
+                    {isLatest && (
+                      <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-[#0066FF] text-white text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white" aria-hidden />
+                        Latest
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    {sermon.seriesName && (
+                      <p className="text-xs font-semibold uppercase tracking-widest text-[#0066FF] mb-1">
+                        {sermon.seriesName}
+                      </p>
+                    )}
+                    <h3 className="text-sm font-bold text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
+                      {sermon.title}
+                    </h3>
+                    <p className="text-xs text-[#7F838A] mt-1">
+                      {sermon.speaker && `${sermon.speaker} · `}
+                      {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
                     </p>
-                  )}
-                  <h3 className="text-sm font-bold text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
-                    {sermon.title}
-                  </h3>
-                  <p className="text-xs text-[#7F838A] mt-1">
-                    {sermon.speaker && `${sermon.speaker} · `}
-                    {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
-                  </p>
-                </div>
-              </a>
-            )
-          })}
-        </div>
-      )}
+                  </div>
+                </a>
+              )
+            })}
+          </div>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-8">
-          <button
-            aria-label="Previous page"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="px-4 py-2 rounded-full border border-[#E5E7EB] text-sm disabled:opacity-40"
-          >
-            Previous
-          </button>
-          <span className="px-4 py-2 text-sm text-[#7F838A]">
-            Page {page} of {totalPages}
-          </span>
-          <button
-            aria-label="Next page"
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            disabled={page === totalPages}
-            className="px-4 py-2 rounded-full border border-[#E5E7EB] text-sm disabled:opacity-40"
-          >
-            Next
-          </button>
-        </div>
+          {/* Infinite-scroll sentinel + manual load-more affordance */}
+          {hasMore ? (
+            <div ref={sentinelRef} className="flex justify-center mt-10">
+              <button
+                onClick={() => setPage((p) => p + 1)}
+                disabled={loading}
+                className="px-6 py-3 min-h-11 rounded-full border border-[#E5E7EB] text-sm font-semibold text-[#1E2024] hover:border-[#0066FF] hover:text-[#0066FF] transition-colors disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2"
+              >
+                {loading ? 'Loading…' : 'Load more sermons'}
+              </button>
+            </div>
+          ) : (
+            sermons.length > limit && (
+              <p className="text-center text-[#7F838A] text-sm mt-10">
+                You&rsquo;ve reached the end — {total} sermons total.
+              </p>
+            )
+          )}
+        </>
       )}
     </div>
   )
