@@ -137,7 +137,17 @@ export default function GroupFinder() {
               key={group.id}
               className="rounded-2xl border border-[#E5E7EB] bg-white p-6"
             >
-              <h3 className="text-lg font-bold text-[#1E2024]">{group.name}</h3>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <h3 className="text-lg font-bold text-[#1E2024]">{group.name}</h3>
+                {!submitted.has(group.name) && interestForm !== group.id && (
+                  <button
+                    onClick={() => setInterestForm(group.id)}
+                    className="self-start sm:shrink-0 px-5 py-2.5 border border-[#0066FF] text-[#0066FF] text-sm font-semibold rounded-full hover:bg-[#0066FF] hover:text-white transition-colors"
+                  >
+                    I&apos;m Interested
+                  </button>
+                )}
+              </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 {group.dayOfWeek && (
                   <span className="px-2.5 py-0.5 rounded-full bg-[#0066FF]/10 text-[#0066FF] text-xs font-semibold">
@@ -201,14 +211,7 @@ export default function GroupFinder() {
                     </button>
                   </div>
                 </div>
-              ) : (
-                <button
-                  onClick={() => setInterestForm(group.id)}
-                  className="mt-4 px-5 py-2.5 border border-[#0066FF] text-[#0066FF] text-sm font-semibold rounded-full hover:bg-[#0066FF] hover:text-white transition-colors"
-                >
-                  I'm Interested
-                </button>
-              )}
+              ) : null /* I'm Interested button moved to top row alongside title */}
             </div>
           ))}
         </div>
