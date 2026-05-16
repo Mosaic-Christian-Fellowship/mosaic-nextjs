@@ -38,7 +38,8 @@ export default function About() {
               { word: 'Embrace', description: 'Everyone who walks through our doors is met with genuine warmth and a place at the table, regardless of background.' },
               { word: 'Disciple', description: 'We are committed to helping people grow in their faith through teaching, community, and intentional formation.' },
             ].map(({ word, description }) => (
-              <div key={word} className="flex flex-col gap-3 p-6 rounded-2xl border border-[#E5E7EB]">
+              <div key={word} className="flex flex-col gap-4 p-6 rounded-2xl border border-[#E5E7EB]">
+                <PlaceholderImage label={`${word} photo`} aspectRatio="aspect-[4/3]" />
                 <span className="text-2xl font-bold text-[#0066FF]">{word}</span>
                 <p className="text-[#7F838A]">{description}</p>
               </div>
