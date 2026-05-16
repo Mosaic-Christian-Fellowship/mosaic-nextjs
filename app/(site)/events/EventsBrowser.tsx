@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatDate, formatEventTime, type EventData } from '@/lib/api'
+import { displayableLocation } from '@/lib/events'
 
 type Layout = 'list' | 'grid'
 type SortKey = 'date-asc' | 'date-desc' | 'name-asc'
@@ -195,11 +196,16 @@ function EventRow({ event }: { event: EventData }) {
             <p className="text-[13px] text-[#4B4F56] mt-1 line-clamp-1">{desc}</p>
           )}
         </div>
-        {event.location && (
-          <p className="hidden lg:block text-[13px] text-[#7F838A] max-w-[280px] truncate">
-            {event.location}
-          </p>
-        )}
+        {(() => {
+          const loc = displayableLocation(event.location)
+          return (
+            loc && (
+              <p className="hidden lg:block text-[13px] text-[#7F838A] max-w-[280px] truncate">
+                {loc}
+              </p>
+            )
+          )
+        })()}
         <span aria-hidden className="text-[#7F838A] group-hover:text-[#0066FF] transition-colors shrink-0">
           →
         </span>
