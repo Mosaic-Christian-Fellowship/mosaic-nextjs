@@ -179,9 +179,26 @@ function EventRow({ event }: { event: EventData }) {
         href={`/events/${event.id}`}
         className="group flex items-center gap-5 py-5 transition-colors hover:bg-[#F5F5F7]/50 -mx-3 px-3 rounded-[8px]"
       >
-        <div className="shrink-0 w-14 h-14 rounded-[10px] bg-[#0066FF]/8 flex flex-col items-center justify-center">
-          <span className="text-[10px] font-bold text-[#0066FF]">{month}</span>
-          <span className="text-[18px] font-bold text-[#1E2024] leading-none">{day}</span>
+        <div className="relative shrink-0 w-[96px] aspect-[5/3] rounded-[10px] overflow-hidden bg-[#F5F5F7]">
+          {event.imageUrl ? (
+            <Image
+              src={event.imageUrl}
+              alt={event.name}
+              fill
+              sizes="96px"
+              className="object-cover"
+            />
+          ) : (
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(135deg, #0066FF 0%, #0041A2 100%)' }}
+            />
+          )}
+          <div className="absolute top-1.5 left-1.5 w-9 h-9 rounded-[6px] bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center">
+            <span className="text-[8px] font-bold text-[#0066FF] leading-none">{month}</span>
+            <span className="text-[13px] font-bold text-[#1E2024] leading-none">{day}</span>
+          </div>
         </div>
         <div className="min-w-0 flex-1">
           <h3 className="text-[16px] font-semibold text-[#1E2024] group-hover:text-[#0066FF] transition-colors">
