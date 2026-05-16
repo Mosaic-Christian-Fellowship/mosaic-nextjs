@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { apiFetch, apiPost, type GroupData, type FormResponse } from '@/lib/api'
+import SanitizedRichText from '@/components/SanitizedRichText'
 
 const DEMOGRAPHICS = [
   'Young Adults', 'Married Couples', 'Families', 'Moms',
@@ -166,7 +167,10 @@ export default function GroupFinder() {
                 )}
               </div>
               {group.description && (
-                <p className="text-sm text-[#7F838A] mt-3 line-clamp-3">{group.description}</p>
+                <SanitizedRichText
+                  html={group.description}
+                  className="text-sm text-[#7F838A] mt-3 line-clamp-3 [&_a]:text-[#0066FF] [&_a]:underline [&_a]:underline-offset-2 [&_strong]:text-[#1E2024] [&_strong]:font-semibold"
+                />
               )}
               <p className="text-xs text-[#7F838A] mt-2">{group.membersCount} members</p>
 
