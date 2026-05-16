@@ -43,3 +43,6 @@ screenshots/
 
 # session handoff docs (Claude session artifacts, not for the repo)
 docs/handoffs/
+
+# Claude Code worktree storage (per-checkout, not for the repo)
+.claude/
