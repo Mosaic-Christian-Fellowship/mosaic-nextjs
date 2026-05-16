@@ -96,7 +96,7 @@ export default function EventsBrowser({ events }: Props) {
             <select
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value as SortKey)}
-              className="h-10 px-3 rounded-[10px] border border-[#E5E7EB] text-[13px] bg-white"
+              className="h-10 pl-3 pr-8 rounded-[10px] border border-[#E5E7EB] text-[13px] bg-white"
             >
               {(Object.keys(SORT_LABEL) as SortKey[]).map((k) => (
                 <option key={k} value={k}>
