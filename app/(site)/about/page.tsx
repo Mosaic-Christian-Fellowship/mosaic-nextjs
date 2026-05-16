@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import SectionHeader from '@/components/SectionHeader'
+import MoreLink from '@/components/MoreLink'
 import PlaceholderImage from '@/components/PlaceholderImage'
 import CTASection from '@/components/CTASection'
 
@@ -65,7 +65,12 @@ export default function About() {
       {/* Meet Our Team — Simple grid linking to staff page */}
       <section className="py-20 px-6 bg-[#FFFFFF]">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Our People" heading="Meet Our Team" centered />
+          <div className="flex items-end justify-between gap-4">
+            <SectionHeader overline="Our People" heading="Meet Our Team" />
+            <div className="hidden md:block">
+              <MoreLink href="/about/staff">View all staff</MoreLink>
+            </div>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { name: 'Lead Pastor', label: 'Photo' },
@@ -79,13 +84,10 @@ export default function About() {
               </div>
             ))}
           </div>
-          <div className="text-center">
-            <Link
-              href="/about/staff"
-              className="text-[#0066FF] font-semibold hover:text-[#0041A2] transition-colors"
-            >
-              View all staff →
-            </Link>
+          <div className="md:hidden">
+            <MoreLink href="/about/staff" className="w-full justify-center">
+              View all staff
+            </MoreLink>
           </div>
         </div>
       </section>
