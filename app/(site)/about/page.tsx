@@ -97,6 +97,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {beliefs.map(({ heading, text }) => (
               <div key={heading} className="p-6 rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF]">
+                <div className="w-20 h-20 rounded-xl bg-[#0066FF]/10 mb-4" aria-hidden />
                 <h3 className="font-bold text-lg mb-2">{heading}</h3>
                 <p className="text-[#7F838A]">{text}</p>
               </div>
