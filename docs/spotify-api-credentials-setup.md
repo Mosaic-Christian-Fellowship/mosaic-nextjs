@@ -38,7 +38,7 @@ You should land on a page that says **"Dashboard"** at the top.
    - **App name:** type **`Mosaic Website`**
    - **App description:** **`Pulls latest podcast episodes for the Mosaic Christian Fellowship website.`**
    - **Website:** **`https://mosaicnj.org`** (or the new site URL once it's live — this just helps Spotify identify the app, doesn't have to be perfect)
-   - **Redirect URI:** **`http://localhost:3000`** — this field is required by Spotify but our website won't actually use it. Just type the value above and click **"Add"** so it lands in the list below the field.
+   - **Redirect URI:** **`http://127.0.0.1:3000`** — this field is required by Spotify but our website won't actually use it. Type the value above and click **"Add"** so it lands in the list below the field. **Important:** use the numeric `127.0.0.1`, not `localhost` — Spotify stopped accepting `localhost` in 2025. They mean the same thing, but only the numeric one passes their check.
    - **Which API/SDKs are you planning to use?** Tick **"Web API"** only. Leave the other boxes unchecked.
 3. Tick the box that says you understand and agree to Spotify's Developer Terms.
 4. Click **Save**.
@@ -101,6 +101,9 @@ If anything breaks or the credentials need to change later, you can come back to
 ---
 
 ## Common questions
+
+**"Spotify won't let me add `http://localhost:3000` as a Redirect URI."**
+Use **`http://127.0.0.1:3000`** instead. Spotify tightened their redirect-URI rules in 2025 and now rejects `localhost`. The numeric version (`127.0.0.1`) is the same thing — your computer reading the address as a number instead of a name — but it's the only form Spotify accepts.
 
 **"It's asking me to verify my email or add my phone number."**
 Spotify sometimes prompts this for new developer accounts. It's a one-time security check — go ahead and do it. There's no charge or credit card.
