@@ -19,9 +19,9 @@ export default function ImNew() {
     <div>
       {/* Hero */}
       <section className="bg-[#0066FF] text-white py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-5">
+        <div className="max-w-4xl mx-auto text-left flex flex-col gap-5">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">Broken pieces. Different stories.<br />One beautiful mosaic.</h1>
-          <p className="text-white/80 text-lg max-w-xl mx-auto">
+          <p className="text-white/80 text-lg max-w-2xl">
             Broken pieces from different lives, forming something beautiful together.
             Whether you&apos;re exploring faith for the first time, coming back after a long time away, or just looking for a place that feels like home — we have a seat for you.
           </p>

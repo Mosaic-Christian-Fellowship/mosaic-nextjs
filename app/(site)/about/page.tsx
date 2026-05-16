@@ -15,7 +15,7 @@ export default function About() {
     <div>
       {/* Page Hero */}
       <section className="bg-[#1E2024] text-white py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
+        <div className="max-w-4xl mx-auto text-left flex flex-col gap-4">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Who We Are</span>
           <h1 className="text-4xl md:text-5xl font-bold">Built on faith. Rooted in community.</h1>
           <p className="text-white/70 text-lg">
