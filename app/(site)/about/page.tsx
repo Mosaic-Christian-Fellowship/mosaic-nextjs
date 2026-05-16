@@ -1,6 +1,6 @@
 import SectionHeader from '@/components/SectionHeader'
-import MoreLink from '@/components/MoreLink'
 import PlaceholderImage from '@/components/PlaceholderImage'
+import TeamGridCrossfade from '@/components/TeamGridCrossfade'
 import CTASection from '@/components/CTASection'
 
 const beliefs = [
@@ -66,35 +66,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Meet Our Team — Simple grid linking to staff page */}
-      <section className="py-20 px-6 bg-[#FFFFFF]">
-        <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <div className="flex items-end justify-between gap-4">
-            <SectionHeader overline="Our People" heading="Meet Our Team" />
-            <div className="hidden md:block">
-              <MoreLink href="/about/staff">View all staff</MoreLink>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: 'Lead Pastor', label: 'Photo' },
-              { name: 'Associate Pastor', label: 'Photo' },
-              { name: 'Worship Director', label: 'Photo' },
-              { name: 'Children & Family Director', label: 'Photo' },
-            ].map((person) => (
-              <div key={person.name} className="flex flex-col gap-3 text-center">
-                <PlaceholderImage label={person.label} aspectRatio="aspect-square" className="rounded-2xl" />
-                <span className="font-medium text-sm text-[#1E2024]">{person.name}</span>
-              </div>
-            ))}
-          </div>
-          <div className="md:hidden">
-            <MoreLink href="/about/staff" className="w-full justify-center">
-              View all staff
-            </MoreLink>
-          </div>
-        </div>
-      </section>
+      {/* Meet Our Team — Crossfade grid ported from wireframe */}
+      <TeamGridCrossfade />
 
       {/* What We Believe */}
       <section className="py-20 px-6">
