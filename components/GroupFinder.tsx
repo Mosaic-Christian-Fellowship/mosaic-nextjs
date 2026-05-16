@@ -121,18 +121,23 @@ export default function GroupFinder() {
       </div>
 
       {/* Results */}
-      {loading ? (
+      {loading && groups.length === 0 ? (
         <div className="grid md:grid-cols-2 gap-6">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="animate-pulse rounded-2xl bg-slate-200 h-48" />
           ))}
         </div>
-      ) : groups.length === 0 ? (
+      ) : !loading && groups.length === 0 ? (
         <p className="text-center text-[#7F838A] py-12">
           No groups match your filters. Try broadening your search.
         </p>
       ) : (
-        <div className="grid md:grid-cols-2 gap-6">
+        <div
+          aria-busy={loading}
+          className={`grid md:grid-cols-2 gap-6 transition-opacity duration-300 ease-out motion-reduce:transition-none ${
+            loading ? 'opacity-50' : 'opacity-100'
+          }`}
+        >
           {groups.map((group) => (
             <div
               key={group.id}
