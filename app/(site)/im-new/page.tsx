@@ -111,14 +111,45 @@ export default function ImNew() {
 
       {/* FAQ */}
       <section className="py-20 px-6">
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
-          <SectionHeader overline="Common Questions" heading="FAQ" centered />
+        <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-2 md:gap-16">
+          <div className="flex flex-col gap-4">
+            <SectionHeader overline="Common Questions" heading="FAQ" />
+            <p className="text-[#7F838A] text-base leading-relaxed">
+              Have a question we haven&apos;t answered yet? We&apos;d love to hear from you — no question
+              is too small.
+            </p>
+            <a
+              href="mailto:welcoming@njmosaic.org"
+              className="text-[#0066FF] font-semibold hover:text-[#0041A2] transition-colors w-fit"
+            >
+              Get in touch →
+            </a>
+          </div>
           <div className="flex flex-col divide-y divide-[#E5E7EB]">
             {faqs.map(({ q, a }) => (
-              <div key={q} className="py-6 flex flex-col gap-2">
-                <h3 className="font-bold text-lg">{q}</h3>
-                <p className="text-[#7F838A]">{a}</p>
-              </div>
+              <details
+                key={q}
+                className="group py-4 [&::-webkit-details-marker]:hidden"
+              >
+                <summary className="cursor-pointer list-none flex items-start justify-between gap-4 marker:hidden">
+                  <h3 className="font-semibold text-lg text-[#1E2024] flex-1">{q}</h3>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                    className="shrink-0 mt-1.5 text-[#7F838A] transition-transform group-open:rotate-180"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </summary>
+                <p className="mt-3 text-[#7F838A] leading-relaxed">{a}</p>
+              </details>
             ))}
           </div>
         </div>
