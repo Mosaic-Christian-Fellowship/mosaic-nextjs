@@ -6,6 +6,7 @@ import { landingPageQuery, allLandingPagesQuery } from '@/sanity/lib/queries'
 import { PortableText, type PortableTextBlock } from '@portabletext/react'
 import { kvGet } from '@/lib/kv'
 import { formatDate, formatEventTime, type EventData } from '@/lib/api'
+import { displayableLocation } from '@/lib/events'
 import SanitizedRichText from '@/components/SanitizedRichText'
 
 export const revalidate = 600
@@ -186,14 +187,19 @@ function PcoEventView({ event }: { event: EventData }) {
                   </span>
                 </div>
               )}
-              {event.location && (
-                <div className="flex flex-col gap-1">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7F838A]">
-                    Location
-                  </span>
-                  <span className="text-[15px] text-[#1E2024] leading-[1.4]">{event.location}</span>
-                </div>
-              )}
+              {(() => {
+                const loc = displayableLocation(event.location)
+                return (
+                  loc && (
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7F838A]">
+                        Location
+                      </span>
+                      <span className="text-[15px] text-[#1E2024] leading-[1.4]">{loc}</span>
+                    </div>
+                  )
+                )
+              })()}
             </div>
           </aside>
         </div>

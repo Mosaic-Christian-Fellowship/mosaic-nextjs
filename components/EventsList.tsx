@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { apiFetch, formatDate, formatEventTime, type EventData } from '@/lib/api'
+import { displayableLocation } from '@/lib/events'
 
 interface Props {
   limit?: number
@@ -66,9 +67,10 @@ function EventCard({ event, featured = false }: { event: EventData; featured?: b
           <p className="text-sm text-white/60 mt-1">
             {formatDate(event.startsAt)} · {formatEventTime(event.startsAt, event.endsAt)}
           </p>
-          {event.location && (
-            <p className="text-sm text-white/50 mt-1">{event.location}</p>
-          )}
+          {(() => {
+            const loc = displayableLocation(event.location)
+            return loc && <p className="text-sm text-white/50 mt-1">{loc}</p>
+          })()}
           {event.summary && (
             <p className="text-sm text-white/70 mt-3 line-clamp-3">{event.summary}</p>
           )}
@@ -88,9 +90,10 @@ function EventCard({ event, featured = false }: { event: EventData; featured?: b
         <p className="text-sm text-[#7F838A] mt-0.5">
           {formatDate(event.startsAt)} · {formatEventTime(event.startsAt, event.endsAt)}
         </p>
-        {event.location && (
-          <p className="text-sm text-[#7F838A] line-clamp-1">{event.location}</p>
-        )}
+        {(() => {
+          const loc = displayableLocation(event.location)
+          return loc && <p className="text-sm text-[#7F838A] line-clamp-1">{loc}</p>
+        })()}
       </div>
     </div>
   )
