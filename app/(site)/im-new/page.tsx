@@ -1,6 +1,7 @@
 import SectionHeader from '@/components/SectionHeader'
 import PlaceholderImage from '@/components/PlaceholderImage'
 import PlanVisitForm from '@/components/PlanVisitForm'
+import FaqAccordion from '@/components/FaqAccordion'
 
 const faqs = [
   { q: "What should I wear?", a: "Come as you are — seriously. You'll see everything from jeans and t-shirts to business casual on a Sunday. There's no dress code." },
@@ -14,76 +15,147 @@ const faqs = [
   { q: "Is there coffee?", a: "Yes. Grab a cup before the service and stick around after — some of the best conversations happen over coffee in the lobby." },
 ]
 
+type ServiceFeature = 'childrens' | 'education' | 'livestream' | 'general'
+
+const FEATURE_LABELS: Record<ServiceFeature, string> = {
+  childrens: "Children's Ministry",
+  education: 'Education Ministries',
+  livestream: 'YouTube Livestream',
+  general: 'General service',
+}
+
+const FEATURE_CHIP_STYLES: Record<ServiceFeature, string> = {
+  childrens: 'bg-amber-100 text-amber-900 border-amber-200',
+  education: 'bg-indigo-100 text-indigo-900 border-indigo-200',
+  livestream: 'bg-rose-100 text-rose-900 border-rose-200',
+  general: 'bg-stone-100 text-stone-700 border-stone-200',
+}
+
+const services: Array<{ time: string; features: ServiceFeature[] }> = [
+  { time: '9:30 AM', features: ['childrens', 'education'] },
+  { time: '11:30 AM', features: ['childrens', 'education', 'livestream'] },
+  { time: '1:30 PM', features: ['general'] },
+]
+
+const sundaySteps = [
+  { step: '1', heading: 'Arrive & Be Welcomed', detail: 'Greeters meet you at the door. Grab a coffee, find a seat. No pressure.' },
+  { step: '2', heading: 'Drop Off Your Kids', detail: 'Head to the welcome area to check your children in. Our kids team takes it from there.' },
+  { step: '3', heading: 'Worship Together', detail: '20-25 minutes of congregational worship — live music, familiar and new songs.' },
+  { step: '4', heading: 'The Message', detail: 'Our pastor teaches through books of the Bible, with historical context and practical application.' },
+  { step: '5', heading: 'Stay & Connect', detail: "Don't rush out. Some of the best conversations happen after the service. Stick around." },
+]
+
+const getToKnowSteps = [
+  { step: 'Show Up', desc: 'Come to a Sunday service. Grab coffee. See if it feels right.' },
+  { step: 'Connect', desc: "Fill out a visit form or chat with someone after the service. We'll follow up — gently." },
+  { step: 'Go Deeper', desc: 'Join a community group, serve on a team, or start asking the bigger questions.' },
+  { step: 'Reach', desc: 'Once Mosaic feels like home, help someone else find theirs.' },
+]
+
 export default function ImNew() {
   return (
     <div>
       {/* Hero — placeholder bg; replace with fullscreen photo/video */}
       <section className="bg-[#FF69B4] text-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-left flex flex-col gap-5">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">Broken pieces. Different stories.<br />One beautiful mosaic.</h1>
-          <p className="text-white/80 text-lg max-w-2xl">
-            Broken pieces from different lives, forming something beautiful together.
+        <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-6">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight max-w-[60%] mx-auto">
+            Broken pieces, different stories. One beautiful mosaic.
+          </h1>
+          <p className="text-white/80 text-lg max-w-xl mx-auto">
             Whether you&apos;re exploring faith for the first time, coming back after a long time away, or just looking for a place that feels like home — we have a seat for you.
           </p>
+          <a
+            href="#plan-your-visit"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#0066FF] font-semibold hover:bg-white/90 transition-colors"
+          >
+            Let us know you&apos;re coming
+            <span aria-hidden>↓</span>
+          </a>
         </div>
       </section>
 
       {/* Service Times & Location */}
       <section className="py-20 px-6 bg-[#FFFFFF]">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col gap-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+          <div className="flex flex-col gap-8">
             <SectionHeader overline="When & Where" heading="Service Times & Location" />
-            <div className="flex flex-col gap-4">
-              {[
-                { time: '9:30 AM', note: 'Full service · Children\'s Ministry + all education ministries' },
-                { time: '11:30 AM', note: 'Full service · Children\'s Ministry + all education · YouTube Livestream' },
-                { time: '1:30 PM', note: 'General service · No children\'s or education programming' },
-              ].map(({ time, note }) => (
-                <div key={time} className="flex gap-4 items-start">
+
+            <div className="flex flex-col gap-5">
+              {services.map(({ time, features }) => (
+                <div key={time} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                   <span className="font-bold text-[#0066FF] w-20 shrink-0">{time}</span>
-                  <span className="text-[#7F838A]">{note}</span>
+                  <div className="flex flex-wrap gap-2">
+                    {features.map((f) => (
+                      <span
+                        key={f}
+                        className={`text-xs font-semibold px-3 py-1 rounded-full border ${FEATURE_CHIP_STYLES[f]}`}
+                      >
+                        {FEATURE_LABELS[f]}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex flex-col gap-3">
-              <div className="p-4 bg-[#F5F5F7] rounded-xl text-sm text-[#7F838A]">
-                119 Rockland Ave · Northvale, NJ 07647
-              </div>
-              <div className="p-4 bg-[#F5F5F7] rounded-xl text-sm text-[#7F838A]">
-                Parking at 147 Walnut St, Northvale (our new lot — it&apos;s right next door)
-              </div>
-              <p className="text-sm text-[#7F838A]">
-                <strong className="text-[#1E2024]">First time?</strong> Arrive about 10 minutes early. Look for greeters outside — they&apos;ll show you where to go, help you check in your kids, and point you to coffee.
+
+            <div className="rounded-xl border border-[#0066FF]/25 bg-[#0066FF]/10 px-4 py-3 text-sm">
+              <p className="font-semibold text-[#0041A2]">Parking</p>
+              <p className="text-[#0041A2]/80">147 Walnut St, Northvale — our new lot, right next door.</p>
+            </div>
+
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm">
+              <p className="font-semibold text-emerald-900">First time?</p>
+              <p className="text-emerald-900/80">
+                Arrive about 10 minutes early. Look for greeters outside — they&apos;ll show you where to go, help you check in your kids, and point you to coffee.
               </p>
             </div>
           </div>
-          <PlaceholderImage label="Map / Building Photo" aspectRatio="aspect-[4/3]" />
+
+          <div className="flex flex-col gap-3">
+            <p className="text-sm font-semibold text-[#1E2024]">
+              119 Rockland Ave · Northvale, NJ 07647
+            </p>
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-[#E5E7EB]">
+              <iframe
+                title="Map to Mosaic Christian Fellowship"
+                src="https://maps.google.com/maps?q=119+Rockland+Ave+Northvale+NJ+07647&output=embed"
+                width="100%"
+                height="100%"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="border-0"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* What Sunday Looks Like */}
+      {/* What a Typical Sunday Looks Like */}
       <section className="py-20 px-6">
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
-          <SectionHeader overline="What to Expect" heading="What a Sunday Looks Like" centered />
-          <div className="flex flex-col gap-6">
-            {[
-              { step: '1', heading: 'Arrive & Be Welcomed', detail: 'Greeters will meet you at the door. Grab a coffee, find a seat. No pressure.' },
-              { step: '2', heading: 'Drop Off Your Kids', detail: 'Head to the welcome area to check your children in. Our kids team will take it from there.' },
-              { step: '3', heading: 'Worship Together', detail: 'We open with 20-25 minutes of congregational worship — live music, familiar and new songs.' },
-              { step: '4', heading: 'The Message', detail: 'Our pastor teaches through books of the Bible, providing historical context and practical application.' },
-              { step: '5', heading: 'Stay & Connect', detail: "Don't rush out. Some of the best conversations happen after the service. Stick around." },
-            ].map(({ step, heading, detail }) => (
-              <div key={step} className="flex gap-6 items-start">
-                <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center shrink-0">
-                  {step}
-                </span>
-                <div>
-                  <h3 className="font-bold text-lg">{heading}</h3>
-                  <p className="text-[#7F838A]">{detail}</p>
+        <div className="max-w-6xl mx-auto flex flex-col gap-10">
+          <SectionHeader overline="What to Expect" heading="What a typical Sunday looks like" centered />
+
+          <ol className="flex flex-col lg:flex-row gap-6 lg:gap-4 lg:items-stretch">
+            {sundaySteps.map(({ step, heading, detail }, i) => (
+              <li
+                key={step}
+                className="flex-1 flex lg:flex-col gap-4 lg:gap-3 items-start lg:items-center lg:text-center"
+              >
+                <div className="flex lg:flex-col items-center gap-3 shrink-0">
+                  <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center shrink-0">
+                    {step}
+                  </span>
+                  {i < sundaySteps.length - 1 && (
+                    <span aria-hidden className="hidden lg:block w-px h-6 bg-[#E5E7EB]" />
+                  )}
                 </div>
-              </div>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-bold text-base text-[#1E2024]">{heading}</h3>
+                  <p className="text-sm text-[#7F838A]">{detail}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -125,48 +197,19 @@ export default function ImNew() {
               Get in touch →
             </a>
           </div>
-          <div className="flex flex-col divide-y divide-[#E5E7EB]">
-            {faqs.map(({ q, a }) => (
-              <details
-                key={q}
-                className="group py-4 [&::-webkit-details-marker]:hidden"
-              >
-                <summary className="cursor-pointer list-none flex items-start justify-between gap-4 marker:hidden">
-                  <h3 className="font-semibold text-lg text-[#1E2024] flex-1">{q}</h3>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden
-                    className="shrink-0 mt-1.5 text-[#7F838A] transition-transform group-open:rotate-180"
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </summary>
-                <p className="mt-3 text-[#7F838A] leading-relaxed">{a}</p>
-              </details>
-            ))}
-          </div>
+          <FaqAccordion items={faqs} />
         </div>
       </section>
 
-      {/* Your Next Steps */}
+      {/* Ways to get to know Mosaic */}
       <section className="py-20 px-6 bg-[#FFFFFF]">
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
-          <SectionHeader overline="Your Journey" heading="What Getting Involved Looks Like" centered />
-          <p className="text-[#7F838A] text-center">There&apos;s no formula and no pressure. But if you&apos;re wondering what a path forward might look like, here&apos;s how most people find their way in.</p>
+          <SectionHeader overline="Your Journey" heading="Ways to get to know Mosaic" centered />
+          <p className="text-[#7F838A] text-center">
+            Some people show up for years before going deeper. Others jump in week one. Wherever you are, these are the doors that tend to be open.
+          </p>
           <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { step: 'Show Up', desc: 'Come to a Sunday service. Grab coffee. See if it feels right.' },
-              { step: 'Connect', desc: 'Fill out a visit form or chat with someone after the service. We\'ll follow up — gently.' },
-              { step: 'Go Deeper', desc: 'Join a community group, serve on a team, or start asking the bigger questions.' },
-              { step: 'Reach', desc: 'Once Mosaic feels like home, help someone else find theirs.' },
-            ].map(({ step, desc }, i) => (
+            {getToKnowSteps.map(({ step, desc }, i) => (
               <div key={step} className="flex flex-col gap-3 text-center">
                 <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center mx-auto">{i + 1}</span>
                 <h3 className="font-bold text-[#1E2024]">{step}</h3>
@@ -178,11 +221,11 @@ export default function ImNew() {
       </section>
 
       {/* Plan Your Visit */}
-      <section className="py-20 px-6 bg-[#F5F5F7]">
+      <section id="plan-your-visit" className="py-20 px-6 bg-[#F5F5F7] scroll-mt-20">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="We'd Love to Hear From You" heading="Plan Your Visit" centered />
           <p className="text-[#7F838A] text-center">
-            Let us know you&apos;re coming and we&apos;ll make sure someone&apos;s there to welcome you personally.
+            Tell us you&apos;re coming and someone from our community will reach out — to answer questions, walk you through what to expect, or just be a familiar face at the door on Sunday. No pressure, no pitch. Just a way to make finding the right church a little easier.
           </p>
           <PlanVisitForm />
         </div>
