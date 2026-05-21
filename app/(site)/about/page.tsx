@@ -13,8 +13,8 @@ const beliefs = [
 export default function About() {
   return (
     <div>
-      {/* Page Hero */}
-      <section className="bg-[#1E2024] text-white py-24 px-6">
+      {/* Page Hero — placeholder bg; replace with fullscreen photo/video */}
+      <section className="bg-[#FF69B4] text-white py-24 px-6">
         <div className="max-w-4xl mx-auto text-left flex flex-col gap-4">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Who We Are</span>
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
