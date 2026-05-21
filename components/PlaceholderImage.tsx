@@ -11,9 +11,9 @@ export default function PlaceholderImage({
 }: Props) {
   return (
     <div
-      className={`${aspectRatio} bg-slate-200 rounded-2xl flex items-center justify-center ${className}`}
+      className={`${aspectRatio} bg-[#FF69B4] rounded-2xl flex items-center justify-center ${className}`}
     >
-      <span className="text-sm font-medium text-[#7F838A]">[ {label} ]</span>
+      <span className="text-sm font-semibold text-white tracking-wide">[ {label} ]</span>
     </div>
   )
 }
