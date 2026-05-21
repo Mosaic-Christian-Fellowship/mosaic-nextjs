@@ -89,7 +89,12 @@ export async function fetchVideoDetails(videoIds: string[]): Promise<VideoDetail
         id: item.id,
         title: item.snippet.title,
         description: item.snippet.description,
-        thumbnail: item.snippet.thumbnails?.high?.url ?? item.snippet.thumbnails?.default?.url ?? '',
+        thumbnail:
+          item.snippet.thumbnails?.maxres?.url ??
+          item.snippet.thumbnails?.standard?.url ??
+          item.snippet.thumbnails?.high?.url ??
+          item.snippet.thumbnails?.default?.url ??
+          '',
         durationSeconds: parseIsoDuration(item.contentDetails.duration),
       })
     }

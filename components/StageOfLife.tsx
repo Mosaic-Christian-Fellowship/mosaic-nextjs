@@ -31,7 +31,7 @@ function CommunityCard({ card }: { card: Card }) {
       href={card.href}
       draggable={false}
       className="relative block overflow-hidden rounded-[12px] bg-black shrink-0"
-      style={{ width: CARD_W, aspectRatio: '4 / 5' }}
+      style={{ width: CARD_W, aspectRatio: '8 / 15' }}
     >
       <Image
         src={card.image}

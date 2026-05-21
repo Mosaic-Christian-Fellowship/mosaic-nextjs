@@ -4,6 +4,7 @@ import ProgressiveBlur from '@/components/ProgressiveBlur'
 import MoreLink from '@/components/MoreLink'
 import { kvGet } from '@/lib/kv'
 import type { EventData } from '@/lib/api'
+import { displayableLocation } from '@/lib/events'
 
 type Event = {
   title: string
@@ -14,19 +15,12 @@ type Event = {
   location?: string
 }
 
-const FALLBACK_LOCATION = 'Mosaic Christian Fellowship'
-
 function formatBentoDate(iso: string): string {
   const d = new Date(iso)
   const month = d.toLocaleDateString('en-US', { month: 'short' })
   const day = String(d.getDate()).padStart(2, '0')
   const weekday = d.toLocaleDateString('en-US', { weekday: 'long' })
   return `${month} ${day}, ${weekday}`
-}
-
-function venueFromLocation(loc: string | null): string {
-  if (!loc) return FALLBACK_LOCATION
-  return loc.split(' - ')[0].trim() || FALLBACK_LOCATION
 }
 
 const PLACEHOLDER_EVENTS: Event[] = [
@@ -79,7 +73,7 @@ async function getHomepageEvents(): Promise<Event[]> {
       image: e.imageUrl,
       href: `/events/${e.id}`,
       date: formatBentoDate(e.startsAt),
-      location: venueFromLocation(e.location),
+      location: displayableLocation(e.location) ?? undefined,
     }))
   } catch {
     return PLACEHOLDER_EVENTS

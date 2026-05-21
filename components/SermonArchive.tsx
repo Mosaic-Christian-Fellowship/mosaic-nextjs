@@ -108,7 +108,7 @@ export default function SermonArchive() {
           id="sermon-series-filter"
           value={selectedSeries}
           onChange={(e) => { setSelectedSeries(e.target.value); setPage(1) }}
-          className="px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
+          className="pl-4 pr-8 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
         >
           <option value="">All Series</option>
           {series.map((s) => (
@@ -120,7 +120,7 @@ export default function SermonArchive() {
           id="sermon-speaker-filter"
           value={selectedSpeaker}
           onChange={(e) => { setSelectedSpeaker(e.target.value); setPage(1) }}
-          className="px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
+          className="pl-4 pr-8 py-2.5 rounded-full border border-[#E5E7EB] text-sm bg-white"
         >
           <option value="">All Speakers</option>
           {speakerOptions.map((s) => (

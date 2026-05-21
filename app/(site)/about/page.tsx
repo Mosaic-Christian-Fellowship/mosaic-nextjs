@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import SectionHeader from '@/components/SectionHeader'
 import PlaceholderImage from '@/components/PlaceholderImage'
+import TeamGridCrossfade from '@/components/TeamGridCrossfade'
 import CTASection from '@/components/CTASection'
 
 const beliefs = [
@@ -15,12 +15,15 @@ export default function About() {
     <div>
       {/* Page Hero */}
       <section className="bg-[#1E2024] text-white py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
+        <div className="max-w-4xl mx-auto text-left flex flex-col gap-4">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Who We Are</span>
-          <h1 className="text-4xl md:text-5xl font-bold">Built on faith. Rooted in community.</h1>
-          <p className="text-white/70 text-lg">
-            Mosaic Christian Fellowship has been a home for seekers, believers, and everyone in between
-            for over [X] years in northern New Jersey.
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+            Built on faith.
+            <br />
+            Rooted in community.
+          </h1>
+          <p className="text-white/70 text-lg max-w-2xl">
+            A home for seekers, believers, and everyone in between — for [X] years in northern New Jersey.
           </p>
         </div>
       </section>
@@ -35,7 +38,8 @@ export default function About() {
               { word: 'Embrace', description: 'Everyone who walks through our doors is met with genuine warmth and a place at the table, regardless of background.' },
               { word: 'Disciple', description: 'We are committed to helping people grow in their faith through teaching, community, and intentional formation.' },
             ].map(({ word, description }) => (
-              <div key={word} className="flex flex-col gap-3 p-6 rounded-2xl border border-[#E5E7EB]">
+              <div key={word} className="flex flex-col gap-4 p-6 rounded-2xl border border-[#E5E7EB]">
+                <PlaceholderImage label={`${word} photo`} aspectRatio="aspect-[4/3]" />
                 <span className="text-2xl font-bold text-[#0066FF]">{word}</span>
                 <p className="text-[#7F838A]">{description}</p>
               </div>
@@ -62,33 +66,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Meet Our Team — Simple grid linking to staff page */}
-      <section className="py-20 px-6 bg-[#FFFFFF]">
-        <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Our People" heading="Meet Our Team" centered />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: 'Lead Pastor', label: 'Photo' },
-              { name: 'Associate Pastor', label: 'Photo' },
-              { name: 'Worship Director', label: 'Photo' },
-              { name: 'Children & Family Director', label: 'Photo' },
-            ].map((person) => (
-              <div key={person.name} className="flex flex-col gap-3 text-center">
-                <PlaceholderImage label={person.label} aspectRatio="aspect-square" className="rounded-2xl" />
-                <span className="font-medium text-sm text-[#1E2024]">{person.name}</span>
-              </div>
-            ))}
-          </div>
-          <div className="text-center">
-            <Link
-              href="/about/staff"
-              className="text-[#0066FF] font-semibold hover:text-[#0041A2] transition-colors"
-            >
-              View all staff →
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Meet Our Team — Crossfade grid ported from wireframe */}
+      <TeamGridCrossfade />
 
       {/* What We Believe */}
       <section className="py-20 px-6">
@@ -97,6 +76,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {beliefs.map(({ heading, text }) => (
               <div key={heading} className="p-6 rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF]">
+                <div className="w-20 h-20 rounded-xl bg-[#0066FF]/10 mb-4" aria-hidden />
                 <h3 className="font-bold text-lg mb-2">{heading}</h3>
                 <p className="text-[#7F838A]">{text}</p>
               </div>

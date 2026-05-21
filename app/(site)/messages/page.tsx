@@ -78,7 +78,7 @@ export default function Messages() {
     <div>
       {/* Hero */}
       <section className="bg-[#1E2024] text-white py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-6">
+        <div className="max-w-4xl mx-auto text-left flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Teaching</span>
             <h1 className="text-4xl md:text-5xl font-bold">Messages</h1>
@@ -88,9 +88,9 @@ export default function Messages() {
             </p>
           </div>
 
-          <div className="flex flex-col items-center gap-3 pt-2">
+          <div className="flex flex-col items-start gap-3 pt-2">
             <p className="text-xs font-semibold uppercase tracking-widest text-white/50">Subscribe &amp; follow</p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap gap-3">
               <a
                 href="https://www.youtube.com/channel/UCgI1-OGVDlM5cXy0xhllT_w?sub_confirmation=1"
                 target="_blank"
