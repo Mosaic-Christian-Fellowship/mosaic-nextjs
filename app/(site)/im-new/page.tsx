@@ -17,8 +17,8 @@ const faqs = [
 export default function ImNew() {
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-[#0066FF] text-white py-24 px-6">
+      {/* Hero — placeholder bg; replace with fullscreen photo/video */}
+      <section className="bg-[#FF69B4] text-white py-24 px-6">
         <div className="max-w-4xl mx-auto text-left flex flex-col gap-5">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">Broken pieces. Different stories.<br />One beautiful mosaic.</h1>
           <p className="text-white/80 text-lg max-w-2xl">

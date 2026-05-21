@@ -3,8 +3,8 @@ import SectionHeader from '@/components/SectionHeader'
 export default function Give() {
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-[#1E2024] text-white py-24 px-6">
+      {/* Hero — placeholder bg; replace with fullscreen photo/video */}
+      <section className="bg-[#FF69B4] text-white py-24 px-6">
         <div className="max-w-4xl mx-auto text-left flex flex-col gap-4">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Generosity</span>
           <h1 className="text-4xl md:text-5xl font-bold">Give</h1>

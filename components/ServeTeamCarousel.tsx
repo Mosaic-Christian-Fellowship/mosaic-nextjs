@@ -85,11 +85,11 @@ export default function ServeTeamCarousel() {
               key={team.id}
               className="flex-shrink-0 w-[calc(33.333%-1rem)] rounded-2xl border border-[#E5E7EB] bg-white overflow-hidden"
             >
-              <div className="aspect-[3/4] bg-slate-200 relative">
+              <div className="aspect-[3/4] bg-[#FF69B4] relative">
                 {team.headerImage ? (
                   <img src={team.headerImage} alt={team.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-stone-400 text-sm">
+                  <div className="w-full h-full flex items-center justify-center text-white font-semibold text-sm tracking-wide">
                     [ {team.name} ]
                   </div>
                 )}
