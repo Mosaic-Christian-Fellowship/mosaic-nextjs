@@ -1,5 +1,7 @@
 import { fetchPlaylistItems, fetchVideoDetails, type PlaylistItem } from '../youtube'
 import { parseSermonTitle, UNATTRIBUTED_SPEAKER } from '../parsers'
+import { fetchSpotifyEpisodes } from '../spotify'
+import { SPOTIFY_SHOW_ID } from './config'
 
 export type PlaylistKind = 'master' | 'series' | 'excluded'
 
@@ -133,4 +135,47 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
     })
 
   return { sermons, series }
+}
+
+function titleOverlap(a: string, b: string): number {
+  const wordsA = new Set(a.toLowerCase().split(/\s+/))
+  const wordsB = new Set(b.toLowerCase().split(/\s+/))
+  let overlap = 0
+  for (const w of wordsA) {
+    if (wordsB.has(w)) overlap++
+  }
+  return overlap
+}
+
+function dayOffset(dateA: string, dateB: string): number {
+  const a = new Date(dateA + 'T00:00:00Z')
+  const b = new Date(dateB + 'T00:00:00Z')
+  return Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24)
+}
+
+export async function enrichWithSpotify(sermons: SermonData[]): Promise<SermonData[]> {
+  const episodes = await fetchSpotifyEpisodes(SPOTIFY_SHOW_ID)
+  if (episodes.length === 0) return sermons
+
+  const matched = new Set<string>()
+
+  for (const ep of episodes) {
+    // Find candidate sermons within ±1 day
+    const candidates = sermons
+      .filter((s) => !s.spotifyUrl && dayOffset(s.date, ep.releaseDate) <= 1)
+      .sort((a, b) => {
+        const dayDiffA = dayOffset(a.date, ep.releaseDate)
+        const dayDiffB = dayOffset(b.date, ep.releaseDate)
+        if (dayDiffA !== dayDiffB) return dayDiffA - dayDiffB
+        return titleOverlap(b.title, ep.name) - titleOverlap(a.title, ep.name)
+      })
+
+    const best = candidates.find((c) => !matched.has(c.id))
+    if (best) {
+      best.spotifyUrl = ep.spotifyUrl
+      matched.add(best.id)
+    }
+  }
+
+  return sermons
 }

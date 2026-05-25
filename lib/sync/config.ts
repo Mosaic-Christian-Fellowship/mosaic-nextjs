@@ -1,6 +1,7 @@
 import type { PlaylistConfig } from './sermons'
 
 export const YOUTUBE_CHANNEL_ID = 'UCgI1-OGVDlM5cXy0xhllT_w'
+export const SPOTIFY_SHOW_ID = '7AZydPQgOQOqdvpiXLGyRR'
 
 // kind:
 //   'master'   — canonical full-archive playlist (Sunday Service); always one
