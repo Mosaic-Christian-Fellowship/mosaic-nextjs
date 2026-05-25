@@ -44,7 +44,7 @@ export async function fetchSpotifyEpisodes(showId: string): Promise<SpotifyEpiso
     `${SPOTIFY_API_BASE}/shows/${showId}/episodes?limit=50&fields=${encodeURIComponent('items(id,name,release_date,external_urls,duration_ms),next')}`
 
   while (url) {
-    const res = await fetch(url, {
+    const res: Response = await fetch(url, {
       headers: { 'Authorization': `Bearer ${token}` },
     })
 
@@ -53,7 +53,7 @@ export async function fetchSpotifyEpisodes(showId: string): Promise<SpotifyEpiso
       break
     }
 
-    const data = await res.json()
+    const data: { items?: Array<{ id: string; name: string; release_date: string; external_urls: { spotify: string }; duration_ms: number }>; next?: string | null } = await res.json()
     for (const item of data.items ?? []) {
       episodes.push({
         id: item.id,

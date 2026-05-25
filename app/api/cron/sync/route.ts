@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { kvSet, kvSetSyncStatus } from '@/lib/kv'
-import { syncSermons } from '@/lib/sync/sermons'
+import { syncSermons, enrichWithSpotify } from '@/lib/sync/sermons'
 import { syncEvents } from '@/lib/sync/events'
 import { syncGroups } from '@/lib/sync/groups'
 import { PLAYLISTS } from '@/lib/sync/config'
@@ -56,10 +56,21 @@ export async function GET(req: NextRequest) {
   if (daily) {
     try {
       const { sermons, series } = await syncSermons(PLAYLISTS)
-      await kvSet('sermons:all', sermons)
+
+      // Spotify enrichment — runs in its own try/catch so failure doesn't break sermon sync
+      let enrichedSermons = sermons
+      try {
+        enrichedSermons = await enrichWithSpotify(sermons)
+        const spotifyCount = enrichedSermons.filter((s) => s.spotifyUrl).length
+        console.log(`Spotify enrichment: matched ${spotifyCount}/${enrichedSermons.length} sermons`)
+      } catch (err) {
+        console.error('Spotify enrichment failed, continuing with YouTube-only data:', err instanceof Error ? err.message : err)
+      }
+
+      await kvSet('sermons:all', enrichedSermons)
       await kvSet('series:all', series)
-      await kvSetSyncStatus('sermons', true, { itemCount: sermons.length })
-      results.sermons = { success: true, count: sermons.length }
+      await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
+      results.sermons = { success: true, count: enrichedSermons.length }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error'
       console.error('Sermon sync failed:', msg)
