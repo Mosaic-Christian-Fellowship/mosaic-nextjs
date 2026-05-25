@@ -8,6 +8,7 @@ export async function GET() {
   checks.mosaic_REDIS_URL = process.env.mosaic_REDIS_URL ? 'set' : 'MISSING'
   checks.PCO_APP_ID = process.env.PCO_APP_ID ? 'set' : 'MISSING'
   checks.PCO_SECRET = process.env.PCO_SECRET ? 'set' : 'MISSING'
+  checks.SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID ? 'set' : 'MISSING (optional)'
 
   // Try Redis connection
   try {
