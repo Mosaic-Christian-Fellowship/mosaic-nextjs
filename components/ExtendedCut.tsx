@@ -8,11 +8,15 @@ export default function ExtendedCut() {
   const [totalWithSpotify, setTotalWithSpotify] = useState(274)
 
   useEffect(() => {
-    apiFetch<SermonData[]>('/api/sermons', { limit: '50' }).then(({ data }) => {
-      const withSpotify = data.filter((s) => s.spotifyUrl)
-      setEpisodes(withSpotify.slice(0, 3))
-      if (withSpotify.length > 0) setTotalWithSpotify(withSpotify.length)
-    })
+    apiFetch<SermonData[]>('/api/sermons', { limit: '50' })
+      .then(({ data }) => {
+        const withSpotify = data.filter((s) => s.spotifyUrl)
+        setEpisodes(withSpotify.slice(0, 3))
+        if (withSpotify.length > 0) setTotalWithSpotify(withSpotify.length)
+      })
+      .catch(() => {
+        /* keep the static fallback list below if the API is unavailable */
+      })
   }, [])
 
   return (
@@ -58,7 +62,7 @@ export default function ExtendedCut() {
             </div>
             <div>
               <p className="text-white font-semibold text-[15px]">NJ Mosaic Christian Fellowship</p>
-              <p className="text-white/50 text-[13px]">{totalWithSpotify} episodes</p>
+              <p className="text-white/80 text-[13px]">{totalWithSpotify} episodes</p>
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -76,7 +80,7 @@ export default function ExtendedCut() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-white text-[14px] font-medium truncate">{ep.title}</p>
-                      <p className="text-white/50 text-[12px]">{ep.speaker} · {formatDate(ep.date)}</p>
+                      <p className="text-white/80 text-[12px]">{ep.speaker} · {formatDate(ep.date)}</p>
                     </div>
                   </a>
                 ))
@@ -91,7 +95,7 @@ export default function ExtendedCut() {
                     </div>
                     <div>
                       <p className="text-white text-[14px] font-medium">{title}</p>
-                      <p className="text-white/50 text-[12px]">{date}</p>
+                      <p className="text-white/80 text-[12px]">{date}</p>
                     </div>
                   </div>
                 ))}

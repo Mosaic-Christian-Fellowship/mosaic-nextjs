@@ -15,25 +15,51 @@
   --color-framer-deep-blue: #0041A2;
   --color-framer-blue: #0066FF;
   --color-framer-lime: #D2F944;
-  --color-framer-grey: #7F838A;
-
-  /* Legacy wireframe palette (used by pre-port pages) */
-  --color-bg: #F5F7FA;
-  --color-surface: #FFFFFF;
-  --color-text: #2D3748;
-  --color-muted: #64748B;
-  --color-accent: #2A9D8F;
-  --color-accent-dark: #1E7A6E;
-  --color-cta: #4E8EBE;
-  --color-cta-dark: #3E7BA6;
-  --color-dark: #1E3A5F;
-  --color-border: #E2E8F0;
+  /* Muted grey darkened from #7F838A (3.81:1) to #6B7280 (4.83:1) for WCAG AA body text */
+  --color-framer-grey: #6B7280;
 }
 
 body {
-  background-color: var(--color-surface);
+  background-color: #FFFFFF;
   color: var(--color-framer-ink);
   font-family: var(--font-sans);
+}
+
+/* Prevent iOS Safari from auto-zooming when a form control is focused (font < 16px). */
+input,
+textarea,
+select {
+  font-size: max(16px, 1rem);
+}
+
+/*
+  Global keyboard focus indicator. Mouse users never see it (:focus-visible),
+  keyboard users always get a 2px brand ring with offset. Individual elements
+  on dark backgrounds opt into a white ring with focus-visible:outline-white.
+*/
+:focus-visible {
+  outline: 2px solid var(--color-framer-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Eliminate headline widows site-wide (global typography rule). */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Respect reduced-motion: kill non-essential animation/transition/auto-scroll. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .scrollbar-hide {

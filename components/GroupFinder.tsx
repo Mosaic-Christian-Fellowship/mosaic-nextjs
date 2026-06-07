@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { apiFetch, apiPost, type GroupData, type FormResponse } from '@/lib/api'
 import SanitizedRichText from '@/components/SanitizedRichText'
 
@@ -22,6 +22,8 @@ export default function GroupFinder() {
   const [submitted, setSubmitted] = useState<Set<string>>(new Set())
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null)
   const selectedGroup = groups.find((g) => g.id === selectedGroupId) ?? null
+  const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLElement | null>(null)
 
   const fetchGroups = useCallback(async () => {
     setLoading(true)
@@ -51,9 +53,13 @@ export default function GroupFinder() {
     window.addEventListener('keydown', handler)
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    // Move keyboard focus into the dialog, and remember where to send it back.
+    const trigger = triggerRef.current
+    closeBtnRef.current?.focus()
     return () => {
       window.removeEventListener('keydown', handler)
       document.body.style.overflow = prevOverflow
+      trigger?.focus()
     }
   }, [selectedGroupId])
 
@@ -85,26 +91,35 @@ export default function GroupFinder() {
 
   const renderInterestForm = (group: GroupData) => (
     <div onClick={(e) => e.stopPropagation()} className="mt-4 space-y-2">
+      <label htmlFor="group-interest-firstName" className="sr-only">First name</label>
       <input
+        id="group-interest-firstName"
         type="text"
+        autoComplete="given-name"
         placeholder="First name *"
         value={formData.firstName}
         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-        className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm"
+        className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm focus:border-[#0066FF]"
       />
+      <label htmlFor="group-interest-lastName" className="sr-only">Last name</label>
       <input
+        id="group-interest-lastName"
         type="text"
+        autoComplete="family-name"
         placeholder="Last name *"
         value={formData.lastName}
         onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-        className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm"
+        className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm focus:border-[#0066FF]"
       />
+      <label htmlFor="group-interest-email" className="sr-only">Email</label>
       <input
+        id="group-interest-email"
         type="email"
+        autoComplete="email"
         placeholder="Email *"
         value={formData.email}
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-        className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm"
+        className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-sm focus:border-[#0066FF]"
       />
       <div className="flex gap-2">
         <button
@@ -116,7 +131,7 @@ export default function GroupFinder() {
         </button>
         <button
           onClick={() => setInterestForm(null)}
-          className="px-4 py-2 text-sm text-[#7F838A] hover:text-[#1E2024]"
+          className="px-4 py-2 text-sm text-[#6B7280] hover:text-[#1E2024]"
         >
           Cancel
         </button>
@@ -128,12 +143,13 @@ export default function GroupFinder() {
     <div>
       {/* Filters */}
       <div className="mb-8 space-y-4">
-        <div>
-          <p className="text-sm font-semibold text-[#1E2024] mb-2">Who are you?</p>
+        <fieldset>
+          <legend className="text-sm font-semibold text-[#1E2024] mb-2">Who are you?</legend>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setDemographic('')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
+              aria-pressed={!demographic}
+              className={`px-4 py-2.5 rounded-full text-sm transition-colors ${
                 !demographic
                   ? 'bg-[#0066FF] text-white'
                   : 'border border-[#E5E7EB] text-[#1E2024] hover:bg-slate-50'
@@ -145,7 +161,8 @@ export default function GroupFinder() {
               <button
                 key={d}
                 onClick={() => setDemographic(d === demographic ? '' : d)}
-                className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                aria-pressed={d === demographic}
+                className={`px-4 py-2.5 rounded-full text-sm transition-colors ${
                   d === demographic
                     ? 'bg-[#0066FF] text-white'
                     : 'border border-[#E5E7EB] text-[#1E2024] hover:bg-slate-50'
@@ -155,16 +172,17 @@ export default function GroupFinder() {
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
 
-        <div>
-          <p className="text-sm font-semibold text-[#1E2024] mb-2">Days available</p>
+        <fieldset>
+          <legend className="text-sm font-semibold text-[#1E2024] mb-2">Days available</legend>
           <div className="flex flex-wrap gap-2">
             {DAYS.map((day) => (
               <button
                 key={day}
                 onClick={() => toggleDay(day)}
-                className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                aria-pressed={selectedDays.includes(day)}
+                className={`px-4 py-2.5 rounded-full text-sm transition-colors ${
                   selectedDays.includes(day)
                     ? 'bg-[#0066FF] text-white'
                     : 'border border-[#E5E7EB] text-[#1E2024] hover:bg-slate-50'
@@ -174,7 +192,7 @@ export default function GroupFinder() {
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
       </div>
 
       {/* Results */}
@@ -185,7 +203,7 @@ export default function GroupFinder() {
           ))}
         </div>
       ) : !loading && groups.length === 0 ? (
-        <p className="text-center text-[#7F838A] py-12">
+        <p className="text-center text-[#6B7280] py-12">
           No groups match your filters. Try broadening your search.
         </p>
       ) : (
@@ -200,10 +218,11 @@ export default function GroupFinder() {
               key={group.id}
               role="button"
               tabIndex={0}
-              onClick={() => setSelectedGroupId(group.id)}
+              onClick={(e) => { triggerRef.current = e.currentTarget; setSelectedGroupId(group.id) }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
+                  triggerRef.current = e.currentTarget
                   setSelectedGroupId(group.id)
                 }
               }}
@@ -217,6 +236,7 @@ export default function GroupFinder() {
                       e.stopPropagation()
                       setInterestForm(group.id)
                     }}
+                    aria-label={`I'm interested in ${group.name}`}
                     className="self-start sm:shrink-0 px-5 py-2.5 border border-[#0066FF] text-[#0066FF] text-sm font-semibold rounded-full hover:bg-[#0066FF] hover:text-white transition-colors"
                   >
                     I&apos;m Interested
@@ -230,12 +250,12 @@ export default function GroupFinder() {
                   </span>
                 )}
                 {group.demographic && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#7F838A] text-xs font-semibold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#6B7280] text-xs font-semibold">
                     {group.demographic}
                   </span>
                 )}
                 {group.location && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#7F838A] text-xs font-semibold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#6B7280] text-xs font-semibold">
                     {group.location}
                   </span>
                 )}
@@ -243,10 +263,10 @@ export default function GroupFinder() {
               {group.description && (
                 <SanitizedRichText
                   html={group.description}
-                  className="text-sm text-[#7F838A] mt-3 line-clamp-3 [&_a]:text-[#0066FF] [&_a]:underline [&_a]:underline-offset-2 [&_strong]:text-[#1E2024] [&_strong]:font-semibold"
+                  className="text-sm text-[#6B7280] mt-3 line-clamp-3 [&_a]:text-[#0066FF] [&_a]:underline [&_a]:underline-offset-2 [&_strong]:text-[#1E2024] [&_strong]:font-semibold"
                 />
               )}
-              <p className="text-xs text-[#7F838A] mt-2">{group.membersCount} members</p>
+              <p className="text-xs text-[#6B7280] mt-2">{group.membersCount} members</p>
 
               {submitted.has(group.name) ? (
                 <p className="mt-4 text-sm font-semibold text-[#0066FF]">Interest submitted!</p>
@@ -278,10 +298,11 @@ export default function GroupFinder() {
                 {selectedGroup.name}
               </h2>
               <button
+                ref={closeBtnRef}
                 type="button"
                 onClick={() => setSelectedGroupId(null)}
                 aria-label="Close"
-                className="shrink-0 -mt-1 -mr-1 p-2 rounded-full text-[#7F838A] hover:bg-[#F5F5F7] transition-colors"
+                className="shrink-0 -mt-1 -mr-1 p-2 rounded-full text-[#6B7280] hover:bg-[#F5F5F7] transition-colors"
               >
                 <svg
                   width="20"
@@ -307,12 +328,12 @@ export default function GroupFinder() {
                   </span>
                 )}
                 {selectedGroup.demographic && (
-                  <span className="px-2.5 py-1 rounded-full bg-slate-100 text-[#7F838A] text-xs font-semibold">
+                  <span className="px-2.5 py-1 rounded-full bg-slate-100 text-[#6B7280] text-xs font-semibold">
                     {selectedGroup.demographic}
                   </span>
                 )}
                 {selectedGroup.location && (
-                  <span className="px-2.5 py-1 rounded-full bg-slate-100 text-[#7F838A] text-xs font-semibold">
+                  <span className="px-2.5 py-1 rounded-full bg-slate-100 text-[#6B7280] text-xs font-semibold">
                     {selectedGroup.location}
                   </span>
                 )}
@@ -324,7 +345,7 @@ export default function GroupFinder() {
                 />
               )}
               <div className="flex flex-col gap-1 pt-2 border-t border-[#E5E7EB]">
-                <p className="text-xs uppercase tracking-[0.12em] font-semibold text-[#7F838A]">Members</p>
+                <p className="text-xs uppercase tracking-[0.12em] font-semibold text-[#6B7280]">Members</p>
                 <p className="text-sm text-[#1E2024]">{selectedGroup.membersCount} members in this group</p>
               </div>
             </div>

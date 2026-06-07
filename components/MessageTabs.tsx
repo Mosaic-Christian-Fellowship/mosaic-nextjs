@@ -67,7 +67,7 @@ export default function MessageTabs({ tabs, defaultId }: MessageTabsProps) {
                 'motion-reduce:transition-none',
                 selected
                   ? 'bg-[#0066FF] text-white'
-                  : 'text-[#7F838A] hover:text-[#1E2024]',
+                  : 'text-[#6B7280] hover:text-[#1E2024]',
               ].join(' ')}
             >
               {tab.label}

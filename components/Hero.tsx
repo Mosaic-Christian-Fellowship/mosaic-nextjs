@@ -1,15 +1,28 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 export default function Hero() {
+  // Respect reduced-motion: hold the video on a static frame instead of looping.
+  const [reduceMotion, setReduceMotion] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduceMotion(mq.matches)
+    const handler = () => setReduceMotion(mq.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
   return (
     <section
       data-hero
       className="relative min-h-[600px] md:min-h-[720px] flex items-center overflow-hidden"
     >
       <video
-        autoPlay
+        autoPlay={!reduceMotion}
         muted
-        loop
+        loop={!reduceMotion}
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: '70% 40%' }}

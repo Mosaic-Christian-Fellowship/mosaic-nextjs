@@ -28,6 +28,10 @@ function LargeSermonCard({ sermon }: { sermon: SermonData }) {
         <img
           src={sermon.thumbnail}
           alt={sermon.title}
+          width={640}
+          height={360}
+          loading="lazy"
+          decoding="async"
           className="w-full aspect-video object-cover group-hover:opacity-95 transition-opacity"
         />
       </a>
@@ -38,12 +42,12 @@ function LargeSermonCard({ sermon }: { sermon: SermonData }) {
           </p>
         )}
         <h3 className="text-[22px] font-semibold text-[#1E2024] leading-[1.25]">{sermon.title}</h3>
-        <p className="text-sm text-[#7F838A] leading-[1.6]">
+        <p className="text-sm text-[#6B7280] leading-[1.6]">
           {sermon.speaker && `${sermon.speaker} · `}
           {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
         </p>
         {sermon.description && (
-          <p className="text-sm text-[#7F838A] leading-[1.6] line-clamp-2 mt-1">{sermon.description}</p>
+          <p className="text-sm text-[#6B7280] leading-[1.6] line-clamp-2 mt-1">{sermon.description}</p>
         )}
         <div className="flex gap-3 mt-auto pt-4">
           <a
@@ -81,6 +85,10 @@ function SmallSermonCard({ sermon }: { sermon: SermonData }) {
       <img
         src={sermon.thumbnail}
         alt={sermon.title}
+        width={320}
+        height={180}
+        loading="lazy"
+        decoding="async"
         className="w-full aspect-video object-cover group-hover:opacity-95 transition-opacity"
       />
       <div className="p-4 flex flex-col gap-1.5 flex-1">
@@ -92,7 +100,7 @@ function SmallSermonCard({ sermon }: { sermon: SermonData }) {
         <h4 className="text-[15px] font-semibold text-[#1E2024] leading-[1.3] line-clamp-2">
           {sermon.title}
         </h4>
-        <p className="text-xs text-[#7F838A] leading-[1.5]">
+        <p className="text-xs text-[#6B7280] leading-[1.5]">
           {sermon.speaker && `${sermon.speaker} · `}
           {formatDate(sermon.date)}
         </p>
@@ -103,7 +111,35 @@ function SmallSermonCard({ sermon }: { sermon: SermonData }) {
 
 export default async function FeaturedSermonSection() {
   const sermons = await getLatestSermons()
-  if (sermons.length === 0) return null
+
+  if (sermons.length === 0) {
+    return (
+      <section className="py-20 md:py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto flex flex-col gap-8">
+          <div className="flex items-end justify-between gap-4">
+            <SectionHeader overline="Latest Message" heading="This Week's Sermon" />
+            <div className="hidden md:block">
+              <MoreLink href="/messages">Browse all messages</MoreLink>
+            </div>
+          </div>
+          <div className="rounded-[12px] border border-[#E5E7EB] bg-[#F5F7FA] p-10 text-center">
+            <p className="text-[15px] text-[#6B7280]">
+              New messages are on the way — check back after Sunday, or{' '}
+              <a
+                href="https://www.youtube.com/channel/UCgI1-OGVDlM5cXy0xhllT_w"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#0066FF] underline underline-offset-2"
+              >
+                watch past sermons on YouTube
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   const [latest, ...rest] = sermons
 

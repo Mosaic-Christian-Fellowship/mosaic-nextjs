@@ -18,7 +18,7 @@ export default function SectionHeader({ overline, heading, subtext, centered = f
         {heading}
       </h2>
       {subtext && (
-        <p className="text-[#7F838A] text-[15px] md:text-base leading-[1.6] max-w-xl">{subtext}</p>
+        <p className="text-[#6B7280] text-[15px] md:text-base leading-[1.6] max-w-xl">{subtext}</p>
       )}
     </div>
   )

@@ -8,11 +8,15 @@ export default function AudioPanel() {
   const [totalWithSpotify, setTotalWithSpotify] = useState(274)
 
   useEffect(() => {
-    apiFetch<SermonData[]>('/api/sermons', { limit: '50' }).then(({ data }) => {
-      const withSpotify = data.filter((s) => s.spotifyUrl)
-      setEpisodes(withSpotify.slice(0, 3))
-      if (withSpotify.length > 0) setTotalWithSpotify(withSpotify.length)
-    })
+    apiFetch<SermonData[]>('/api/sermons', { limit: '50' })
+      .then(({ data }) => {
+        const withSpotify = data.filter((s) => s.spotifyUrl)
+        setEpisodes(withSpotify.slice(0, 3))
+        if (withSpotify.length > 0) setTotalWithSpotify(withSpotify.length)
+      })
+      .catch(() => {
+        /* keep the static fallback list below if the API is unavailable */
+      })
   }, [])
 
   return (
@@ -55,7 +59,7 @@ export default function AudioPanel() {
           </div>
           <div>
             <p className="text-white font-bold">NJ Mosaic Christian Fellowship</p>
-            <p className="text-white/50 text-sm">{totalWithSpotify} episodes</p>
+            <p className="text-white/70 text-sm">{totalWithSpotify} episodes</p>
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -73,7 +77,7 @@ export default function AudioPanel() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-white text-sm font-medium truncate">{ep.title}</p>
-                    <p className="text-white/40 text-xs">{ep.speaker} · {formatDate(ep.date)}</p>
+                    <p className="text-white/70 text-xs">{ep.speaker} · {formatDate(ep.date)}</p>
                   </div>
                 </a>
               ))
@@ -88,7 +92,7 @@ export default function AudioPanel() {
                   </div>
                   <div>
                     <p className="text-white text-sm font-medium">{title}</p>
-                    <p className="text-white/40 text-xs">{date}</p>
+                    <p className="text-white/70 text-xs">{date}</p>
                   </div>
                 </div>
               ))}

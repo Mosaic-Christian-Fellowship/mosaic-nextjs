@@ -87,12 +87,12 @@ function EventCard({ event, featured = false }: { event: EventData; featured?: b
       </div>
       <div className="flex-1 min-w-0">
         <h3 className="text-base font-bold text-[#1E2024]">{event.name}</h3>
-        <p className="text-sm text-[#7F838A] mt-0.5">
+        <p className="text-sm text-[#6B7280] mt-0.5">
           {formatDate(event.startsAt)} · {formatEventTime(event.startsAt, event.endsAt)}
         </p>
         {(() => {
           const loc = displayableLocation(event.location)
-          return loc && <p className="text-sm text-[#7F838A] line-clamp-1">{loc}</p>
+          return loc && <p className="text-sm text-[#6B7280] line-clamp-1">{loc}</p>
         })()}
       </div>
     </div>
@@ -126,7 +126,7 @@ export default function EventsList({ limit, layout = 'list' }: Props) {
   }
 
   if (events.length === 0) {
-    return <p className="text-center text-[#7F838A] py-8">No upcoming events.</p>
+    return <p className="text-center text-[#6B7280] py-8">No upcoming events.</p>
   }
 
   if (layout === 'bento') {

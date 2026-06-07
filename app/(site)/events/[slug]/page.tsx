@@ -113,7 +113,7 @@ function PcoEventView({ event }: { event: EventData }) {
         <div className="mx-auto max-w-[1000px]">
           <Link
             href="/events"
-            className="inline-flex items-center gap-1 text-[14px] text-[#7F838A] hover:text-[#1E2024] transition-colors"
+            className="inline-flex items-center gap-1 text-[14px] text-[#6B7280] hover:text-[#1E2024] transition-colors"
           >
             ← Back to all events
           </Link>
@@ -172,14 +172,14 @@ function PcoEventView({ event }: { event: EventData }) {
             )}
             <div className="flex flex-col gap-3 p-5 rounded-[12px] border border-[#E5E7EB] bg-white">
               <div className="flex flex-col gap-1">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7F838A]">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B7280]">
                   Date
                 </span>
                 <span className="text-[15px] text-[#1E2024]">{formatDate(event.startsAt)}</span>
               </div>
               {!event.allDay && (
                 <div className="flex flex-col gap-1">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7F838A]">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B7280]">
                     Time
                   </span>
                   <span className="text-[15px] text-[#1E2024]">
@@ -192,7 +192,7 @@ function PcoEventView({ event }: { event: EventData }) {
                 return (
                   loc && (
                     <div className="flex flex-col gap-1">
-                      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7F838A]">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B7280]">
                         Location
                       </span>
                       <span className="text-[15px] text-[#1E2024] leading-[1.4]">{loc}</span>

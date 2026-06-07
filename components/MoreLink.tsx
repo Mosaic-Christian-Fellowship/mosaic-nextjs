@@ -10,8 +10,7 @@ export default function MoreLink({ href, children, className = '' }: Props) {
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 rounded-[10px] border border-[#F3F4F5] bg-white px-3 py-2 text-[14px] font-semibold text-[#131517] transition-colors hover:border-[#D2D5DA] ${className}`}
-      style={{ fontFamily: 'var(--font-inter)' }}
+      className={`font-inter inline-flex items-center gap-2 rounded-[10px] border border-[#F3F4F5] bg-white px-3 py-2 text-[14px] font-semibold text-[#131517] transition-colors hover:border-[#D2D5DA] ${className}`}
     >
       <span>{children}</span>
       <svg
