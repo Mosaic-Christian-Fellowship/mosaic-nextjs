@@ -24,7 +24,11 @@ export default function SermonArchive() {
   const [selectedSpeaker, setSelectedSpeaker] = useState('')
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
+  const [autoLoads, setAutoLoads] = useState(0)
   const limit = 12
+  // Cap automatic infinite-scroll loads so mobile doesn't balloon the DOM
+  // (274-sermon library); after this the manual "Load more" button takes over.
+  const MAX_AUTO_LOADS = 3
   const sentinelRef = useRef<HTMLDivElement>(null)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -71,22 +75,24 @@ export default function SermonArchive() {
   const isDefaultView = !search && !selectedSeries && !selectedSpeaker
   const hasMore = sermons.length < total
 
-  // Auto-trigger Load More when sentinel scrolls into view
+  // Auto-trigger Load More when sentinel scrolls into view — but only up to
+  // MAX_AUTO_LOADS, after which the user clicks the button explicitly.
   useEffect(() => {
-    if (!hasMore || loading) return
+    if (!hasMore || loading || autoLoads >= MAX_AUTO_LOADS) return
     const sentinel = sentinelRef.current
     if (!sentinel) return
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           setPage((p) => p + 1)
+          setAutoLoads((n) => n + 1)
         }
       },
-      { rootMargin: '300px' }
+      { rootMargin: '200px' }
     )
     observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [hasMore, loading])
+  }, [hasMore, loading, autoLoads])
 
   const showInitialSkeleton = sermons.length === 0 && loading
 
@@ -101,7 +107,7 @@ export default function SermonArchive() {
           placeholder="Search sermons..."
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-          className="flex-1 px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm focus:outline-none focus:border-[#0066FF]"
+          className="flex-1 px-4 py-2.5 rounded-full border border-[#E5E7EB] text-sm focus:border-[#0066FF]"
         />
         <label htmlFor="sermon-series-filter" className="sr-only">Filter by series</label>
         <select
@@ -137,7 +143,7 @@ export default function SermonArchive() {
           ))}
         </div>
       ) : sermons.length === 0 ? (
-        <p className="text-center text-[#7F838A] py-12">No sermons found.</p>
+        <p className="text-center text-[#6B7280] py-12">No sermons found.</p>
       ) : (
         <>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" aria-live="polite" aria-busy={loading}>
@@ -157,6 +163,10 @@ export default function SermonArchive() {
                     <img
                       src={sermon.thumbnail}
                       alt={sermon.title}
+                      width={320}
+                      height={180}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full aspect-video object-cover"
                     />
                     {isLatest && (
@@ -175,7 +185,7 @@ export default function SermonArchive() {
                     <h3 className="text-sm font-bold text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
                       {sermon.title}
                     </h3>
-                    <p className="text-xs text-[#7F838A] mt-1">
+                    <p className="text-xs text-[#6B7280] mt-1">
                       {sermon.speaker && `${sermon.speaker} · `}
                       {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
                     </p>
@@ -198,7 +208,7 @@ export default function SermonArchive() {
             </div>
           ) : (
             sermons.length > limit && (
-              <p className="text-center text-[#7F838A] text-sm mt-10">
+              <p className="text-center text-[#6B7280] text-sm mt-10">
                 You&rsquo;ve reached the end — {total} sermons total.
               </p>
             )

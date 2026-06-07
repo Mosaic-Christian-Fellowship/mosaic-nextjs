@@ -1,7 +1,15 @@
+import type { Metadata } from 'next'
 import SectionHeader from '@/components/SectionHeader'
+import PageHero from '@/components/PageHero'
 import SermonArchive from '@/components/SermonArchive'
 import MessageTabs from '@/components/MessageTabs'
 import AudioPanel from '@/components/AudioPanel'
+
+export const metadata: Metadata = {
+  title: 'Messages',
+  description:
+    'Explore the Mosaic sermon archive — every message rooted in Scripture and the context that makes it come alive. Watch on YouTube or listen on Spotify and Apple Podcasts.',
+}
 
 const videoPanel = (
   <div className="flex flex-col gap-12">
@@ -15,21 +23,14 @@ const audioPanel = <AudioPanel />
 export default function Messages() {
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-[#1E2024] text-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-left flex flex-col gap-6">
-          <div className="flex flex-col gap-4">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Teaching</span>
-            <h1 className="text-4xl md:text-5xl font-bold">Messages</h1>
-            <p className="text-white/70 text-lg">
-              Explore our sermon archive — every message rooted in Scripture and grounded in the context
-              that makes it come alive.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-start gap-3 pt-2">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/50">Subscribe &amp; follow</p>
-            <div className="flex flex-wrap gap-3">
+      <PageHero
+        overline="Teaching"
+        title="Messages"
+        subtitle="Explore our sermon archive — every message rooted in Scripture and grounded in the context that makes it come alive."
+      >
+        <div className="flex flex-col items-start gap-3">
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/70">Subscribe &amp; follow</p>
+          <div className="flex flex-wrap gap-3">
               <a
                 href="https://www.youtube.com/channel/UCgI1-OGVDlM5cXy0xhllT_w?sub_confirmation=1"
                 target="_blank"
@@ -54,10 +55,9 @@ export default function Messages() {
               >
                 Apple Podcasts
               </a>
-            </div>
           </div>
         </div>
-      </section>
+      </PageHero>
 
       {/* Tabs + content */}
       <section className="py-20 px-6 bg-white">

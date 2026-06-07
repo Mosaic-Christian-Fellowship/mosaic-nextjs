@@ -8,6 +8,12 @@ const photos = Array.from({ length: 12 }, (_, i) =>
   `/team-photos/staff-${String(i + 1).padStart(2, '0')}.png`
 )
 
+// Deterministic pairing for the server + first client render (avoids a
+// hydration mismatch); the random shuffle happens after mount in useEffect.
+function defaultTileAssignments(): string[][] {
+  return Array.from({ length: 6 }, (_, i) => [photos[i], photos[i + 6]])
+}
+
 function buildTileAssignments(): string[][] {
   const shuffled = [...photos].sort(() => Math.random() - 0.5)
   return Array.from({ length: 6 }, (_, i) => [shuffled[i], shuffled[i + 6]])
@@ -39,8 +45,13 @@ function Tile({ images, activeIndex, eager = false }: TileProps) {
 }
 
 export default function TeamGridCrossfade() {
-  const [assignments] = useState(buildTileAssignments)
+  const [assignments, setAssignments] = useState<string[][]>(defaultTileAssignments)
   const [activeIndices, setActiveIndices] = useState(() => Array(6).fill(0))
+
+  // Randomize tile pairings only on the client, after hydration.
+  useEffect(() => {
+    setAssignments(buildTileAssignments())
+  }, [])
 
   const flipNext = useCallback(() => {
     const order = [0, 1, 2, 3, 4, 5].sort(() => Math.random() - 0.5)

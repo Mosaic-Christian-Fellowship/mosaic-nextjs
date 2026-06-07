@@ -24,6 +24,8 @@ export default function FaqAccordion({ items }: Props) {
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : i)}
               aria-expanded={isOpen}
+              aria-controls={`faq-panel-${i}`}
+              id={`faq-trigger-${i}`}
               className="w-full flex justify-between items-center gap-4 py-5 text-left group"
             >
               <span className="font-bold text-lg text-[#1E2024]">{q}</span>
@@ -37,12 +39,15 @@ export default function FaqAccordion({ items }: Props) {
               </span>
             </button>
             <div
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
               className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
                 isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
               }`}
             >
               <div className="overflow-hidden">
-                <p className="pb-5 pr-8 text-[#7F838A]">{a}</p>
+                <p className="pb-5 pr-8 text-[#6B7280]">{a}</p>
               </div>
             </div>
           </div>

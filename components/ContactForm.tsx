@@ -43,49 +43,57 @@ export default function ContactForm() {
     return (
       <div className="text-center py-8">
         <p className="text-xl font-bold text-[#1E2024] mb-2">Message sent!</p>
-        <p className="text-[#7F838A]">We'll get back to you soon.</p>
+        <p className="text-[#6B7280]">We'll get back to you soon.</p>
       </div>
     )
   }
 
   const inputClass = (field: string) =>
     `w-full px-4 py-3 rounded-xl border text-sm ${
-      errors[field] ? 'border-red-400' : 'border-[#E5E7EB]'
-    } focus:outline-none focus:border-[#0066FF]`
+      errors[field] ? 'border-red-500' : 'border-[#E5E7EB]'
+    } focus:border-[#0066FF]`
 
   return (
-    <form onSubmit={submit} className="space-y-4">
-      {errors.form && <p className="text-sm text-red-500">{errors.form}</p>}
+    <form onSubmit={submit} className="space-y-4" noValidate>
+      <p className="text-xs text-[#6B7280]"><span aria-hidden="true">*</span> Required field</p>
+      {errors.form && (
+        <p role="alert" className="text-sm text-red-700 flex items-center gap-1.5">
+          <span aria-hidden="true">⚠</span>{errors.form}
+        </p>
+      )}
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="contact-firstName" className="sr-only">First name</label>
-          <input id="contact-firstName" type="text" placeholder="First name *" value={form.firstName}
+          <input id="contact-firstName" type="text" autoComplete="given-name" placeholder="First name *" value={form.firstName}
             onChange={(e) => setForm({ ...form, firstName: e.target.value })}
             required
+            aria-invalid={errors.firstName ? true : undefined}
             aria-describedby={errors.firstName ? 'contact-firstName-error' : undefined}
             className={inputClass('firstName')} />
-          {errors.firstName && <p id="contact-firstName-error" className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
+          {errors.firstName && <p id="contact-firstName-error" className="text-xs text-red-700 mt-1">{errors.firstName}</p>}
         </div>
         <div>
           <label htmlFor="contact-lastName" className="sr-only">Last name</label>
-          <input id="contact-lastName" type="text" placeholder="Last name *" value={form.lastName}
+          <input id="contact-lastName" type="text" autoComplete="family-name" placeholder="Last name *" value={form.lastName}
             onChange={(e) => setForm({ ...form, lastName: e.target.value })}
             required
+            aria-invalid={errors.lastName ? true : undefined}
             aria-describedby={errors.lastName ? 'contact-lastName-error' : undefined}
             className={inputClass('lastName')} />
-          {errors.lastName && <p id="contact-lastName-error" className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
+          {errors.lastName && <p id="contact-lastName-error" className="text-xs text-red-700 mt-1">{errors.lastName}</p>}
         </div>
       </div>
 
       <div>
         <label htmlFor="contact-email" className="sr-only">Email</label>
-        <input id="contact-email" type="email" placeholder="Email *" value={form.email}
+        <input id="contact-email" type="email" autoComplete="email" placeholder="Email *" value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
+          aria-invalid={errors.email ? true : undefined}
           aria-describedby={errors.email ? 'contact-email-error' : undefined}
           className={inputClass('email')} />
-        {errors.email && <p id="contact-email-error" className="text-xs text-red-500 mt-1">{errors.email}</p>}
+        {errors.email && <p id="contact-email-error" className="text-xs text-red-700 mt-1">{errors.email}</p>}
       </div>
 
       <div>
@@ -94,9 +102,10 @@ export default function ContactForm() {
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           rows={4}
           required
+          aria-invalid={errors.message ? true : undefined}
           aria-describedby={errors.message ? 'contact-message-error' : undefined}
           className={`${inputClass('message')} resize-none`} />
-        {errors.message && <p id="contact-message-error" className="text-xs text-red-500 mt-1">{errors.message}</p>}
+        {errors.message && <p id="contact-message-error" className="text-xs text-red-700 mt-1">{errors.message}</p>}
       </div>
 
       <button

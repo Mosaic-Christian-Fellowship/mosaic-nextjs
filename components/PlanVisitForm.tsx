@@ -100,118 +100,128 @@ export default function PlanVisitForm() {
     return (
       <div className="text-center py-12">
         <p className="text-2xl font-bold text-[#1E2024] mb-2">We can't wait to meet you!</p>
-        <p className="text-[#7F838A]">We've received your information and our welcome team will be ready for you.</p>
+        <p className="text-[#6B7280]">We've received your information and our welcome team will be ready for you.</p>
       </div>
     )
   }
 
   const inputClass = (field: string) =>
     `w-full px-4 py-3 rounded-xl border text-sm ${
-      errors[field] ? 'border-red-400' : 'border-[#E5E7EB]'
-    } focus:outline-none focus:border-[#0066FF]`
+      errors[field] ? 'border-red-500' : 'border-[#E5E7EB]'
+    } focus:border-[#0066FF]`
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <p className="text-xs text-[#6B7280]"><span aria-hidden="true">*</span> Required field</p>
       {errors.form && (
-        <p id="form-error" className="text-sm text-red-500 text-center">{errors.form}</p>
+        <p id="form-error" role="alert" className="text-sm text-red-700 text-center flex items-center justify-center gap-1.5">
+          <span aria-hidden="true">⚠</span>{errors.form}
+        </p>
       )}
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="firstName" className="sr-only">First name</label>
-          <input id="firstName" type="text" placeholder="First name *" value={form.firstName}
+          <input id="firstName" type="text" autoComplete="given-name" placeholder="First name *" value={form.firstName}
             required
+            aria-invalid={errors.firstName ? true : undefined}
             aria-describedby={errors.firstName ? 'firstName-error' : undefined}
             onChange={(e) => setForm({ ...form, firstName: e.target.value })}
             className={inputClass('firstName')} />
-          {errors.firstName && <p id="firstName-error" className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
+          {errors.firstName && <p id="firstName-error" className="text-xs text-red-700 mt-1">{errors.firstName}</p>}
         </div>
         <div>
           <label htmlFor="lastName" className="sr-only">Last name</label>
-          <input id="lastName" type="text" placeholder="Last name *" value={form.lastName}
+          <input id="lastName" type="text" autoComplete="family-name" placeholder="Last name *" value={form.lastName}
             required
+            aria-invalid={errors.lastName ? true : undefined}
             aria-describedby={errors.lastName ? 'lastName-error' : undefined}
             onChange={(e) => setForm({ ...form, lastName: e.target.value })}
             className={inputClass('lastName')} />
-          {errors.lastName && <p id="lastName-error" className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
+          {errors.lastName && <p id="lastName-error" className="text-xs text-red-700 mt-1">{errors.lastName}</p>}
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="email" className="sr-only">Email</label>
-          <input id="email" type="email" placeholder="Email *" value={form.email}
+          <input id="email" type="email" autoComplete="email" placeholder="Email *" value={form.email}
             required
+            aria-invalid={errors.email ? true : undefined}
             aria-describedby={errors.email ? 'email-error' : undefined}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             className={inputClass('email')} />
-          {errors.email && <p id="email-error" className="text-xs text-red-500 mt-1">{errors.email}</p>}
+          {errors.email && <p id="email-error" className="text-xs text-red-700 mt-1">{errors.email}</p>}
         </div>
         <div>
           <label htmlFor="phone" className="sr-only">Phone</label>
-          <input id="phone" type="tel" placeholder="Phone (optional)" value={form.phone}
+          <input id="phone" type="tel" autoComplete="tel" placeholder="Phone (optional)" value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
             className={inputClass('phone')} />
         </div>
       </div>
 
-      <fieldset>
+      <fieldset aria-describedby={errors.visitorType ? 'visitorType-error' : undefined}>
         <legend className="text-sm font-semibold text-[#1E2024] mb-2">I am a... *</legend>
-        <div className="flex gap-2" role="group">
+        <div className="flex flex-wrap gap-2">
           {VISITOR_TYPES.map((t) => (
             <button key={t} type="button" onClick={() => setForm({ ...form, visitorType: t })}
               aria-pressed={form.visitorType === t}
-              className={`px-4 py-2 rounded-full text-sm ${
-                form.visitorType === t ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
+              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm ${
+                form.visitorType === t ? 'bg-[#0066FF] text-white font-semibold' : 'border border-[#E5E7EB]'
               }`}>
+              {form.visitorType === t && <span aria-hidden="true">✓</span>}
               {t}
             </button>
           ))}
         </div>
-        {errors.visitorType && <p id="visitorType-error" className="text-xs text-red-500 mt-1">{errors.visitorType}</p>}
+        {errors.visitorType && <p id="visitorType-error" className="text-xs text-red-700 mt-1">{errors.visitorType}</p>}
       </fieldset>
 
-      <fieldset>
+      <fieldset aria-describedby={errors.ageRange ? 'ageRange-error' : undefined}>
         <legend className="text-sm font-semibold text-[#1E2024] mb-2">Age range *</legend>
-        <div className="flex flex-wrap gap-2" role="group">
+        <div className="flex flex-wrap gap-2">
           {AGE_RANGES.map((a) => (
             <button key={a} type="button" onClick={() => setForm({ ...form, ageRange: a })}
               aria-pressed={form.ageRange === a}
-              className={`px-4 py-2 rounded-full text-sm ${
-                form.ageRange === a ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
+              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm ${
+                form.ageRange === a ? 'bg-[#0066FF] text-white font-semibold' : 'border border-[#E5E7EB]'
               }`}>
+              {form.ageRange === a && <span aria-hidden="true">✓</span>}
               {a}
             </button>
           ))}
         </div>
-        {errors.ageRange && <p id="ageRange-error" className="text-xs text-red-500 mt-1">{errors.ageRange}</p>}
+        {errors.ageRange && <p id="ageRange-error" className="text-xs text-red-700 mt-1">{errors.ageRange}</p>}
       </fieldset>
 
-      <fieldset>
+      <fieldset aria-describedby={errors.service ? 'service-error' : undefined}>
         <legend className="text-sm font-semibold text-[#1E2024] mb-2">Service time *</legend>
-        <div className="flex flex-wrap gap-2" role="group">
+        <div className="flex flex-wrap gap-2">
           {SERVICES.map((s) => (
             <button key={s} type="button" onClick={() => setForm({ ...form, service: s })}
               aria-pressed={form.service === s}
-              className={`px-4 py-2 rounded-full text-sm ${
-                form.service === s ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
+              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm ${
+                form.service === s ? 'bg-[#0066FF] text-white font-semibold' : 'border border-[#E5E7EB]'
               }`}>
+              {form.service === s && <span aria-hidden="true">✓</span>}
               {s}
             </button>
           ))}
         </div>
-        {errors.service && <p id="service-error" className="text-xs text-red-500 mt-1">{errors.service}</p>}
+        {errors.service && <p id="service-error" className="text-xs text-red-700 mt-1">{errors.service}</p>}
       </fieldset>
 
       <fieldset>
         <legend className="text-sm font-semibold text-[#1E2024] mb-2">I have children (optional)</legend>
-        <div className="flex flex-wrap gap-2" role="group">
+        <div className="flex flex-wrap gap-2">
           {CHILDREN_OPTIONS.map((c) => (
             <button key={c} type="button" onClick={() => toggleChild(c)}
               aria-pressed={form.children.includes(c)}
-              className={`px-4 py-2 rounded-full text-sm ${
-                form.children.includes(c) ? 'bg-[#0066FF] text-white' : 'border border-[#E5E7EB]'
+              className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm ${
+                form.children.includes(c) ? 'bg-[#0066FF] text-white font-semibold' : 'border border-[#E5E7EB]'
               }`}>
+              {form.children.includes(c) && <span aria-hidden="true">✓</span>}
               {c}
             </button>
           ))}

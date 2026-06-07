@@ -21,6 +21,7 @@ export default function MeetYou() {
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
+              tabIndex={-1}
               referrerPolicy="no-referrer-when-downgrade"
               title="Mosaic Christian Fellowship Location"
             />
@@ -29,7 +30,7 @@ export default function MeetYou() {
           <div className="md:col-span-2 flex flex-col gap-6">
             <div className="flex flex-col gap-1">
               <h3 className="text-[16px] font-semibold text-[#1E2024]">Location</h3>
-              <p className="text-[15px] text-[#7F838A] leading-[1.6]">
+              <p className="text-[15px] text-[#6B7280] leading-[1.6]">
                 119 Rockland Ave
                 <br />
                 Northvale, NJ 07647
@@ -38,7 +39,7 @@ export default function MeetYou() {
 
             <div className="flex flex-col gap-1">
               <h3 className="text-[16px] font-semibold text-[#1E2024]">Service Times</h3>
-              <p className="text-[15px] text-[#7F838A] leading-[1.6]">
+              <p className="text-[15px] text-[#6B7280] leading-[1.6]">
                 Sundays at 9:30 AM, 11:30 AM, and 1:30 PM
               </p>
             </div>
@@ -52,7 +53,7 @@ export default function MeetYou() {
                 <p className="text-[15px] font-semibold text-[#1E2024]">
                   147 Walnut St, Northvale, NJ 07647
                 </p>
-                <p className="text-[14px] text-[#7F838A] leading-[1.6]">
+                <p className="text-[14px] text-[#6B7280] leading-[1.6]">
                   Our dedicated parking lot is a short walk from the building. Free for all
                   attendees. Accessible parking is available near the main entrance.
                 </p>
@@ -61,7 +62,7 @@ export default function MeetYou() {
 
             <Link
               href="/im-new"
-              className="inline-flex items-center h-[50px] px-7 bg-[#0066FF] text-white text-[15px] font-semibold rounded-[10px] w-fit hover:brightness-110 transition-[filter]"
+              className="inline-flex items-center justify-center h-[50px] px-7 bg-[#0066FF] text-white text-[15px] font-semibold rounded-[10px] w-full md:w-fit hover:brightness-110 transition-[filter]"
             >
               Plan Your Visit
             </Link>

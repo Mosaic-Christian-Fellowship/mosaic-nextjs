@@ -107,13 +107,19 @@ function BentoCard({ event, size }: { event: Event; size: 'large' | 'small' }) {
         />
       )}
 
+      {/* Persistent scrim so the title is always legible (incl. touch + keyboard). */}
       <div
-        className="absolute inset-0 z-10 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+        className="absolute inset-x-0 bottom-0 z-10 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+        aria-hidden
+      />
+      {/* Extra darkening on hover/focus as enhancement only. */}
+      <div
+        className="absolute inset-0 z-10 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
         style={{ backgroundColor: 'rgba(0, 46, 116, 0.6)' }}
         aria-hidden
       />
 
-      <div className="relative z-20 flex h-full translate-y-2 flex-col justify-end gap-3 p-6 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="relative z-20 flex h-full flex-col justify-end gap-3 p-6">
         {(event.date || event.location) && (
           <div className="flex flex-wrap items-baseline gap-x-2 text-[14px] font-medium leading-tight">
             {event.date && <span className="text-[#22D3EE]">{event.date}</span>}
@@ -122,10 +128,9 @@ function BentoCard({ event, size }: { event: Event; size: 'large' | 'small' }) {
           </div>
         )}
         <h3
-          className={`font-semibold tracking-[-0.04em] text-white leading-[1.15] ${
+          className={`font-sans font-semibold tracking-[-0.04em] text-white leading-[1.15] ${
             isLarge ? 'text-[32px]' : 'text-[22px]'
           }`}
-          style={{ fontFamily: 'var(--font-sans)' }}
         >
           {event.title}
         </h3>
@@ -147,7 +152,7 @@ export default async function CommunityEvents() {
     <section className="bg-white py-20 md:py-24 px-6 md:px-8">
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-10 flex items-end justify-between gap-4">
-          <h2 className="text-[28px] md:text-[34px] font-semibold leading-[1.2] text-[#1E2024]">
+          <h2 className="text-[30px] md:text-[40px] font-semibold leading-[1.15] tracking-[-0.02em] text-[#1E2024]">
             Upcoming Community Events
           </h2>
           <div className="hidden md:block">

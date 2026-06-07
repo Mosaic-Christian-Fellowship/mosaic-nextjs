@@ -167,11 +167,12 @@ export default function Nav() {
                 </button>
                 {openDropdown === item.label && (
                   <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3">
-                    <div className="min-w-[200px] bg-white border border-[#E2E8F0] rounded-xl shadow-lg py-2">
+                    <div role="menu" className="min-w-[200px] bg-white border border-[#E2E8F0] rounded-xl shadow-lg py-2">
                       {item.items.map((sub) => (
                         <Link
                           key={sub.label}
                           href={sub.href}
+                          role="menuitem"
                           className="block px-4 py-2 text-sm text-[#1E2024] hover:bg-[#F5F7FA] transition-colors"
                         >
                           {sub.label}
@@ -196,7 +197,7 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <Link
             href="/im-new"
-            className="group relative inline-flex items-center h-[50px] rounded-[30px] bg-[#0066FF] border border-[rgba(19,21,23,0.1)] overflow-hidden"
+            className="group relative hidden md:inline-flex items-center h-[50px] rounded-[30px] bg-[#0066FF] border border-[rgba(19,21,23,0.1)] overflow-hidden"
           >
             <span
               aria-hidden="true"
@@ -216,9 +217,9 @@ export default function Nav() {
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5"
           >
-            <span className={`block w-5 h-0.5 bg-[#1E2024] transition-transform ${mobileOpen ? 'translate-y-[4px] rotate-45' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-[#1E2024] transition-opacity ${mobileOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-[#1E2024] transition-transform ${mobileOpen ? '-translate-y-[4px] -rotate-45' : ''}`} />
+            <span aria-hidden="true" className={`block w-5 h-0.5 bg-[#1E2024] transition-transform ${mobileOpen ? 'translate-y-[4px] rotate-45' : ''}`} />
+            <span aria-hidden="true" className={`block w-5 h-0.5 bg-[#1E2024] transition-opacity ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span aria-hidden="true" className={`block w-5 h-0.5 bg-[#1E2024] transition-transform ${mobileOpen ? '-translate-y-[4px] -rotate-45' : ''}`} />
           </button>
         </div>
       </div>
@@ -232,7 +233,7 @@ export default function Nav() {
                   <button
                     onClick={() => setOpenDropdown((cur) => (cur === item.label ? null : item.label))}
                     aria-expanded={openDropdown === item.label}
-                    className="flex items-center justify-between w-full text-[15px] font-medium text-[#1E2024] py-2"
+                    className="flex items-center justify-between w-full text-[15px] font-medium text-[#1E2024] py-3"
                   >
                     {item.label}
                     <ChevronDown className={`transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`} />
@@ -243,7 +244,7 @@ export default function Nav() {
                         <Link
                           key={sub.label}
                           href={sub.href}
-                          className="block py-2 text-sm text-[#1E2024]"
+                          className="block py-3 text-sm text-[#1E2024]"
                         >
                           {sub.label}
                         </Link>
@@ -255,12 +256,18 @@ export default function Nav() {
                 <Link
                   key={item.label}
                   href={item.href!}
-                  className="block py-2 text-[15px] font-medium text-[#1E2024]"
+                  className="block py-3 text-[15px] font-medium text-[#1E2024]"
                 >
                   {item.label}
                 </Link>
               )
             )}
+            <Link
+              href="/im-new"
+              className="mt-3 inline-flex items-center justify-center h-12 px-6 rounded-full bg-[#0066FF] text-white text-[15px] font-semibold"
+            >
+              Plan a visit
+            </Link>
           </div>
         </nav>
       )}

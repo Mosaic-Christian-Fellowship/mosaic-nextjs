@@ -1,7 +1,15 @@
+import type { Metadata } from 'next'
 import SectionHeader from '@/components/SectionHeader'
+import PageHero from '@/components/PageHero'
 import PlaceholderImage from '@/components/PlaceholderImage'
 import PlanVisitForm from '@/components/PlanVisitForm'
 import FaqAccordion from '@/components/FaqAccordion'
+
+export const metadata: Metadata = {
+  title: "I'm New",
+  description:
+    'Planning your first visit to Mosaic? Service times, what to expect on a Sunday, kids programming, FAQs, and a way to let us know you’re coming.',
+}
 
 const faqs = [
   { q: "What should I wear?", a: "Come as you are — seriously. You'll see everything from jeans and t-shirts to business casual on a Sunday. There's no dress code." },
@@ -55,24 +63,19 @@ const getToKnowSteps = [
 export default function ImNew() {
   return (
     <div>
-      {/* Hero — placeholder bg; replace with fullscreen photo/video */}
-      <section className="bg-[#FF69B4] text-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-6">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight max-w-[60%] mx-auto">
-            Broken pieces, different stories. One beautiful mosaic.
-          </h1>
-          <p className="text-white/80 text-lg max-w-xl mx-auto">
-            Whether you&apos;re exploring faith for the first time, coming back after a long time away, or just looking for a place that feels like home — we have a seat for you.
-          </p>
-          <a
-            href="#plan-your-visit"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#0066FF] font-semibold hover:bg-white/90 transition-colors"
-          >
-            Let us know you&apos;re coming
-            <span aria-hidden>↓</span>
-          </a>
-        </div>
-      </section>
+      <PageHero
+        align="center"
+        title="Broken pieces, different stories. One beautiful mosaic."
+        subtitle="Whether you're exploring faith for the first time, coming back after a long time away, or just looking for a place that feels like home — we have a seat for you."
+      >
+        <a
+          href="#plan-your-visit"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#0066FF] font-semibold hover:bg-white/90 transition-colors"
+        >
+          Let us know you&apos;re coming
+          <span aria-hidden>↓</span>
+        </a>
+      </PageHero>
 
       {/* Service Times & Location */}
       <section className="py-20 px-6 bg-[#FFFFFF]">
@@ -122,6 +125,7 @@ export default function ImNew() {
                 width="100%"
                 height="100%"
                 loading="lazy"
+                tabIndex={-1}
                 referrerPolicy="no-referrer-when-downgrade"
                 className="border-0"
               />
@@ -151,7 +155,7 @@ export default function ImNew() {
                 </div>
                 <div className="flex flex-col gap-1">
                   <h3 className="font-bold text-base text-[#1E2024]">{heading}</h3>
-                  <p className="text-sm text-[#7F838A]">{detail}</p>
+                  <p className="text-sm text-[#6B7280]">{detail}</p>
                 </div>
               </li>
             ))}
@@ -165,7 +169,7 @@ export default function ImNew() {
           <PlaceholderImage label="Kids Ministry Photo" aspectRatio="aspect-[4/3]" />
           <div className="flex flex-col gap-6">
             <SectionHeader overline="Families Welcome" heading="Your Kids Are in Good Hands" />
-            <p className="text-[#7F838A]">
+            <p className="text-[#6B7280]">
               We have dedicated programming for every age group during the 9:30 and 11:30 AM services —
               from the nursery through 5th grade. All children&apos;s workers are background-checked and trained.
             </p>
@@ -173,7 +177,7 @@ export default function ImNew() {
               {['Nursery (0-18 months)', 'Toddlers (18 months - 3 years)', 'Preschool (3-5 years)', 'Elementary (Grades 1-5)'].map((group) => (
                 <div key={group} className="flex gap-3 items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
-                  <span className="text-[#7F838A]">{group}</span>
+                  <span className="text-[#6B7280]">{group}</span>
                 </div>
               ))}
             </div>
@@ -186,7 +190,7 @@ export default function ImNew() {
         <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-2 md:gap-16">
           <div className="flex flex-col gap-4">
             <SectionHeader overline="Common Questions" heading="FAQ" />
-            <p className="text-[#7F838A] text-base leading-relaxed">
+            <p className="text-[#6B7280] text-base leading-relaxed">
               Have a question we haven&apos;t answered yet? We&apos;d love to hear from you — no question
               is too small.
             </p>
@@ -205,7 +209,7 @@ export default function ImNew() {
       <section className="py-20 px-6 bg-[#FFFFFF]">
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
           <SectionHeader overline="Your Journey" heading="Ways to get to know Mosaic" centered />
-          <p className="text-[#7F838A] text-center">
+          <p className="text-[#6B7280] text-center">
             Some people show up for years before going deeper. Others jump in week one. Wherever you are, these are the doors that tend to be open.
           </p>
           <div className="grid md:grid-cols-4 gap-6">
@@ -213,7 +217,7 @@ export default function ImNew() {
               <div key={step} className="flex flex-col gap-3 text-center">
                 <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center mx-auto">{i + 1}</span>
                 <h3 className="font-bold text-[#1E2024]">{step}</h3>
-                <p className="text-sm text-[#7F838A]">{desc}</p>
+                <p className="text-sm text-[#6B7280]">{desc}</p>
               </div>
             ))}
           </div>
@@ -224,7 +228,7 @@ export default function ImNew() {
       <section id="plan-your-visit" className="py-20 px-6 bg-[#F5F5F7] scroll-mt-20">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="We'd Love to Hear From You" heading="Plan Your Visit" centered />
-          <p className="text-[#7F838A] text-center">
+          <p className="text-[#6B7280] text-center">
             Tell us you&apos;re coming and someone from our community will reach out — to answer questions, walk you through what to expect, or just be a familiar face at the door on Sunday. No pressure, no pitch. Just a way to make finding the right church a little easier.
           </p>
           <PlanVisitForm />

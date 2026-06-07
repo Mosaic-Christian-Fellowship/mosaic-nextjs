@@ -69,12 +69,14 @@ export default function EventsBrowser({ events }: Props) {
       <div className="mx-auto max-w-[1200px]">
         <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
+            <label htmlFor="events-search" className="sr-only">Search events</label>
             <input
+              id="events-search"
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search events…"
-              className="flex-1 max-w-[320px] h-10 px-3 rounded-[10px] border border-[#E5E7EB] text-[14px] bg-white focus:outline-none focus:border-[#0066FF]"
+              className="flex-1 max-w-[320px] h-10 px-3 rounded-[10px] border border-[#E5E7EB] text-[14px] bg-white focus:border-[#0066FF]"
             />
             <div className="flex items-center gap-1">
               {(Object.keys(WINDOW_LABEL) as WindowFilter[]).map((w) => (
@@ -93,8 +95,9 @@ export default function EventsBrowser({ events }: Props) {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <label className="text-[13px] text-[#7F838A]">Sort</label>
+            <label htmlFor="events-sort" className="text-[13px] text-[#6B7280]">Sort</label>
             <select
+              id="events-sort"
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value as SortKey)}
               className="h-10 pl-3 pr-8 rounded-[10px] border border-[#E5E7EB] text-[13px] bg-white"
@@ -111,7 +114,7 @@ export default function EventsBrowser({ events }: Props) {
                 aria-pressed={layout === 'list'}
                 aria-label="List view"
                 className={`p-1.5 rounded-[6px] transition-colors ${
-                  layout === 'list' ? 'bg-[#F5F5F7] text-[#1E2024]' : 'text-[#7F838A]'
+                  layout === 'list' ? 'bg-[#F5F5F7] text-[#1E2024]' : 'text-[#6B7280]'
                 }`}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -125,7 +128,7 @@ export default function EventsBrowser({ events }: Props) {
                 aria-pressed={layout === 'grid'}
                 aria-label="Grid view"
                 className={`p-1.5 rounded-[6px] transition-colors ${
-                  layout === 'grid' ? 'bg-[#F5F5F7] text-[#1E2024]' : 'text-[#7F838A]'
+                  layout === 'grid' ? 'bg-[#F5F5F7] text-[#1E2024]' : 'text-[#6B7280]'
                 }`}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -139,13 +142,13 @@ export default function EventsBrowser({ events }: Props) {
           </div>
         </div>
 
-        <div className="mb-4 text-[13px] text-[#7F838A]">
+        <div className="mb-4 text-[13px] text-[#6B7280]" aria-live="polite">
           {filtered.length} {filtered.length === 1 ? 'event' : 'events'}
         </div>
 
         {filtered.length === 0 ? (
           <div className="rounded-[12px] border border-[#E5E7EB] bg-[#F5F5F7] p-10 text-center">
-            <p className="text-[15px] text-[#7F838A]">
+            <p className="text-[15px] text-[#6B7280]">
               No events match your filters.
             </p>
           </div>
@@ -204,7 +207,7 @@ function EventRow({ event }: { event: EventData }) {
           <h3 className="text-[16px] font-semibold text-[#1E2024] group-hover:text-[#0066FF] transition-colors">
             {event.name}
           </h3>
-          <p className="text-[13px] text-[#7F838A] mt-0.5">
+          <p className="text-[13px] text-[#6B7280] mt-0.5">
             {formatDate(event.startsAt)}
             {!event.allDay && ` · ${formatEventTime(event.startsAt, event.endsAt)}`}
             {event.recurrenceDescription && ` · ${event.recurrenceDescription}`}
@@ -217,13 +220,13 @@ function EventRow({ event }: { event: EventData }) {
           const loc = displayableLocation(event.location)
           return (
             loc && (
-              <p className="hidden lg:block text-[13px] text-[#7F838A] max-w-[280px] truncate">
+              <p className="hidden lg:block text-[13px] text-[#6B7280] max-w-[280px] truncate">
                 {loc}
               </p>
             )
           )
         })()}
-        <span aria-hidden className="text-[#7F838A] group-hover:text-[#0066FF] transition-colors shrink-0">
+        <span aria-hidden className="text-[#6B7280] group-hover:text-[#0066FF] transition-colors shrink-0">
           →
         </span>
       </Link>
@@ -268,7 +271,7 @@ function EventCard({ event }: { event: EventData }) {
           <h3 className="text-[16px] font-semibold leading-[1.3] text-[#1E2024] group-hover:text-[#0066FF] transition-colors line-clamp-2">
             {event.name}
           </h3>
-          <p className="text-[12px] text-[#7F838A]">
+          <p className="text-[12px] text-[#6B7280]">
             {formatDate(event.startsAt)}
             {!event.allDay && ` · ${formatEventTime(event.startsAt, event.endsAt)}`}
           </p>

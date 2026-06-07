@@ -38,7 +38,7 @@ export default function PlanVisitSection() {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold text-[#1E2024]">{s.time}</span>
-                  <span className="text-xs font-medium text-[#7F838A] bg-[#F5F5F7] px-3 py-1 rounded-full">
+                  <span className="text-xs font-medium text-[#6B7280] bg-[#F5F5F7] px-3 py-1 rounded-full">
                     {s.badge}
                   </span>
                 </div>
@@ -47,14 +47,14 @@ export default function PlanVisitSection() {
                     {s.tags.map((t) => (
                       <span
                         key={t}
-                        className="text-xs font-medium text-[#0066FF] bg-[#0066FF]/8 px-3 py-1 rounded-full"
+                        className="text-xs font-semibold text-[#0041A2] bg-[#0066FF]/10 px-3 py-1 rounded-full"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
                 )}
-                {s.note && <p className="text-sm text-[#7F838A] leading-[1.6]">{s.note}</p>}
+                {s.note && <p className="text-sm text-[#6B7280] leading-[1.6]">{s.note}</p>}
               </div>
             ))}
           </div>

@@ -30,7 +30,7 @@ export default function LiveStreamBanner() {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white text-sm font-semibold rounded-full hover:bg-red-700 transition-colors"
       >
-        <span className="w-2.5 h-2.5 bg-white rounded-full animate-pulse" />
+        <span className="w-2.5 h-2.5 bg-white rounded-full animate-pulse motion-reduce:animate-none" />
         Watch Live
       </a>
     )

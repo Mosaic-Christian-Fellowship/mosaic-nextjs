@@ -38,7 +38,7 @@ function CommunityCard({ card }: { card: Card }) {
         alt={card.title}
         fill
         sizes="300px"
-        className="object-cover object-top opacity-50 select-none pointer-events-none"
+        className="object-cover object-top opacity-80 select-none pointer-events-none"
         draggable={false}
       />
 
@@ -48,15 +48,14 @@ function CommunityCard({ card }: { card: Card }) {
         className="absolute inset-0 z-10 pointer-events-none"
         style={{
           background:
-            'linear-gradient(180deg, rgba(0,65,162,0) 0%, rgba(0,65,162,0.85) 100%)',
+            'linear-gradient(180deg, rgba(0,65,162,0) 0%, rgba(0,65,162,0.62) 100%)',
         }}
         aria-hidden
       />
 
       <div className="relative z-20 flex h-full flex-col justify-end p-6">
         <h3
-          className="text-[22px] font-semibold tracking-[-0.04em] text-[#F3F4F5] leading-[1.15]"
-          style={{ fontFamily: 'var(--font-sans)' }}
+          className="font-sans text-[22px] font-semibold tracking-[-0.04em] text-[#F3F4F5] leading-[1.15]"
         >
           {card.title}
         </h3>
@@ -73,7 +72,17 @@ export default function StageOfLife() {
   const [index, setIndex] = useState(0)
   const [maxIndex, setMaxIndex] = useState(cards.length - 1)
   const [paused, setPaused] = useState(false)
+  const [reduceMotion, setReduceMotion] = useState(false)
   const dragState = useRef<{ startX: number; startScroll: number; moved: boolean } | null>(null)
+
+  // Don't auto-advance for visitors who prefer reduced motion (WCAG 2.2.2).
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduceMotion(mq.matches)
+    const handler = () => setReduceMotion(mq.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   const recomputeMax = useCallback(() => {
     const track = trackRef.current
@@ -98,7 +107,7 @@ export default function StageOfLife() {
   }, [maxIndex])
 
   useEffect(() => {
-    if (paused) return
+    if (paused || reduceMotion) return
     const id = window.setInterval(() => {
       setIndex((prev) => {
         const next = prev + 1 > maxIndex ? 0 : prev + 1
@@ -108,7 +117,7 @@ export default function StageOfLife() {
       })
     }, AUTOSCROLL_MS)
     return () => window.clearInterval(id)
-  }, [paused, maxIndex])
+  }, [paused, maxIndex, reduceMotion])
 
   const onScroll = () => {
     const track = trackRef.current
@@ -170,7 +179,7 @@ export default function StageOfLife() {
   return (
     <section className="py-20 md:py-24 overflow-hidden bg-white">
       <div className="mx-auto max-w-[1200px] px-4 md:px-8 mb-8 flex items-end justify-between gap-4">
-        <h2 className="text-[36px] md:text-[48px] font-semibold tracking-[-0.04em] text-[#1E2024] leading-[1.1]">
+        <h2 className="text-[30px] md:text-[40px] font-semibold tracking-[-0.02em] text-[#1E2024] leading-[1.15]">
           Meet Our Community
         </h2>
         <div className="flex items-center gap-2 shrink-0">
@@ -179,7 +188,7 @@ export default function StageOfLife() {
             onClick={prev}
             disabled={index <= 0}
             aria-label="Previous"
-            className="w-10 h-10 rounded-full border border-[#F3F4F5] bg-white text-[#1E2024] flex items-center justify-center hover:border-[#D2D5DA] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-11 h-11 rounded-full border border-[#F3F4F5] bg-white text-[#1E2024] flex items-center justify-center hover:border-[#D2D5DA] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
               <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -190,7 +199,7 @@ export default function StageOfLife() {
             onClick={next}
             disabled={index >= maxIndex}
             aria-label="Next"
-            className="w-10 h-10 rounded-full border border-[#F3F4F5] bg-white text-[#1E2024] flex items-center justify-center hover:border-[#D2D5DA] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-11 h-11 rounded-full border border-[#F3F4F5] bg-white text-[#1E2024] flex items-center justify-center hover:border-[#D2D5DA] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
               <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -237,14 +246,18 @@ export default function StageOfLife() {
                 type="button"
                 onClick={() => goto(i)}
                 aria-label={`Go to slide ${i + 1}`}
-                aria-current={active}
-                className="rounded-full transition-all"
-                style={{
-                  width: active ? 24 : 8,
-                  height: 8,
-                  backgroundColor: active ? '#1E2024' : '#D2D5DA',
-                }}
-              />
+                className="flex items-center justify-center p-2"
+              >
+                <span
+                  aria-hidden
+                  className="block rounded-full transition-all"
+                  style={{
+                    width: active ? 24 : 8,
+                    height: 8,
+                    backgroundColor: active ? '#1E2024' : '#D2D5DA',
+                  }}
+                />
+              </button>
             )
           })}
         </div>

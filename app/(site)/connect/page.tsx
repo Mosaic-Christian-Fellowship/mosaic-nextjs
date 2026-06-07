@@ -1,27 +1,30 @@
+import type { Metadata } from 'next'
 import SectionHeader from '@/components/SectionHeader'
+import PageHero from '@/components/PageHero'
 import CTASection from '@/components/CTASection'
 import GroupFinder from '@/components/GroupFinder'
 import ServeTeamCarousel from '@/components/ServeTeamCarousel'
 import EventsList from '@/components/EventsList'
+import MoreLink from '@/components/MoreLink'
 import ContactForm from '@/components/ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Connect',
+  description:
+    'Find a community group, join a serve team, see upcoming events, and get in touch. There’s a place for you at Mosaic.',
+}
 
 export default function Connect() {
   return (
     <div>
-      {/* Hero — placeholder bg; replace with fullscreen photo/video */}
-      <section className="bg-[#FF69B4] text-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-left flex flex-col gap-4">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#0066FF]">Get Involved</span>
-          <h1 className="text-4xl md:text-5xl font-bold">Your Community Is Here</h1>
-          <p className="text-white/70 text-lg">
-            Connection at Mosaic happens in groups, at events, and through serving together.
-            There&apos;s a place for you here.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        overline="Get Involved"
+        title="Your Community Is Here"
+        subtitle="Connection at Mosaic happens in groups, at events, and through serving together. There's a place for you here."
+      />
 
       {/* Community Groups */}
-      <section id="Community-Groups" className="py-20 px-6 bg-white">
+      <section id="community-groups" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader overline="Community Groups" heading="Find Your People"/>
           <GroupFinder />
@@ -29,15 +32,16 @@ export default function Connect() {
       </section>
 
       {/* Events */}
-      <section id="Whats-Coming-Up" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col gap-12">
+      <section id="whats-coming-up" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col gap-8">
           <SectionHeader overline="What's Coming Up" heading="Events Calendar" />
-          <EventsList />
+          <EventsList limit={6} />
+          <MoreLink href="/events">Browse all events</MoreLink>
         </div>
       </section>
 
       {/* Serve Teams */}
-      <section id="Ways-To-Serve" className="py-20 px-6 bg-white">
+      <section id="ways-to-serve" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader overline="Ways to Serve" heading="Join a Serve Team" />
           <ServeTeamCarousel />
@@ -45,10 +49,10 @@ export default function Connect() {
       </section>
 
       {/* Contact */}
-      <section id="Get-In-Touch" className="py-20 px-6">
+      <section id="get-in-touch" className="py-20 px-6">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="Get in Touch" heading="Contact Us" centered />
-          <p className="text-[#7F838A] text-center">
+          <p className="text-[#6B7280] text-center">
             Have a question or want to connect? Drop us a message and we&apos;ll get back to you.
           </p>
           <ContactForm />

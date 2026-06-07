@@ -50,13 +50,13 @@ const linkColumns = [
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-[#DBDDE0] px-6 pt-16 pb-10">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-12 md:gap-10">
-        <div className="flex flex-col gap-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr] gap-10 md:gap-10">
+        <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
           <Link href="/" className="flex items-center gap-2 text-[#1E2024] w-fit">
             <HexagonLogo className="w-8 h-8" />
             <span className="text-lg font-semibold tracking-tight">Mosaic</span>
           </Link>
-          <p className="text-[14px] text-[#7F838A] leading-[1.6] max-w-sm">
+          <p className="text-[14px] text-[#6B7280] leading-[1.6] max-w-sm">
             Mosaic Christian Fellowship is a diverse church in Northvale, NJ helping people know
             Jesus, grow in faith, and live in community. Join us for Sunday worship, small groups,
             and family-friendly ministries.
@@ -85,7 +85,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-[#1E2024] hover:text-[#0066FF] transition-colors"
+                    className="inline-block py-1 text-[14px] text-[#1E2024] hover:text-[#0066FF] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-[#DBDDE0] text-[13px] text-[#7F838A]">
+      <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-[#DBDDE0] text-[13px] text-[#6B7280]">
         © {new Date().getFullYear()} Mosaic Christian Fellowship
       </div>
     </footer>
