@@ -45,6 +45,28 @@ export const HERO_FALLBACK = {
 const clean = (v: unknown): string | null =>
   typeof v === 'string' && v.trim() !== '' ? v.trim() : null
 
+export function safeHref(h: string): string {
+  const v = h.trim()
+  // site-relative (but not protocol-relative "//evil.com")
+  if (v.startsWith('/') && !v.startsWith('//')) return v
+  try {
+    const u = new URL(v)
+    return ['http:', 'https:', 'mailto:', 'tel:'].includes(u.protocol) ? v : '#'
+  } catch {
+    return '#'
+  }
+}
+
+export function safeVideoSrc(h: string): string {
+  const v = h.trim()
+  if (v.startsWith('/') && !v.startsWith('//')) return v
+  try {
+    return new URL(v).protocol === 'https:' ? v : HERO_FALLBACK.videoUrl
+  } catch {
+    return HERO_FALLBACK.videoUrl
+  }
+}
+
 export function resolveHero(
   data: HeroData | HeroData[] | null | undefined
 ): ResolvedHero {
@@ -55,13 +77,13 @@ export function resolveHero(
     subtext: clean(d?.heroSubtext),
     cta1: {
       text: clean(d?.heroCta1Text) ?? HERO_FALLBACK.cta1.text,
-      href: clean(d?.heroCta1Href) ?? HERO_FALLBACK.cta1.href,
+      href: safeHref(clean(d?.heroCta1Href) ?? HERO_FALLBACK.cta1.href),
     },
     cta2: {
       text: clean(d?.heroCta2Text) ?? HERO_FALLBACK.cta2.text,
-      href: clean(d?.heroCta2Href) ?? HERO_FALLBACK.cta2.href,
+      href: safeHref(clean(d?.heroCta2Href) ?? HERO_FALLBACK.cta2.href),
     },
     heroImage: d?.heroImage ?? null,
-    videoUrl: clean(d?.heroVideoUrl) ?? HERO_FALLBACK.videoUrl,
+    videoUrl: safeVideoSrc(clean(d?.heroVideoUrl) ?? HERO_FALLBACK.videoUrl),
   }
 }

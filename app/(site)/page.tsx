@@ -14,7 +14,7 @@ import { resolveHero, type HeroData } from '@/lib/hero'
 export const revalidate = 600
 
 export default async function Home() {
-  const hero = await sanityFetch<HeroData>(homePageHeroQuery)
+  const hero = await sanityFetch<HeroData | null>(homePageHeroQuery)
   const r = resolveHero(hero)
   const imageUrl = r.heroImage
     ? urlFor(r.heroImage)?.width(1920).height(1080).auto('format').url() ?? null

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { resolveHero, HERO_FALLBACK } from '@/lib/hero'
+import { resolveHero, safeHref, safeVideoSrc, HERO_FALLBACK } from '@/lib/hero'
 
 describe('resolveHero', () => {
   it('returns all fallbacks when data is null', () => {
@@ -39,5 +39,39 @@ describe('resolveHero', () => {
   it('passes through a raw image ref for server-side url building', () => {
     const img = { asset: { _ref: 'image-abc-1920x1080-jpg' } }
     expect(resolveHero({ heroImage: img }).heroImage).toEqual(img)
+  })
+
+  it('sanitizes a javascript: CTA href to "#"', () => {
+    expect(resolveHero({ heroCta1Href: 'javascript:alert(1)' }).cta1.href).toBe('#')
+  })
+
+  it('preserves an https CTA href', () => {
+    expect(resolveHero({ heroCta2Href: 'https://example.com' }).cta2.href).toBe(
+      'https://example.com'
+    )
+  })
+
+  it('preserves the site-relative fallback href', () => {
+    expect(resolveHero(null).cta1.href).toBe('/im-new')
+  })
+
+  it('falls back to the static video for a javascript: video URL', () => {
+    expect(resolveHero({ heroVideoUrl: 'javascript:alert(1)' }).videoUrl).toBe('/hero-video.mp4')
+  })
+
+  it('preserves an https Sanity video URL', () => {
+    expect(resolveHero({ heroVideoUrl: 'https://cdn.sanity.io/x.mp4' }).videoUrl).toBe(
+      'https://cdn.sanity.io/x.mp4'
+    )
+  })
+})
+
+describe('safeHref', () => {
+  it('preserves a mailto: link', () => {
+    expect(safeHref('mailto:a@b.com')).toBe('mailto:a@b.com')
+  })
+
+  it('rejects a protocol-relative URL', () => {
+    expect(safeHref('//evil.com')).toBe('#')
   })
 })
