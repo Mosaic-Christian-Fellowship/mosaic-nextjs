@@ -59,6 +59,16 @@ You'll personally only ever touch **three things**: GitHub Desktop, Claude, and 
 
 You only do this part **once.** Take it one step at a time, and remember — wait until the maintainer has given you the go-ahead (see the heads-up on the first page). If anything is confusing, message the maintainer. That's expected, not a bother.
 
+## Getting onto GitHub (do this first)
+
+**GitHub** is the shared filing cabinet that holds all the website's files. Before anything else, you need a free GitHub account and an invite to the church's space.
+
+1. **Create a free GitHub account** — if you don't already have one, go to **https://github.com/signup** and follow the prompts (an email, a password, and a username). It's free, and takes a couple of minutes.
+2. **Send the maintainer your GitHub username** (or the email you signed up with). They'll invite you to the church's space on GitHub, called the **Mosaic-Christian-Fellowship** organization.
+3. **Accept the invite.** Look for the invitation email from GitHub — or open **https://github.com/Mosaic-Christian-Fellowship** — and click **Accept**. That's it: you can now see and work on the website's files.
+
+Once you've accepted the invite, continue with the two apps below.
+
 ## What you'll install
 
 You'll install **two free apps.** Here's what each one looks like so you know what to expect.
@@ -76,7 +86,7 @@ Download it here: **https://code.claude.com/docs/en/desktop-quickstart** (pick m
 ## The steps
 
 **Step 1 — Install GitHub Desktop.**
-Open the link above, download it, and install it. Sign in with the GitHub account you were invited with. (Didn't get an invite? Ask the maintainer.)
+Open the link above, download it, and install it. Sign in with the **GitHub account you set up above** — the one you accepted the church invite with. (Didn't get the invite yet? Ask the maintainer.)
 
 **Step 2 — Download the website to your computer.**
 In GitHub Desktop: **File → Clone repository →** choose **mosaic-nextjs →** click **Clone.** This copies all the website files into your private workshop.
@@ -120,8 +130,13 @@ Switch to **GitHub Desktop.** You'll see a list of what changed (this is your ch
 3. Click **Push origin** (top of the window).
 4. Click **Create Pull Request** — this opens your web browser.
 
-**Step 5 — Ask for a review.**
-On the Pull Request page that opens, click **Reviewers** and choose the maintainer. That's it — you've handed in your work! The maintainer will look it over and, when it's ready, publish it to the live site.
+**Step 5 — Tell the maintainer when it's ready to go live.**
+This is how the maintainer knows to publish your work — there's a simple "still working" vs. "ready" signal:
+
+- **Still tinkering?** On the Pull Request page, click the small arrow next to the green button and choose **Create draft pull request.** A *draft* quietly tells the maintainer "not done yet — please don't publish." You can keep making changes to it for as long as you like.
+- **Happy and ready to publish?** Click **Ready for review** at the top of the Pull Request page, then click **Reviewers** and choose the maintainer. **Requesting the maintainer's review is your signal that it's ready to go live.**
+
+A minute or two after you push, a **preview link** also appears on the Pull Request — a private, working copy of your exact change. The maintainer clicks it to see how it looks *before* publishing. (You never publish anything yourself — the maintainer does that after a quick look.)
 
 ## What you'll **never** have to do
 

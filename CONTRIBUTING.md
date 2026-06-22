@@ -24,7 +24,7 @@ No terminal/command line needed for everyday work.
 
 ## One-time setup
 
-1. Install **[GitHub Desktop](https://desktop.github.com/)** and sign in with the GitHub account you were invited with.
+1. **Get onto GitHub, then install [GitHub Desktop](https://desktop.github.com/).** First, create a free account at [github.com/signup](https://github.com/signup) (if you don't have one), send the maintainer your username, and accept the email invite to the **Mosaic-Christian-Fellowship** organization. Then install GitHub Desktop and sign in with that account.
 2. In GitHub Desktop: **File → Clone repository → mosaic-nextjs → Clone.** This downloads the project to your computer.
 3. Install the **Claude Code desktop app** and open the `mosaic-nextjs` folder you just cloned.
 4. Ask Claude: **"Please run the setup script."** It installs everything and creates your settings file.
@@ -44,7 +44,7 @@ That's it. You're ready.
    Claude makes the change and the site updates live in your browser.
 3. **Review it yourself.** Look at <http://localhost:3000> until you're happy. Not right? Keep asking Claude to adjust.
 4. **Save + submit.** Back in GitHub Desktop you'll see a list of what changed. Type a one-line summary, then **Commit → Push → Create Pull Request.**
-5. **Request a review.** On the Pull Request page, request a review from the maintainer. They'll review, merge, and publish it to the live site.
+5. **Signal when it's ready to publish.** While you're still tinkering, open it as a **draft** pull request — that tells the maintainer "don't publish yet." When it's ready to go live, click **Ready for review** and request the maintainer as reviewer — *that request is your "please publish" signal.* A preview link also appears on the Pull Request so the maintainer can check your exact change before publishing. They review, merge, and deploy.
 
 **You never deploy to the live site yourself** — the maintainer does that after reviewing your Pull Request. Nothing you do locally can affect the real website until it's reviewed and merged. Experiment freely.
 
