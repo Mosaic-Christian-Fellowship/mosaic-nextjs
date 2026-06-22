@@ -4,6 +4,7 @@ import { faqItem } from './faqItem'
 import { ministry } from './ministry'
 import { serviceTime } from './serviceTime'
 import { landingPage } from './landingPage'
+import { homePage } from './homePage'
 
 export const schemaTypes = [
   siteSettings,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   ministry,
   serviceTime,
   landingPage,
+  homePage,
 ]
