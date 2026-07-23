@@ -9,10 +9,11 @@ type NavItem = { label: string; href?: string; items?: SubItem[] }
 
 const NAV_ITEMS: NavItem[] = [
   {
-    label: 'Church',
+    label: 'About Us',
     items: [
       { label: 'Our Beliefs', href: '/about' },
       { label: 'Our Team', href: '/about' },
+      { label: 'The Mosaic Guide', href: '/mosaic-guide' },
     ],
   },
   {
