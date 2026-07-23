@@ -151,3 +151,165 @@ A minute or two after you push, a **preview link** also appears on the Pull Requ
 - **"I think I messed something up."** You almost certainly didn't break anything real. Message the maintainer — it's easy to undo.
 
 **Thank you again for serving. We're glad you're here.**
+
+@@@TAB:Claude's toolkit@@@
+
+# Claude's Toolkit — What It Knows, and When to Ask
+
+Claude comes with a set of **skills** — bundles of instructions that teach it how we do things on this project specifically. Think of them as specialist colleagues Claude can call in: one who's fussy about how things look, one who's careful with words, one who stops small jobs from turning into big ones.
+
+**The good news: you mostly don't have to do anything.** Skills load themselves when they're relevant. If you ask Claude to "make the events page look better on my phone," the responsive-design skill wakes up on its own. You don't need to memorize this page.
+
+Two things you **do** type yourself:
+
+- **Commands** start with a slash, like `/wrap-up`. You type them on their own line and press enter.
+- **Plain requests** are just normal sentences. Most of your work is this.
+
+Read this tab once so you know what's in the box. Then come back to the **Recipes** section at the bottom when you're not sure how to start something.
+
+---
+
+## Making the site look right
+
+These handle anything visual — layout, spacing, colors, how things look on a phone.
+
+| Skill | What it does | You'd use it when… |
+|---|---|---|
+| **design-craft** | The fussy-eye colleague. Checks spacing, type sizes, color contrast, and whether a page reads as one finished thing instead of assembled parts. Also checks the site is usable by people with low vision or who navigate by keyboard. | "Does this section look right?" · "Review the About page design." |
+| **responsive-craft** | Makes pages work at every screen size — phone, tablet, laptop. Builds it in from the start rather than patching it on later. | "This looks broken on my phone." · "Add a new section" (it'll handle phone sizing automatically). |
+| **figma-to-code** | When you're copying a design exactly, this stops Claude from improvising. Every measurement comes from the real design file, not from a guess. | Only when you've been handed a specific design to match. |
+| **image-optimization** | Shrinks photos so pages load fast, without them looking worse. | "I added a photo and the page got slow." |
+
+> **A note on photos:** a lot of this site is still waiting on real photography. If you see a plain gray or colored block where a picture should be, that's a placeholder, not a bug.
+
+## Writing the words
+
+| Skill | What it does | You'd use it when… |
+|---|---|---|
+| **humanizer** | Strips out the tells that make writing sound like a robot wrote it — the stiff phrasing, the empty filler. | "This paragraph sounds like AI wrote it." |
+| **warm-voice** | The other half of the pair. Adds warmth back in, so it reads like a real person from Mosaic talking. | Any copy a visitor will actually read — headlines, welcome text, ministry descriptions. |
+
+Use them together, in that order: humanizer takes the bad out, warm-voice puts the good in. Just ask Claude to "clean this up and make it sound like us" and it'll run both.
+
+## Keeping your change small and safe
+
+| Skill | What it does | You'd use it when… |
+|---|---|---|
+| **scope-lock** | **The most important one on this page.** Stops Claude from turning "change this one heading" into a rewrite of forty files. It keeps the job to exactly what you asked. | Any time you want **one specific thing** changed and nothing else. Say: "scope-lock this — only change the headline." |
+| **project-hygiene** | Tidies up leftover files and stray notes so the project stays clean. | Rarely. The maintainer usually runs this. |
+| **preflight-check** | Checks that everything on your computer is set up correctly — the right tools installed, the right folders in place. | Your very first session, or when something stops working for no obvious reason. |
+
+**Why scope-lock matters so much:** Claude is eager and capable, which is mostly wonderful and occasionally a problem. Ask for a small fix and it may notice five other things it could improve — and do them. That makes your work harder for the maintainer to review, and harder for you to undo. Naming scope-lock keeps everyone's life simple.
+
+## Starting and ending your session
+
+These three are the discipline that makes the next session easy. They're commands — you type them.
+
+| Command | What it does | When |
+|---|---|---|
+| `/start-session` | Shows you where things stand and what you were doing last time. | First thing, every time you sit down. |
+| `/save-memory` | Tells Claude to remember something you just decided, so it still knows next week. | Any time you settle a question you don't want to re-explain. |
+| `/wrap-up` | The end-of-session check. Catches work you forgot to hand in, or a Pull Request you never opened. Writes a note to your future self about where you left off. | Last thing, before you close the app. |
+
+> If you only adopt one habit from this whole handbook, make it `/wrap-up`. Almost every "wait, where did my work go?" moment is a session that ended without it.
+
+## Planning something bigger
+
+For anything that'll take more than a sitting, Claude has a set of skills (called **superpowers**) that work the way a good contractor does: talk it through, write it down, then build it.
+
+| Skill | What it does |
+|---|---|
+| **brainstorming** | Talks the idea through with you **before** any building starts. Asks what you actually want. |
+| **writing-plans** | Turns that conversation into a written, step-by-step plan you can read and approve. |
+| **subagent-driven-development** | Works through the approved plan one step at a time. |
+| **test-driven-development** | Writes a check that proves the thing works **before** building it. Sounds backwards; prevents a lot of grief. |
+| **systematic-debugging** | When something's broken, finds the actual cause instead of guessing. |
+| **verification-before-completion** | Makes Claude actually confirm something works before telling you it's done. |
+
+You don't call these by name. Just say **"let's plan this out first"** for anything non-trivial, and Claude will walk you through it. There are real examples of this on the project already, in `docs/superpowers/`.
+
+## Under the hood
+
+You'll never call these directly, but they're why Claude doesn't get the technical details wrong on this project.
+
+| Skill | What it covers |
+|---|---|
+| **vercel:nextjs** | The specific web framework this site is built on. Its rules changed recently, and this keeps Claude current. |
+| **vercel:next-cache-components** | How the site remembers things between visitors so pages load fast. |
+| **vercel:deploy** / **vercel:env** | Publishing and secret keys. **Maintainer only** — you'll never need these. |
+
+---
+
+# Recipes
+
+Real situations, and how to start each one. These mirror how the site has actually been built so far.
+
+### "I want to change one specific thing."
+
+> **"scope-lock this — on the homepage, change the headline to 'Welcome Home' and don't touch anything else."**
+
+Naming scope-lock up front is the whole trick. Small, reviewable, easy to undo.
+
+### "This section doesn't look right, but I can't say why."
+
+> **"Review the Get Involved section with design-craft. What's off?"**
+
+You'll get a specific list — spacing, contrast, type size — instead of a vague opinion. Then pick which ones you want fixed. You don't have to accept all of them.
+
+### "It's broken on my phone."
+
+> **"The events page is a mess on mobile. Fix the layout for phone screens."**
+
+Ask Claude to show you what it looks like at phone size before **and** after, so you can see the difference yourself.
+
+### "The words sound stiff."
+
+> **"Rewrite this welcome paragraph so it sounds like a real person from Mosaic. Run humanizer and warm-voice on it."**
+
+Give it context if you can — who's reading it, and what you want them to feel. "This is the first thing a nervous first-time visitor reads" gets you much better copy than "make it warmer."
+
+### "I have a list of small fixes from the team."
+
+Do them **all on one branch, as one Pull Request** — not five separate ones. It's far less work for the maintainer to review.
+
+> **"I have six small fixes. Let's do them all on one branch, one commit each, then open a single Pull Request."**
+
+### "I want to add something real — a new page, a new section."
+
+Don't dive in. Plan it first.
+
+> **"I want to add a page for our youth ministry. Let's plan this out before building anything."**
+
+Claude will ask questions, write a plan, and wait for you to approve it. Ten minutes of planning saves an afternoon of undoing.
+
+### "Something's broken and I don't know why."
+
+> **"The site won't start. Help me find out why — don't guess, work it out step by step."**
+
+The "don't guess" part matters. Left alone, Claude will sometimes try three fixes in a row without knowing which one worked.
+
+### "Claude says it's done. Is it?"
+
+Check it yourself, in the browser. Always.
+
+> **"Show me. Take a screenshot of the section you changed."**
+
+This is the single most valuable habit in the whole handbook. Claude will occasionally report a change it didn't quite make — updating a label instead of the actual thing. Trust what you can see, not what you're told.
+
+### "I'm done for the day."
+
+> `/wrap-up`
+
+It'll tell you if anything's unfinished, unpushed, or un-handed-in. Then close the app with a clear conscience.
+
+---
+
+## The three habits that matter most
+
+Everything above is optional. These three aren't.
+
+1. **Say scope-lock when you want one thing changed.** Keeps your work small and reviewable.
+2. **Look at it in the browser before you believe it's done.** Screenshot, click around, see it with your own eyes.
+3. **Run `/wrap-up` before you close the app.** It's thirty seconds and it prevents the most common way work gets lost.
+
+Everything else you'll pick up as you go. And if you're ever unsure which skill applies — just describe what you want in plain English. Claude will figure out which one to reach for. That's the whole point of them.
