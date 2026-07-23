@@ -278,24 +278,65 @@ const GUIDE_SECTIONS: { id: string; title: string; items: { q: string; a: ReactN
     title: "Children's Services",
     items: [
       {
-        q: 'What happens with my kids during the service?',
-        a: 'Children are welcome to stay with you, and we also run age-appropriate programming during both gatherings.',
+        q: "What Children's Services are offered during service?",
+        a: (
+          <div className="flex flex-col gap-4">
+            <p>
+              Mosaic MINIS is the children&apos;s ministry of Mosaic Christian Fellowship for ages 2–6.
+            </p>
+            <p>
+              Precious Jewels Ministry (PJM) serves early elementary children (Grades 1–2) and is
+              facilitated by our sister church, Chodae Community Church.
+            </p>
+            <p>
+              Kingdom Kids Ministry serves elementary children (Grades 3–5) and is facilitated by our
+              sister church, Chodae Community Church.
+            </p>
+            <p>
+              Firm Foundations Ministry (FFM) exists for Junior High students (Grades 6–8) and is
+              facilitated by our sister church, Chodae Community Church.
+            </p>
+            <p>
+              Resurgence serves High School students (Grades 9–12) and is facilitated by our sister
+              church, Chodae Community Church.
+            </p>
+          </div>
+        ),
       },
       {
-        q: 'Placeholder question one',
-        a: 'Placeholder answer — content to come.',
+        q: "When are Children's Services offered?",
+        a: (
+          <div className="flex flex-col gap-4">
+            <p>
+              All Children&apos;s Services are offered during our 9:30am and 11:30am services. The
+              9:30am service is often referred to as &ldquo;2nd Service&rdquo; by Chodae Community
+              Church though it is Mosaic&apos;s 1st service, and the 11:30am service is referred to
+              as{' '}
+              &ldquo;3rd Service&rdquo; by Chodae Community Church though it is Mosaic&apos;s 2nd
+              service.
+            </p>
+            <p>
+              No Children&apos;s Services are offered during Mosaic&apos;s third service at 1:30pm.
+            </p>
+          </div>
+        ),
       },
       {
-        q: 'Placeholder question two',
-        a: 'Placeholder answer — content to come.',
+        q: 'How do I register my child?',
+        a: 'Visitors and newcomers should stop by the welcome desk at each ministry off the main atrium area to register your child.',
       },
       {
-        q: 'Placeholder question three',
-        a: 'Placeholder answer — content to come.',
+        q: "Do Children's Services have PTAs?",
+        a: 'KKM, FFM, and Resurgence each have their own PTA. Please contact a leader in the relevant ministry to be connected.',
       },
       {
-        q: 'Placeholder question four',
-        a: 'Placeholder answer — content to come.',
+        q: 'How do youth ministries reach out to parents?',
+        a: (
+          <p>
+            Youth ministries use the app &lsquo;Kakao Talk&rsquo; for weekly communications to parents.
+            If you have not been added, please contact a leader in the relevant ministry.
+          </p>
+        ),
       },
     ],
   },
