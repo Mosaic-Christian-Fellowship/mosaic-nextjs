@@ -1,0 +1,31 @@
+name: Scope check
+
+# Flags a pull request that reaches outside its author's lane, and explains why
+# in a comment. See .github/lanes.json for who owns what.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: scope-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  scope:
+    name: Changes stay in lane
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { default: scopeCheck } = await import(
+              `${process.env.GITHUB_WORKSPACE}/.github/scripts/scope-check.mjs`
+            )
+            await scopeCheck({ github, context, core })

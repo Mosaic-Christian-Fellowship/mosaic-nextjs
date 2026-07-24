@@ -1,0 +1,58 @@
+{
+  "//": "Who owns what. Read by .github/scripts/scope-check.mjs on every pull request.",
+  "//maintainers": "Exempt from every restriction. Also the people who publish.",
+  "maintainers": ["kamicrafted", "mosaicnj"],
+
+  "//defaultLane": "Applied to any contributor not listed below. Deliberately the strictest lane — a new volunteer gets guardrails until someone assigns them a lane.",
+  "defaultLane": "content",
+
+  "//skipLabel": "Add this label to a pull request to waive the check for that PR.",
+  "skipLabel": "scope-approved",
+
+  "lanes": {
+    "content": {
+      "description": "Copy, the HTML structure holding it, images and media, and new draft pages.",
+      "members": ["mikeymmc"],
+      "restricted": [
+        "lib/**",
+        "sanity/**",
+        "app/api/**",
+        "app/studio/**",
+        "app/**/layout.tsx",
+        "components/Nav.tsx",
+        "components/Footer.tsx",
+        "components/CTASection.tsx",
+        "middleware.ts",
+        "next.config.ts",
+        "tsconfig.json",
+        "eslint.config.mjs",
+        "postcss.config.mjs",
+        "package.json",
+        "bun.lock",
+        "package-lock.json",
+        "**/*.css",
+        ".github/**",
+        ".env*"
+      ]
+    },
+
+    "design": {
+      "description": "Layout, styling and CSS, visual assets, how components look.",
+      "members": [],
+      "restricted": [
+        "lib/**",
+        "sanity/**",
+        "app/api/**",
+        "app/studio/**",
+        "middleware.ts",
+        "next.config.ts",
+        "tsconfig.json",
+        "package.json",
+        "bun.lock",
+        "package-lock.json",
+        ".github/**",
+        ".env*"
+      ]
+    }
+  }
+}
