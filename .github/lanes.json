@@ -1,7 +1,7 @@
 {
   "//": "Who owns what. Read by .github/scripts/scope-check.mjs on every pull request.",
   "//maintainers": "Exempt from every restriction. Also the people who publish.",
-  "maintainers": ["mosaicnj"],
+  "maintainers": ["kamicrafted", "mosaicnj"],
 
   "//defaultLane": "Applied to any contributor not listed below. Deliberately the strictest lane — a new volunteer gets guardrails until someone assigns them a lane.",
   "defaultLane": "content",
@@ -12,7 +12,7 @@
   "lanes": {
     "content": {
       "description": "Copy, the HTML structure holding it, images and media, and new draft pages.",
-      "members": ["mikeymmc", "kamicrafted"],
+      "members": ["mikeymmc"],
       "restricted": [
         "lib/**",
         "sanity/**",
