@@ -78,7 +78,7 @@ export default async function scopeCheck({ github, context, core }) {
         `The **${laneName}** lane covers: ${lane.description}`,
         '',
         isAssigned
-          ? ''
+          ? null
           : `_You aren't assigned a lane yet, so you're getting the default one. If that's wrong, a maintainer can add your username to \`.github/lanes.json\`._`,
         '',
         '**What to do now.** Nothing here is lost. Either take those files back out of this pull request and keep the rest, or leave it and raise the idea in Slack — a maintainer can wave it through with the `' +
@@ -87,7 +87,9 @@ export default async function scopeCheck({ github, context, core }) {
         '',
         "This isn't a judgement on the work. Lanes exist so two people don't quietly undo each other, and so nobody spends an evening on something that has to be unpicked.",
       ]
-        .filter((line) => line !== '')
+        // Only the conditional line above is dropped; '' entries are real
+        // paragraph breaks and must survive into the rendered comment.
+        .filter((line) => line !== null)
         .join('\n')
     : [
         MARKER,
