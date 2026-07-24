@@ -34,6 +34,52 @@ That's it. You're ready.
 
 ---
 
+## Before you build: agree the work first
+
+The single most useful habit on this team is **checking in before you build**, not after.
+It isn't a formality — it's what stops you spending an evening on something that then has
+to be unpicked, which is discouraging for you and slow for everyone.
+
+**Two questions decide how much of a heads-up something needs.**
+
+**Is it new?** A new page, a new section, a new idea nobody's discussed — post it in Slack
+first and get a yes. Small edits to something that already exists don't need this.
+
+**Is it in your lane?** Everyone owns an area, so two people don't quietly redo or undo each
+other's work:
+
+| Lane | Owns |
+|------|------|
+| **Content** | Words on the page, the HTML structure holding them, images and media, and new pages (see below) |
+| **Design** | Layout, styling and CSS, visual assets, how components look |
+| **Maintainer** | Navigation and site structure, data, config, dependencies, and publishing |
+
+Lanes overlap in practice, and that's fine — they exist so the *deciding* happens in one
+place, not to police who types what.
+
+If a change touches a lane that isn't yours — the menu, or colors and spacing if you're on
+content — **say it instead of building it.** A Slack message takes thirty seconds and gets a
+real answer. A pull request takes an evening and gets sent back. You're not being shut out of
+those decisions; you're being routed to the fast path for them.
+
+**For anything net new, plan it before Claude writes code.** Ask Claude to brainstorm and
+produce two short documents — a **design doc** (what it is, who it's for, why) and an
+**implementation doc** (what actually gets built). Share those first. Reviewing a page of
+plain English takes minutes; reviewing four hundred lines of code that went the wrong
+direction takes an evening and usually ends in disappointment.
+
+### New pages ship "draft-locked"
+
+You can build a whole new page and have it merged without it going live. Ask Claude to
+*"make this a draft page"* — it stays reachable at its address for review, but stays out of
+the menu and hidden from Google. The maintainer flips it live as a separate, deliberate step.
+
+This is deliberately in your favour: you don't have to get a page perfect in one pass, and
+nothing half-finished is ever visible to a visitor. **Don't add the menu link yourself**,
+even for a page you wrote — that part is the maintainer's.
+
+---
+
 ## Making a change (the everyday loop)
 
 1. **Start a fresh workspace.** In GitHub Desktop, click **Current Branch → New Branch** and name it after your idea (e.g. `new-events-section`). This keeps your experiment separate from the live site.

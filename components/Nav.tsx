@@ -3,46 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-type SubItem = { label: string; href: string }
-type NavItem = { label: string; href?: string; items?: SubItem[] }
-
-const NAV_ITEMS: NavItem[] = [
-  {
-    label: 'Church',
-    items: [
-      { label: 'Our Beliefs', href: '/about' },
-      { label: 'Our Team', href: '/about' },
-    ],
-  },
-  {
-    label: 'Community',
-    items: [
-      { label: 'Events', href: '/events' },
-      { label: 'Community Groups', href: '/connect' },
-      { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Training', href: '#' },
-      { label: 'Gallery', href: '#' },
-    ],
-  },
-  {
-    label: 'Ministries',
-    items: [
-      { label: 'Our Ministries', href: '/connect' },
-      { label: 'Education Department', href: '#' },
-      { label: 'Missions', href: '#' },
-    ],
-  },
-  {
-    label: 'Messages',
-    items: [
-      { label: 'Sermons', href: '/messages' },
-      { label: 'Testimonies', href: '#' },
-      { label: 'Resources', href: '#' },
-    ],
-  },
-  { label: 'Give', href: '/give' },
-]
+import { NAV_ITEMS } from '@/lib/nav'
 
 function HexagonLogo({ className = '' }: { className?: string }) {
   return (

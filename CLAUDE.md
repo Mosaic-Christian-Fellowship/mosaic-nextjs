@@ -43,6 +43,50 @@ Data flows one direction:
 - `main` is protected. It takes a pull request and one approval.
 - Every pull request gets a preview link a minute or two after you push. Use it to check your change before asking for review.
 
+## Who does what
+
+Everyone here is a volunteer with limited time, so we split the site into lanes. This isn't about trust — it's so two people don't quietly redo or undo each other's work, and so nobody spends an evening building something that was already decided differently.
+
+| Lane | Owns | Who |
+|---|---|---|
+| **Content** | Copy, the HTML structure holding it, images and media, new draft pages | `mikeymmc` |
+| **Design** | Layout, styling and CSS, visual assets, how components look | *(Liz — GitHub handle to be added)* |
+| **Maintainer** | Navigation and site structure, data, config, dependencies, publishing | `kamicrafted`, `mosaicnj` |
+
+Lanes overlap in practice, and that's fine — they exist to make sure the *deciding* happens in one place, not to police who types what. When in doubt, ask; it's quicker than guessing wrong.
+
+### Content lane
+
+Owns copy — headings, body text, questions and answers, labels, alt text — plus the HTML holding it (sections, lists, paragraphs, links), images and media, and **new pages** on one condition: a new page ships **draft-locked** (see below), and the maintainer flips it live after review.
+
+**Raise these rather than build them.** A pull request that changes one will be sent back regardless of how good the change is:
+
+- **Navigation** — labels, ordering, what appears in the menu, where a page sits in it
+- **Styling and CSS** — Tailwind classes that change appearance, colors, spacing, layout *(Design lane)*
+- **Site structure** — moving or renaming existing routes, redirects
+- **Shared components** — `Nav`, `Footer`, `CTASection`, anything used site-wide
+- **Config and data** — `next.config.ts`, `lib/**`, `sanity/**`, `package.json`, environment variables
+
+Have an opinion on any of these? Good — say it in Slack or open a GitHub issue. That path is *faster* than building it, because it skips the round-trip where the maintainer reviews code they're going to ask you to remove. A message costs thirty seconds; a pull request costs an evening.
+
+### Design lane
+
+Owns the visual layer outright — layout, spacing, typography, color, Tailwind classes, and visual assets — including inside shared components. No need to ask before restyling something; that's the job.
+
+Two things still route through the maintainer, because they're structural rather than visual: **navigation and site structure** (what's in the menu, what a route is called), and **config, data, and dependencies**. Adding a package for an animation counts — raise it first.
+
+Beyond that, normal engineering judgement applies. Keep a pull request to one coherent change so it stays reviewable.
+
+### Draft-locked pages
+
+A new page can merge without going live. Set `draft: true` in the page's `pageMeta` export and the page will be reachable at its URL but kept out of navigation, out of sitemaps, and marked `noindex` for search engines. That means:
+
+- You can build a whole page, merge it, and keep refining it — no pressure to get it perfect in one pass
+- The maintainer promotes it by flipping `draft: false` and adding the nav entry, as one deliberate act
+- Nothing half-finished shows up for a visitor in the meantime
+
+Don't add the nav link yourself, even for a page you built. Promoting is the maintainer's step.
+
 ## Conventions
 
 These are hard-won. Each one cost somebody a bad afternoon.
@@ -78,6 +122,8 @@ Real photography, staff headshots, and the About page's founding story are all s
 
 ## Working with Claude on this project
 
+- **Check the lane before writing code.** If the request touches navigation, styling, site structure, shared components, or config, and the person you're working with is in the Content lane, **say so before building.** Offer to write it up as a proposal for the maintainer instead. Doing the work anyway isn't helpful here — it will be sent back, and that costs them an evening.
+- **Anything net new gets planned first.** For a new page, section, or feature, produce a short **design doc** (what it is, who it's for, why) and an **implementation doc** (what gets built) *before* writing code. Share them for review. Don't skip to implementation because the change seems obvious.
 - **Keep changes scoped.** When asked for one specific change, make exactly that change. Don't audit neighbouring files or improve things nobody asked about — it makes review harder and undo riskier.
 - **Verify in the browser before claiming success.** Screenshot it. A change that updates a label instead of the actual element looks identical in a summary and wrong on screen.
 - **Plan anything larger than a sitting** before writing code. Write the plan down, get it approved, then build.
