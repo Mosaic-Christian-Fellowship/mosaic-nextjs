@@ -48,3 +48,7 @@ docs/handoffs/
 
 # Claude Code worktree storage (per-checkout, not for the repo)
 .claude/
+
+# Maintainer-only migration notes. Documents live infrastructure endpoints and
+# outstanding credential rotations — must never land in this PUBLIC repo.
+docs/onboarding/account-migration-tracker.md
