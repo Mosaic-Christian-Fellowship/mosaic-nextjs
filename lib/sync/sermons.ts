@@ -1,9 +1,25 @@
-import { fetchPlaylistItems, fetchVideoDetails, type PlaylistItem } from '../youtube'
+import { fetchPlaylistItems, fetchVideoDetails, isShort, type PlaylistItem } from '../youtube'
 import { parseSermonTitle, UNATTRIBUTED_SPEAKER } from '../parsers'
 import { fetchSpotifyEpisodes } from '../spotify'
 import { SPOTIFY_SHOW_ID } from './config'
 
 export type PlaylistKind = 'master' | 'series' | 'excluded'
+
+// YouTube's Shorts ceiling. Nothing longer than this can be a Short, so anything above it
+// skips the probe in step 5 entirely. This is a threshold for *who gets checked*, not a
+// cut — a genuine sermon clip under 3 minutes still survives, because the probe clears it.
+// For scale: 38 of the archive's 337 videos currently fall at or below this line.
+export const MIN_SERMON_DURATION_SECONDS = 180
+
+// How many Shorts probes to run at once. Only videos at or under the duration ceiling are
+// probed, so this caps concurrent requests to youtube.com rather than total work.
+const SHORTS_PROBE_CONCURRENCY = 6
+
+function chunk<T>(items: T[], size: number): T[][] {
+  const out: T[][] = []
+  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size))
+  return out
+}
 
 export interface PlaylistConfig {
   id: string
@@ -98,8 +114,35 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
     console.log(`syncSermons: dropped ${droppedPrivate} private/deleted playlist items`)
   }
 
-  // 5. Build sermon records.
-  const sermons: SermonData[] = accessibleItems.map((item) => {
+  // 5. Drop YouTube Shorts. Backstop for promo clips in playlists nobody has thought to
+  //    mark 'excluded' yet — the exclusion list only covers known offenders.
+  //
+  //    Duration alone would be a blunt instrument: it can never MISS a Short (nothing over
+  //    3 minutes qualifies) but it would over-catch a genuine short sermon clip. So the
+  //    duration check is only a cheap pre-filter that decides who gets asked — anything
+  //    longer than the Shorts ceiling is admitted without a network call, and only the
+  //    handful at or under it are confirmed against YouTube. Today that is ~38 of ~337.
+  const shortCandidates = accessibleItems.filter(
+    (item) => detailMap.get(item.videoId)!.durationSeconds <= MIN_SERMON_DURATION_SECONDS
+  )
+  const confirmedShorts = new Set<string>()
+  for (const batch of chunk(shortCandidates, SHORTS_PROBE_CONCURRENCY)) {
+    const verdicts = await Promise.all(batch.map((item) => isShort(item.videoId)))
+    batch.forEach((item, i) => {
+      if (verdicts[i]) confirmedShorts.add(item.videoId)
+    })
+  }
+
+  const fullLengthItems = accessibleItems.filter((item) => !confirmedShorts.has(item.videoId))
+  if (confirmedShorts.size > 0) {
+    console.log(
+      `syncSermons: dropped ${confirmedShorts.size} YouTube Shorts ` +
+        `(probed ${shortCandidates.length} videos at or under ${MIN_SERMON_DURATION_SECONDS}s)`
+    )
+  }
+
+  // 6. Build sermon records.
+  const sermons: SermonData[] = fullLengthItems.map((item) => {
     const detail = detailMap.get(item.videoId)!
     const parsed = parseSermonTitle(detail.title)
     const series = videoToSeries.get(item.videoId)
@@ -119,7 +162,7 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
     }
   })
 
-  // 6. Build series records — only series that ended up with at least one sermon.
+  // 7. Build series records — only series that ended up with at least one sermon.
   const activeSeries = new Set(sermons.filter((s) => s.seriesId).map((s) => s.seriesId!))
   const series: SeriesData[] = seriesPlaylists
     .filter((sp) => activeSeries.has(sp.id))
