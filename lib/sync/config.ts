@@ -14,7 +14,9 @@ export const PLAYLISTS: PlaylistConfig[] = [
   { id: 'PLcVnilxMSYGLZdeUjrCE8ZPDlLZu6zOEC', name: 'Sermon Clips', kind: 'excluded' },
   { id: 'PLcVnilxMSYGI3tJD8kfKVO8JdTDuw416N', name: 'Healing, Anchoring, Thriving Series', kind: 'series' },
   { id: 'PLcVnilxMSYGJvNAPRGXzi32iLlTjfa7M8', name: 'Ministry Magnified', kind: 'series' },
-  { id: 'PLcVnilxMSYGLxElwnvRqRXmlAyH4jHi42', name: 'See You Sunday', kind: 'series' },
+  // Weekly ~30s promo Shorts, not sermons. Excluded rather than merely untagged:
+  // 'series' playlists are additive, so leaving it here would keep pulling them in.
+  { id: 'PLcVnilxMSYGLxElwnvRqRXmlAyH4jHi42', name: 'See You Sunday', kind: 'excluded' },
   { id: 'PLcVnilxMSYGIJ9kSij-mS2W-eMB-ShIyc', name: 'Coffee Met Bagel', kind: 'series' },
   { id: 'PLcVnilxMSYGKQFAS8xgW0HhCZ8CVwWULL', name: 'Devotional Series', kind: 'series' },
   { id: 'PLcVnilxMSYGJDSH5-Des6MbXJToUeEuwO', name: 'Hebrews Sermon Series', kind: 'series' },

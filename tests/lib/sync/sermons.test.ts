@@ -129,6 +129,65 @@ describe('syncSermons', () => {
     expect(result.sermons[0].speaker).toBe(UNATTRIBUTED_SPEAKER)
   })
 
+  describe('YouTube Shorts', () => {
+    const twoShortsAndASermon = () => {
+      mockedYt.fetchPlaylistItems.mockImplementation(async (plId) =>
+        plId === 'PLmaster'
+          ? [
+              { videoId: 'promo', title: 'See You Sunday!', publishedAt: '2026-06-12T00:00:00Z', position: 0 },
+              { videoId: 'clip', title: 'A short but real clip', publishedAt: '2026-06-11T00:00:00Z', position: 1 },
+              { videoId: 'sermon', title: '"Calling" by Pastor Dave Park', publishedAt: '2026-06-07T00:00:00Z', position: 2 },
+            ]
+          : []
+      )
+      mockedYt.fetchVideoDetails.mockResolvedValue([
+        { id: 'promo', title: 'See You Sunday!', description: '', thumbnail: 't.jpg', durationSeconds: 16 },
+        { id: 'clip', title: 'A short but real clip', description: '', thumbnail: 't.jpg', durationSeconds: 120 },
+        { id: 'sermon', title: '"Calling" by Pastor Dave Park', description: '', thumbnail: 't.jpg', durationSeconds: 5158 },
+      ])
+    }
+
+    it('drops videos confirmed as Shorts', async () => {
+      twoShortsAndASermon()
+      mockedYt.isShort.mockImplementation(async (id) => id === 'promo')
+
+      const result = await syncSermons(PLAYLISTS)
+
+      expect(result.sermons.map((s) => s.id)).toEqual(['clip', 'sermon'])
+    })
+
+    it('keeps a sub-3-minute video that is not actually a Short', async () => {
+      twoShortsAndASermon()
+      mockedYt.isShort.mockResolvedValue(false)
+
+      const result = await syncSermons(PLAYLISTS)
+
+      expect(result.sermons.map((s) => s.id)).toEqual(['promo', 'clip', 'sermon'])
+    })
+
+    it('only probes videos at or under the Shorts duration ceiling', async () => {
+      twoShortsAndASermon()
+      mockedYt.isShort.mockResolvedValue(false)
+
+      await syncSermons(PLAYLISTS)
+
+      const probed = mockedYt.isShort.mock.calls.map(([id]) => id)
+      expect(probed.sort()).toEqual(['clip', 'promo'])
+      expect(probed).not.toContain('sermon')
+    })
+
+    it('keeps the video when the probe fails rather than dropping a possible sermon', async () => {
+      twoShortsAndASermon()
+      // isShort swallows its own errors and resolves false; this asserts syncSermons
+      // treats that verdict as "keep", so a YouTube outage cannot empty the archive.
+      mockedYt.isShort.mockResolvedValue(false)
+
+      const result = await syncSermons(PLAYLISTS)
+
+      expect(result.sermons).toHaveLength(3)
+    })
+  })
+
   it('returns empty result when no master playlist is configured', async () => {
     const result = await syncSermons([
       { id: 'PLseries1', name: 'God of Promise Series', kind: 'series' },
