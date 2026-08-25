@@ -34,6 +34,8 @@ export default function Hero({
       data-hero
       className="relative min-h-[600px] md:min-h-[720px] flex items-center overflow-hidden"
     >
+      {/* objectPosition is centred for /hero-video.mp4 (1920x1080, centre-weighted
+          montage). Retune it if that asset is swapped for differently-framed footage. */}
       <video
         autoPlay={!reduceMotion}
         muted
@@ -41,7 +43,7 @@ export default function Hero({
         playsInline
         poster={imageUrl ?? undefined}
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: '70% 40%' }}
+        style={{ objectPosition: '50% 50%' }}
       >
         <source src={videoUrl} type="video/mp4" />
       </video>
