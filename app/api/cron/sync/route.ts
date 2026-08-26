@@ -3,6 +3,7 @@ import { kvSet, kvSetSyncStatus } from '@/lib/kv'
 import { syncSermons, enrichWithSpotify } from '@/lib/sync/sermons'
 import { syncEvents } from '@/lib/sync/events'
 import { syncGroups } from '@/lib/sync/groups'
+import { syncPodcastEpisodes } from '@/lib/sync/podcast'
 import { PLAYLISTS } from '@/lib/sync/config'
 
 export const maxDuration = 60
@@ -86,6 +87,25 @@ export async function GET(req: NextRequest) {
     console.error('Sermon sync failed:', msg)
     await kvSetSyncStatus('sermons', false, { error: msg })
     results.sermons = { success: false, error: msg }
+  }
+
+  // Podcast sync. Independent of the sermon sync above — the archive comes
+  // straight from the Spotify show rather than from sermons that matched an
+  // episode, so a YouTube failure cannot empty the podcasts page.
+  //
+  // Last because it is the cheapest (~2.5s against the sermon sync's ~45s) and
+  // the least urgent: if this run ever hits the 60s function limit, losing a
+  // podcast refresh for a day costs less than losing the sermon archive.
+  try {
+    const episodes = await syncPodcastEpisodes()
+    await kvSet('podcast:episodes', episodes)
+    await kvSetSyncStatus('podcast', true, { itemCount: episodes.length })
+    results.podcast = { success: true, count: episodes.length }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Unknown error'
+    console.error('Podcast sync failed:', msg)
+    await kvSetSyncStatus('podcast', false, { error: msg })
+    results.podcast = { success: false, error: msg }
   }
 
   return NextResponse.json({

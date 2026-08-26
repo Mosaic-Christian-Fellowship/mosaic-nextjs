@@ -1,56 +1,65 @@
 import type { Metadata } from 'next'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
-import VideoGrid from '@/components/VideoGrid'
+import EpisodeList from '@/components/EpisodeList'
+import Pagination from '@/components/Pagination'
 import { kvGet } from '@/lib/kv'
-import type { SermonData } from '@/lib/api'
+import { APPLE_PODCAST_SHOW_URL } from '@/lib/sync/config'
+import type { PodcastEpisode } from '@/lib/api'
 
 export const metadata: Metadata = {
   title: 'Podcasts',
   description:
-    'Extended Cut — the Mosaic podcast. Go deeper than Sunday on Spotify and Apple Podcasts.',
+    'Every Mosaic message as a podcast episode — listen on Spotify or Apple Podcasts.',
 }
 
 export const revalidate = 600
 
-/** How many episodes the page lists. Roughly 70% of sermons have a matched episode. */
-const EPISODE_LIMIT = 12
+const PER_PAGE = 24
+const BASE_PATH = '/messages/podcasts'
+const LIST_ANCHOR = 'episodes'
 
 const SUBSCRIBE = [
   { label: 'Spotify', href: 'https://open.spotify.com/show/7AZydPQgOQOqdvpiXLGyRR' },
-  {
-    label: 'Apple Podcasts',
-    href: 'https://podcasts.apple.com/us/podcast/nj-mosaic-christian-fellowship/id1440078295',
-  },
+  { label: 'Apple Podcasts', href: APPLE_PODCAST_SHOW_URL },
 ]
 
 /**
- * Episodes are sermons that matched a Spotify episode during sync — not a
- * separate podcast feed — so they carry the same title, date, speaker and
- * thumbnail as their video, and render in the same card as every other page.
+ * The full archive, synced from the Spotify show by `lib/sync/podcast.ts`.
+ * This used to filter `sermons:all` for entries that happened to match an
+ * episode, which meant an episode only appeared if it also had a video.
  */
-async function getEpisodes(): Promise<SermonData[]> {
+async function getEpisodes(): Promise<PodcastEpisode[]> {
   try {
-    const sermons = (await kvGet<SermonData[]>('sermons:all')) ?? []
-    return sermons.filter((s) => s.spotifyUrl).slice(0, EPISODE_LIMIT)
+    return (await kvGet<PodcastEpisode[]>('podcast:episodes')) ?? []
   } catch (err) {
     console.error(
-      'Failed to load sermons:all for podcasts:',
+      'Failed to load podcast:episodes:',
       err instanceof Error ? err.message : err
     )
     return []
   }
 }
 
-export default async function Podcasts() {
+export default async function Podcasts({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>
+}) {
   const episodes = await getEpisodes()
+  const { page: pageParam } = await searchParams
+
+  const totalPages = Math.max(1, Math.ceil(episodes.length / PER_PAGE))
+  const requested = parseInt(pageParam ?? '', 10)
+  const page = Number.isNaN(requested) ? 1 : Math.min(Math.max(requested, 1), totalPages)
+  const pageEpisodes = episodes.slice((page - 1) * PER_PAGE, page * PER_PAGE)
 
   return (
     <div>
       <PageHero
         overline="Listen"
         title="Podcasts"
-        subtitle="Go deeper than Sunday. Extended Cut unpacks the sermon, the passage, and what it means for everyday life."
+        subtitle="Every message from Mosaic, wherever you already listen. Catch the one you missed on the drive, on a walk, or over the dishes."
       >
         <div className="flex flex-col items-start gap-3">
           <p className="text-xs font-semibold uppercase tracking-widest text-white/70">
@@ -72,18 +81,27 @@ export default async function Podcasts() {
         </div>
       </PageHero>
 
-      <section className="py-20 px-6 bg-white">
+      <section id={LIST_ANCHOR} className="py-20 px-6 bg-white scroll-mt-24">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader
             overline="Podcast"
-            heading="Extended Cut"
-            subtext="Every week we unpack the sermon, explore the passage in its historical context, and discuss what it means for everyday life."
+            heading="All Episodes"
+            subtext={
+              episodes.length > 0
+                ? `The complete archive — ${episodes.length} episodes, newest first.`
+                : 'The complete archive, newest first.'
+            }
           />
-          <VideoGrid
-            videos={episodes}
-            emptyMessage="Episodes will appear here as they are published."
-            linkFor={(v) => v.spotifyUrl!}
-          />
+          <div className="flex flex-col gap-10">
+            <EpisodeList episodes={pageEpisodes} />
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              basePath={BASE_PATH}
+              anchor={LIST_ANCHOR}
+              label="Episodes"
+            />
+          </div>
         </div>
       </section>
     </div>

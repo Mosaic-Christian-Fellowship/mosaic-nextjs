@@ -52,6 +52,9 @@ describe('fetchSpotifyEpisodes', () => {
         releaseDate: '2026-01-05',
         spotifyUrl: 'https://open.spotify.com/episode/ep1',
         durationMs: 2400000,
+        // Roughly a quarter of the show has no notes; those come back empty
+        // rather than undefined so callers can render without a guard.
+        description: '',
       },
     ])
 
@@ -93,6 +96,30 @@ describe('fetchSpotifyEpisodes', () => {
     expect(episodes[0].id).toBe('ep1')
     expect(episodes[1].id).toBe('ep2')
     expect(mockFetch).toHaveBeenCalledTimes(3)
+  })
+
+  it('skips the nulls Spotify pads a page with', async () => {
+    // Episodes unavailable in the token's market come back as null entries.
+    // Reading external_urls off one of those throws and kills the whole sync.
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ access_token: 'test-token', expires_in: 3600 }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({
+          items: [
+            null,
+            { id: 'ep1', name: 'Ep 1', release_date: '2026-01-01', external_urls: { spotify: 'https://open.spotify.com/episode/ep1' }, duration_ms: 1000, description: 'Notes.' },
+          ],
+          next: null,
+        }),
+      })
+
+    const episodes = await fetchSpotifyEpisodes('show123')
+    expect(episodes).toHaveLength(1)
+    expect(episodes[0].description).toBe('Notes.')
   })
 
   it('returns empty array on auth failure', async () => {

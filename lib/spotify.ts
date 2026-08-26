@@ -4,6 +4,8 @@ export interface SpotifyEpisode {
   releaseDate: string
   spotifyUrl: string
   durationMs: number
+  /** Show notes. Empty for roughly a quarter of the archive. */
+  description: string
 }
 
 const SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token'
@@ -41,7 +43,7 @@ export async function fetchSpotifyEpisodes(showId: string): Promise<SpotifyEpiso
 
   const episodes: SpotifyEpisode[] = []
   let url: string | null =
-    `${SPOTIFY_API_BASE}/shows/${showId}/episodes?limit=50&fields=${encodeURIComponent('items(id,name,release_date,external_urls,duration_ms),next')}`
+    `${SPOTIFY_API_BASE}/shows/${showId}/episodes?limit=50&fields=${encodeURIComponent('items(id,name,release_date,external_urls,duration_ms,description),next')}`
 
   while (url) {
     const res: Response = await fetch(url, {
@@ -53,14 +55,18 @@ export async function fetchSpotifyEpisodes(showId: string): Promise<SpotifyEpiso
       break
     }
 
-    const data: { items?: Array<{ id: string; name: string; release_date: string; external_urls: { spotify: string }; duration_ms: number }>; next?: string | null } = await res.json()
+    const data: { items?: Array<{ id: string; name: string; release_date: string; external_urls: { spotify: string }; duration_ms: number; description?: string } | null>; next?: string | null } = await res.json()
     for (const item of data.items ?? []) {
+      // Spotify pads pages with nulls for episodes unavailable in the token's
+      // market. Reading `.external_urls` off one of those throws mid-sync.
+      if (!item) continue
       episodes.push({
         id: item.id,
         name: item.name,
         releaseDate: item.release_date,
         spotifyUrl: item.external_urls.spotify,
         durationMs: item.duration_ms,
+        description: item.description ?? '',
       })
     }
 

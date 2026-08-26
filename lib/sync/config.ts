@@ -3,6 +3,11 @@ import type { PlaylistConfig } from './sermons'
 export const YOUTUBE_CHANNEL_ID = 'UCgI1-OGVDlM5cXy0xhllT_w'
 export const SPOTIFY_SHOW_ID = '7AZydPQgOQOqdvpiXLGyRR'
 
+// Apple Podcasts collection id for "NJ Mosaic Christian Fellowship".
+export const APPLE_PODCAST_ID = '1440078295'
+export const APPLE_PODCAST_SHOW_URL =
+  'https://podcasts.apple.com/us/podcast/nj-mosaic-christian-fellowship/id1440078295'
+
 // kind:
 //   'master'   — the full pool of candidate videos; always exactly one
 //   'series'   — sermon series; videos surface in the archive AND group under the series
