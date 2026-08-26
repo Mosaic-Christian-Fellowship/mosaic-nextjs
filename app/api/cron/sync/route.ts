@@ -7,15 +7,6 @@ import { PLAYLISTS } from '@/lib/sync/config'
 
 export const maxDuration = 60
 
-function isDailyRun(): boolean {
-  const now = new Date()
-  const etHour = parseInt(
-    now.toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric', hour12: false })
-  )
-  // Run daily syncs between 1 AM and 3 AM ET
-  return etHour >= 1 && etHour <= 3
-}
-
 export async function GET(req: NextRequest) {
   // Verify cron secret (Vercel sets this header for cron invocations)
   const authHeader = req.headers.get('authorization')
@@ -24,7 +15,6 @@ export async function GET(req: NextRequest) {
   }
 
   const results: Record<string, { success: boolean; count?: number; error?: string }> = {}
-  const daily = isDailyRun()
 
   // Always: Event sync
   try {
@@ -52,35 +42,36 @@ export async function GET(req: NextRequest) {
     results.groups = { success: false, error: msg }
   }
 
-  // Daily only: Sermon sync
-  if (daily) {
+  // Sermon sync. This used to be gated behind a 1-3 AM ET window, which made sense while
+  // the cron ran every 2 hours. The schedule is now a single daily run (`0 9 * * *` in
+  // vercel.json), and Vercel cron schedules are UTC — 09:00 UTC is 05:00 ET in summer and
+  // 04:00 ET in winter, so the window never opened and sermons silently stopped syncing.
+  // The cron is the throttle now; don't reintroduce a time gate here.
+  try {
+    const { sermons, series } = await syncSermons(PLAYLISTS)
+
+    // Spotify enrichment — runs in its own try/catch so failure doesn't break sermon sync
+    let enrichedSermons = sermons
     try {
-      const { sermons, series } = await syncSermons(PLAYLISTS)
-
-      // Spotify enrichment — runs in its own try/catch so failure doesn't break sermon sync
-      let enrichedSermons = sermons
-      try {
-        enrichedSermons = await enrichWithSpotify(sermons)
-        const spotifyCount = enrichedSermons.filter((s) => s.spotifyUrl).length
-        console.log(`Spotify enrichment: matched ${spotifyCount}/${enrichedSermons.length} sermons`)
-      } catch (err) {
-        console.error('Spotify enrichment failed, continuing with YouTube-only data:', err instanceof Error ? err.message : err)
-      }
-
-      await kvSet('sermons:all', enrichedSermons)
-      await kvSet('series:all', series)
-      await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
-      results.sermons = { success: true, count: enrichedSermons.length }
+      enrichedSermons = await enrichWithSpotify(sermons)
+      const spotifyCount = enrichedSermons.filter((s) => s.spotifyUrl).length
+      console.log(`Spotify enrichment: matched ${spotifyCount}/${enrichedSermons.length} sermons`)
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unknown error'
-      console.error('Sermon sync failed:', msg)
-      await kvSetSyncStatus('sermons', false, { error: msg })
-      results.sermons = { success: false, error: msg }
+      console.error('Spotify enrichment failed, continuing with YouTube-only data:', err instanceof Error ? err.message : err)
     }
+
+    await kvSet('sermons:all', enrichedSermons)
+    await kvSet('series:all', series)
+    await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
+    results.sermons = { success: true, count: enrichedSermons.length }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Unknown error'
+    console.error('Sermon sync failed:', msg)
+    await kvSetSyncStatus('sermons', false, { error: msg })
+    results.sermons = { success: false, error: msg }
   }
 
   return NextResponse.json({
-    daily,
     results,
     syncedAt: new Date().toISOString(),
   })
