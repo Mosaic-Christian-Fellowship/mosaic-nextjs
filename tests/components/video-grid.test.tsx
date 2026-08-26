@@ -42,4 +42,25 @@ describe('VideoGrid', () => {
 
     expect(html).toContain('No testimonies yet.')
   })
+
+  it('lets a caller override the link target', () => {
+    // The podcasts page lists the same records but sends visitors to Spotify.
+    // Without this the grid would have to be forked into a second card component.
+    const html = renderToStaticMarkup(
+      <VideoGrid
+        videos={[video({ spotifyUrl: 'https://open.spotify.com/episode/xyz' })]}
+        emptyMessage="None yet."
+        linkFor={(v) => v.spotifyUrl!}
+      />
+    )
+
+    expect(html).toContain('https://open.spotify.com/episode/xyz')
+    expect(html).not.toContain('youtube.com/watch')
+  })
+
+  it('still defaults to YouTube when no override is given', () => {
+    const html = renderToStaticMarkup(<VideoGrid videos={[video()]} emptyMessage="None yet." />)
+
+    expect(html).toContain('https://www.youtube.com/watch?v=abc123')
+  })
 })

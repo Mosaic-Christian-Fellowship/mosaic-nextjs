@@ -1,12 +1,20 @@
 import type { Metadata } from 'next'
 import PageHero from '@/components/PageHero'
-import AudioPanel from '@/components/AudioPanel'
+import SectionHeader from '@/components/SectionHeader'
+import VideoGrid from '@/components/VideoGrid'
+import { kvGet } from '@/lib/kv'
+import type { SermonData } from '@/lib/api'
 
 export const metadata: Metadata = {
   title: 'Podcasts',
   description:
     'Extended Cut — the Mosaic podcast. Go deeper than Sunday on Spotify and Apple Podcasts.',
 }
+
+export const revalidate = 600
+
+/** How many episodes the page lists. Roughly 70% of sermons have a matched episode. */
+const EPISODE_LIMIT = 12
 
 const SUBSCRIBE = [
   { label: 'Spotify', href: 'https://open.spotify.com/show/7AZydPQgOQOqdvpiXLGyRR' },
@@ -16,7 +24,27 @@ const SUBSCRIBE = [
   },
 ]
 
-export default function Podcasts() {
+/**
+ * Episodes are sermons that matched a Spotify episode during sync — not a
+ * separate podcast feed — so they carry the same title, date, speaker and
+ * thumbnail as their video, and render in the same card as every other page.
+ */
+async function getEpisodes(): Promise<SermonData[]> {
+  try {
+    const sermons = (await kvGet<SermonData[]>('sermons:all')) ?? []
+    return sermons.filter((s) => s.spotifyUrl).slice(0, EPISODE_LIMIT)
+  } catch (err) {
+    console.error(
+      'Failed to load sermons:all for podcasts:',
+      err instanceof Error ? err.message : err
+    )
+    return []
+  }
+}
+
+export default async function Podcasts() {
+  const episodes = await getEpisodes()
+
   return (
     <div>
       <PageHero
@@ -43,9 +71,19 @@ export default function Podcasts() {
           </div>
         </div>
       </PageHero>
+
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <AudioPanel />
+        <div className="max-w-6xl mx-auto flex flex-col gap-12">
+          <SectionHeader
+            overline="Podcast"
+            heading="Extended Cut"
+            subtext="Every week we unpack the sermon, explore the passage in its historical context, and discuss what it means for everyday life."
+          />
+          <VideoGrid
+            videos={episodes}
+            emptyMessage="Episodes will appear here as they are published."
+            linkFor={(v) => v.spotifyUrl!}
+          />
         </div>
       </section>
     </div>
