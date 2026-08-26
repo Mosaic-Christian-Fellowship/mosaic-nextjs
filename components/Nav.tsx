@@ -4,23 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { NAV_ITEMS } from '@/lib/nav'
-
-function HexagonLogo({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
-      <g transform="translate(1.785 0)">
-        <path
-          d="M 16.242 22.105 L 16.242 32.367 C 16.252 32.783 15.802 33.05 15.441 32.839 L 6.271 27.498 C 5.879 27.269 5.637 26.849 5.637 26.395 L 5.628 16.135 C 5.628 15.719 6.085 15.464 6.44 15.682 L 15.635 21.05 C 16.003 21.276 16.231 21.673 16.242 22.105"
-          fill="#BCBEC4"
-        />
-        <path
-          d="M 16.028 3.472 L 4.938 9.875 C 3.613 10.64 2.79 12.066 2.79 13.597 L 2.79 26.403 C 2.79 27.934 3.613 29.36 4.938 30.125 L 16.028 36.527 C 17.355 37.294 19.001 37.294 20.326 36.527 L 31.417 30.125 C 32.742 29.36 33.565 27.934 33.565 26.403 L 33.565 13.597 C 33.565 12.066 32.742 10.64 31.417 9.875 L 20.326 3.473 C 19.001 2.707 17.355 2.707 16.028 3.473 M 18.178 40 C 17.074 40 15.972 39.717 14.987 39.148 L 3.189 32.337 C 1.222 31.2 0 29.084 0 26.812 L 0 13.189 C 0 10.918 1.222 8.799 3.189 7.663 L 14.987 0.851 C 16.955 -0.284 19.4 -0.284 21.367 0.851 L 33.165 7.663 C 35.133 8.799 36.355 10.918 36.355 13.189 L 36.355 26.812 C 36.355 29.084 35.133 31.2 33.165 32.337 L 21.367 39.148 C 20.384 39.717 19.28 40 18.178 40"
-          fill="#1E2024"
-        />
-      </g>
-    </svg>
-  )
-}
+import Logo from './Logo'
 
 function ChevronDown({ className = '' }: { className?: string }) {
   return (
@@ -102,9 +86,8 @@ export default function Nav() {
       className={`sticky top-0 z-50 font-inter transition-[background-color,border-color] duration-200 ${headerBg}`}
     >
       <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-5 px-5 md:px-10 py-5">
-        <Link href="/" className="flex items-center gap-2 text-[#1E2024]">
-          <HexagonLogo className="w-8 h-8" />
-          <span className="text-lg font-semibold tracking-tight">Mosaic</span>
+        <Link href="/" className="flex items-center text-[#1E2024]">
+          <Logo className="h-10 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
