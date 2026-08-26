@@ -2,6 +2,7 @@ import SectionHeader from './SectionHeader'
 import MoreLink from './MoreLink'
 import { kvGet } from '@/lib/kv'
 import { formatDate, formatDuration, type SermonData } from '@/lib/api'
+import { speakerLabel } from '@/lib/parsers'
 
 async function getLatestSermons(): Promise<SermonData[]> {
   try {
@@ -43,7 +44,7 @@ function LargeSermonCard({ sermon }: { sermon: SermonData }) {
         )}
         <h3 className="text-[22px] font-semibold text-[#1E2024] leading-[1.25]">{sermon.title}</h3>
         <p className="text-sm text-[#6B7280] leading-[1.6]">
-          {sermon.speaker && `${sermon.speaker} · `}
+          {speakerLabel(sermon.speaker) && `${speakerLabel(sermon.speaker)} · `}
           {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
         </p>
         {sermon.description && (
@@ -101,7 +102,7 @@ function SmallSermonCard({ sermon }: { sermon: SermonData }) {
           {sermon.title}
         </h4>
         <p className="text-xs text-[#6B7280] leading-[1.5]">
-          {sermon.speaker && `${sermon.speaker} · `}
+          {speakerLabel(sermon.speaker) && `${speakerLabel(sermon.speaker)} · `}
           {formatDate(sermon.date)}
         </p>
       </div>
