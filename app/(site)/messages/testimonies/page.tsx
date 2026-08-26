@@ -19,7 +19,11 @@ async function getTestimonies(): Promise<SermonData[]> {
     // server component, so an HTTP round trip back to our own origin buys
     // nothing.
     return (await kvGet<SermonData[]>('videos:testimonies')) ?? []
-  } catch {
+  } catch (err) {
+    console.error(
+      'Failed to load videos:testimonies:',
+      err instanceof Error ? err.message : err
+    )
     return []
   }
 }
