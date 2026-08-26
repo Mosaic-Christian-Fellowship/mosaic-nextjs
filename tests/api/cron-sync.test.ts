@@ -128,4 +128,26 @@ describe('GET /api/cron/sync', () => {
 
     expect(res.status).toBe(200)
   })
+
+  it('isolates a category kvSet failure from the sermon result and the other categories', async () => {
+    mockedSermons.syncSermons.mockResolvedValue({
+      sermons: [],
+      series: [],
+      categories: {
+        bad: [{ id: 'b1' }] as never,
+        good: [{ id: 'g1' }] as never,
+      },
+    })
+    mockedKv.kvSet.mockImplementation(async (key: string) => {
+      if (key === 'videos:bad') throw new Error('Redis down')
+    })
+
+    const res = await GET(request())
+    const body = await res.json()
+
+    expect(body.results.sermons).toEqual({ success: true, count: 0 })
+    expect(body.results['videos:bad']).toEqual({ success: false, error: 'Redis down' })
+    expect(mockedKv.kvSet).toHaveBeenCalledWith('videos:good', [{ id: 'g1' }])
+    expect(body.results['videos:good']).toEqual({ success: true, count: 1 })
+  })
 })

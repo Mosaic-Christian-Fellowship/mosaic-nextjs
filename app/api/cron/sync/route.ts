@@ -63,12 +63,20 @@ export async function GET(req: NextRequest) {
     await kvSet('sermons:all', enrichedSermons)
     await kvSet('series:all', series)
 
-    // One key per category so a page can load only what it needs, and so a
-    // failure in one collection cannot take the others down with it.
+    // One key per category, each in its own try/catch (same isolation pattern as
+    // Spotify enrichment above) so a single category's kvSet throwing cannot mark
+    // sermon sync as failed and cannot stop the remaining categories from writing.
     for (const [slug, videos] of Object.entries(categories)) {
-      await kvSet(`videos:${slug}`, videos)
-      await kvSetSyncStatus(`videos:${slug}`, true, { itemCount: videos.length })
-      results[`videos:${slug}`] = { success: true, count: videos.length }
+      try {
+        await kvSet(`videos:${slug}`, videos)
+        await kvSetSyncStatus(`videos:${slug}`, true, { itemCount: videos.length })
+        results[`videos:${slug}`] = { success: true, count: videos.length }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Unknown error'
+        console.error(`Category sync failed for "${slug}":`, msg)
+        await kvSetSyncStatus(`videos:${slug}`, false, { error: msg })
+        results[`videos:${slug}`] = { success: false, error: msg }
+      }
     }
 
     await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
