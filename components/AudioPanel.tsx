@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { apiFetch, formatDate, type SermonData } from '@/lib/api'
+import { speakerLabel } from '@/lib/parsers'
 
 export default function AudioPanel() {
   const [episodes, setEpisodes] = useState<SermonData[]>([])
@@ -77,7 +78,7 @@ export default function AudioPanel() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-white text-sm font-medium truncate">{ep.title}</p>
-                    <p className="text-white/70 text-xs">{ep.speaker} · {formatDate(ep.date)}</p>
+                    <p className="text-white/70 text-xs">{speakerLabel(ep.speaker) && `${speakerLabel(ep.speaker)} · `}{formatDate(ep.date)}</p>
                   </div>
                 </a>
               ))

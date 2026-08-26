@@ -1,5 +1,20 @@
 export const UNATTRIBUTED_SPEAKER = 'Undefined'
 
+/**
+ * The speaker to show a visitor, or null when we don't know.
+ *
+ * `speaker` is always a non-empty string on a SermonData record — it falls back to
+ * UNATTRIBUTED_SPEAKER when the video title names nobody. That makes a plain truthy
+ * check useless at render time: 'Undefined' is truthy, so `{sermon.speaker && ...}`
+ * happily printed the literal word "Undefined" on the site. Roughly 39% of the archive
+ * has no speaker in its title, so this was visible on a lot of cards.
+ */
+export function speakerLabel(speaker: string | null | undefined): string | null {
+  if (!speaker) return null
+  const s = speaker.trim()
+  return s === '' || s === UNATTRIBUTED_SPEAKER ? null : s
+}
+
 export interface ParsedSermonTitle {
   title: string
   speaker: string | null

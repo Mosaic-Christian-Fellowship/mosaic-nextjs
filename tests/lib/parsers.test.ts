@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { parseSermonTitle, parseGroupName } from '@/lib/parsers'
+import { parseSermonTitle, parseGroupName, speakerLabel, UNATTRIBUTED_SPEAKER } from '@/lib/parsers'
 
 describe('parseSermonTitle', () => {
   it('parses "Mosaic Christian Fellowship: "Title" by Pastor Name"', () => {
@@ -127,5 +127,27 @@ describe('parseGroupName', () => {
     expect(result.dayOfWeek).toBeNull()
     expect(result.location).toBeNull()
     expect(result.parsed).toBe(false)
+  })
+})
+
+describe('speakerLabel', () => {
+  it('returns the speaker when one was parsed', () => {
+    expect(speakerLabel('Pastor Dave Park')).toBe('Pastor Dave Park')
+  })
+
+  it('returns null for the unattributed sentinel, which is truthy and used to render', () => {
+    // 'Undefined' is a non-empty string, so `{sermon.speaker && ...}` printed it verbatim.
+    expect(UNATTRIBUTED_SPEAKER).toBeTruthy()
+    expect(speakerLabel(UNATTRIBUTED_SPEAKER)).toBeNull()
+  })
+
+  it('returns null for missing or blank values', () => {
+    expect(speakerLabel(null)).toBeNull()
+    expect(speakerLabel(undefined)).toBeNull()
+    expect(speakerLabel('   ')).toBeNull()
+  })
+
+  it('trims surrounding whitespace', () => {
+    expect(speakerLabel('  Andre Choi  ')).toBe('Andre Choi')
   })
 })

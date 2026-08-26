@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { apiFetch, formatDate, type SermonData } from '@/lib/api'
+import { speakerLabel } from '@/lib/parsers'
 
 export default function ExtendedCut() {
   const [episodes, setEpisodes] = useState<SermonData[]>([])
@@ -80,7 +81,7 @@ export default function ExtendedCut() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-white text-[14px] font-medium truncate">{ep.title}</p>
-                      <p className="text-white/80 text-[12px]">{ep.speaker} · {formatDate(ep.date)}</p>
+                      <p className="text-white/80 text-[12px]">{speakerLabel(ep.speaker) && `${speakerLabel(ep.speaker)} · `}{formatDate(ep.date)}</p>
                     </div>
                   </a>
                 ))

@@ -8,6 +8,7 @@ import {
   type SermonData,
   type SeriesData,
 } from '@/lib/api'
+import { speakerLabel } from '@/lib/parsers'
 
 interface SpeakerEntry {
   name: string
@@ -186,7 +187,7 @@ export default function SermonArchive() {
                       {sermon.title}
                     </h3>
                     <p className="text-xs text-[#6B7280] mt-1">
-                      {sermon.speaker && `${sermon.speaker} · `}
+                      {speakerLabel(sermon.speaker) && `${speakerLabel(sermon.speaker)} · `}
                       {formatDate(sermon.date)} · {formatDuration(sermon.duration)}
                     </p>
                   </div>
