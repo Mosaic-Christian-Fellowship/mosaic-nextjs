@@ -43,8 +43,9 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: 'Messages',
     items: [
-      { label: 'Sermons', href: '/messages' },
-      { label: 'Testimonies', href: '#' },
+      { label: 'Sermons', href: '/messages/sermons' },
+      { label: 'Testimonies', href: '/messages/testimonies' },
+      { label: 'Podcasts', href: '/messages/podcasts' },
       { label: 'Resources', href: '#' },
     ],
   },
