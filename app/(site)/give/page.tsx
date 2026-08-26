@@ -25,36 +25,26 @@ const OTHER_WAYS = [
   },
 ]
 
+/*
+  The "Generosity at Mosaic" copy lives in the hero rather than in a section
+  below it. Previously the hero carried a one-line framing statement and the
+  real message sat in the first section — which meant two stacked `py-20`
+  sections and a 160px gap before "Other Ways to Give". One hero plus one
+  section removes the gap without needing a special-case margin.
+*/
 export default function Give() {
   return (
     <div>
       <PageHero
-        overline="Generosity"
-        title="Give"
-        subtitle="Generosity is an act of worship and a practice of trust. Thank you for partnering with us."
-      />
-
-      {/*
-        Left-aligned in a max-w-6xl section, matching the Messages child pages.
-        The separate "Give Online" section was folded into the single CTA below —
-        it held one button and a sentence, which read as a section break for no
-        reason once the page was left-aligned.
-      */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto flex flex-col gap-8">
-          <SectionHeader overline="Why It Matters" heading="Generosity at Mosaic" />
-
-          <div className="flex flex-col gap-4 max-w-2xl">
-            <p className="text-[#6B7280] text-[15px] md:text-base leading-[1.6]">
-              Your giving funds the ministries, outreach, and community programs that make
-              Mosaic possible. It supports our staff, our building, our children&apos;s
-              programming, and the missions work we do locally and globally.
-            </p>
-            <p className="text-[#6B7280] text-[15px] md:text-base leading-[1.6]">
-              We believe generosity is less about an amount and more about a posture — a
-              willingness to hold our resources with open hands.
-            </p>
-          </div>
+        overline="Why It Matters"
+        title="Generosity at Mosaic"
+        subtitle="Your giving funds the ministries, outreach, and community programs that make Mosaic possible. It supports our staff, our building, our children's programming, and the missions work we do locally and globally."
+      >
+        <div className="flex flex-col items-start gap-6 max-w-2xl">
+          <p className="text-white/80 text-lg leading-relaxed">
+            We believe generosity is less about an amount and more about a posture — a
+            willingness to hold our resources with open hands.
+          </p>
 
           <div className="flex flex-col items-start gap-3">
             <button
@@ -66,16 +56,16 @@ export default function Give() {
               Give Now
             </button>
             {/*
-              The button stays disabled until the church's Church Center account is
-              connected. Saying so is deliberate: a dead button with no explanation
-              reads as a broken site rather than a pending integration.
+              Disabled until the church's Church Center account is connected. Saying
+              so is deliberate: a dead button with no explanation reads as a broken
+              site rather than a pending integration.
             */}
-            <p className="text-xs text-[#6B7280] leading-[1.5]">
+            <p className="text-xs text-white/60 leading-[1.5]">
               Secure online giving opens here once the Church Center account is connected.
             </p>
           </div>
         </div>
-      </section>
+      </PageHero>
 
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-8">
