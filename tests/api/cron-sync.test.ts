@@ -27,7 +27,7 @@ beforeEach(() => {
   vi.clearAllMocks()
   vi.stubEnv('CRON_SECRET', SECRET)
 
-  mockedSermons.syncSermons.mockResolvedValue({ sermons: [], series: [] })
+  mockedSermons.syncSermons.mockResolvedValue({ sermons: [], series: [], categories: {} })
   mockedSermons.enrichWithSpotify.mockImplementation(async (s) => s)
   mockedEvents.syncEvents.mockResolvedValue([])
   mockedGroups.syncGroups.mockResolvedValue([])
@@ -70,6 +70,7 @@ describe('GET /api/cron/sync', () => {
     mockedSermons.syncSermons.mockResolvedValue({
       sermons: [{ id: 'v1' }] as never,
       series: [{ id: 's1' }] as never,
+      categories: {},
     })
     mockedSermons.enrichWithSpotify.mockImplementation(async (s) => s)
 
@@ -95,6 +96,7 @@ describe('GET /api/cron/sync', () => {
     mockedSermons.syncSermons.mockResolvedValue({
       sermons: [{ id: 'v1' }] as never,
       series: [],
+      categories: {},
     })
     mockedSermons.enrichWithSpotify.mockRejectedValue(new Error('Spotify down'))
 
@@ -103,5 +105,27 @@ describe('GET /api/cron/sync', () => {
 
     expect(body.results.sermons.success).toBe(true)
     expect(mockedKv.kvSet).toHaveBeenCalledWith('sermons:all', [{ id: 'v1' }])
+  })
+
+  it('writes each category to its own cache key', async () => {
+    mockedSermons.syncSermons.mockResolvedValue({
+      sermons: [],
+      series: [],
+      categories: { testimonies: [{ id: 't1' }] as never },
+    })
+
+    const res = await GET(request())
+    const body = await res.json()
+
+    expect(mockedKv.kvSet).toHaveBeenCalledWith('videos:testimonies', [{ id: 't1' }])
+    expect(body.results['videos:testimonies']).toEqual({ success: true, count: 1 })
+  })
+
+  it('does not fail the run when there are no categories', async () => {
+    mockedSermons.syncSermons.mockResolvedValue({ sermons: [], series: [], categories: {} })
+
+    const res = await GET(request())
+
+    expect(res.status).toBe(200)
   })
 })

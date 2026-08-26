@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const { sermons, series } = await syncSermons(PLAYLISTS)
+    const { sermons, series, categories } = await syncSermons(PLAYLISTS)
 
     let enrichedSermons = sermons
     try {
@@ -23,6 +23,16 @@ export async function GET(req: NextRequest) {
 
     await kvSet('sermons:all', enrichedSermons)
     await kvSet('series:all', series)
+
+    // One key per category so a page can load only what it needs, and so a
+    // failure in one collection cannot take the others down with it.
+    const categoryCounts: Record<string, number> = {}
+    for (const [slug, videos] of Object.entries(categories)) {
+      await kvSet(`videos:${slug}`, videos)
+      await kvSetSyncStatus(`videos:${slug}`, true, { itemCount: videos.length })
+      categoryCounts[slug] = videos.length
+    }
+
     await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
 
     const spotifyCount = enrichedSermons.filter((s) => s.spotifyUrl).length
@@ -31,6 +41,7 @@ export async function GET(req: NextRequest) {
       sermonCount: enrichedSermons.length,
       seriesCount: series.length,
       spotifyMatched: spotifyCount,
+      categoryCounts,
       syncedAt: new Date().toISOString(),
     })
   } catch (err) {
