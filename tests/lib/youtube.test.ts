@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { fetchPlaylistItems, fetchVideoDetails, checkLiveStream, isShort } from '@/lib/youtube'
+import { fetchPlaylistItems, fetchVideoDetails, checkLiveStream } from '@/lib/youtube'
 
 const mockFetch = vi.fn()
 vi.stubGlobal('fetch', mockFetch)
@@ -84,30 +84,5 @@ describe('checkLiveStream', () => {
 
     const result = await checkLiveStream('UCtest')
     expect(result).toEqual({ isLive: false, videoId: null, title: null })
-  })
-})
-
-describe('isShort', () => {
-  it('reports true when /shorts/<id> serves the video directly', async () => {
-    mockFetch.mockResolvedValue({ status: 200 })
-
-    await expect(isShort('promoId')).resolves.toBe(true)
-
-    const [url, init] = mockFetch.mock.calls[0]
-    expect(url).toBe('https://www.youtube.com/shorts/promoId')
-    // Following the redirect would turn every 303 into a 200 and mark everything a Short.
-    expect(init).toMatchObject({ method: 'HEAD', redirect: 'manual' })
-  })
-
-  it('reports false when /shorts/<id> redirects to /watch', async () => {
-    mockFetch.mockResolvedValue({ status: 303 })
-
-    await expect(isShort('sermonId')).resolves.toBe(false)
-  })
-
-  it('reports false when the request throws, so an outage cannot drop sermons', async () => {
-    mockFetch.mockRejectedValue(new Error('network down'))
-
-    await expect(isShort('sermonId')).resolves.toBe(false)
   })
 })
