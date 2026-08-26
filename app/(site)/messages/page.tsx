@@ -28,7 +28,7 @@ const SECTIONS = [
   {
     href: '/messages/podcasts',
     title: 'Podcasts',
-    blurb: 'Extended Cut — going deeper than Sunday, on Spotify and Apple.',
+    blurb: 'Every message as an episode — listen on Spotify or Apple Podcasts.',
   },
 ]
 

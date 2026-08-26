@@ -13,6 +13,24 @@ export interface SermonData {
   description: string
 }
 
+/**
+ * One podcast episode as the site lists it. Sourced from the Spotify show,
+ * which carries the complete archive; `appleUrl` is filled in where Apple's
+ * lookup could be matched to it and is null for older episodes Apple no
+ * longer exposes. See `lib/sync/podcast.ts`.
+ */
+export interface PodcastEpisode {
+  /** Spotify episode id */
+  id: string
+  title: string
+  /** YYYY-MM-DD */
+  date: string
+  durationMs: number
+  description: string
+  spotifyUrl: string
+  appleUrl: string | null
+}
+
 export interface SeriesData {
   id: string
   name: string
