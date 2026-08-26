@@ -69,16 +69,23 @@ export interface SyncSermonsResult {
 function toSermonData(
   item: PlaylistItem,
   detail: VideoDetail,
-  series: { id: string; name: string } | null
+  series: { id: string; name: string } | null,
+  isCategory = false
 ): SermonData {
-  const parsed = parseSermonTitle(detail.title)
+  // parseSermonTitle assumes the `"Title" by Pastor X` sermon convention. Category
+  // playlists (testimonies, etc.) use personal-narrative titles that convention doesn't
+  // fit — the fallback's stripSpeakerTail would truncate "Saved by Grace" into title
+  // "Saved" / speaker "Grace". Category records keep the raw title and stay unattributed.
+  const parsed = isCategory ? { title: detail.title, speaker: null } : parseSermonTitle(detail.title)
   return {
     id: item.videoId,
     title: parsed.title,
     speaker: parsed.speaker ?? UNATTRIBUTED_SPEAKER,
     seriesId: series?.id ?? null,
     seriesName: series?.name ?? null,
-    date: item.publishedAt.split('T')[0],
+    // Prefer the video's own publish date over the playlist-add date (see PlaylistItem
+    // doc). Falls back to publishedAt for fixtures/records that predate this field.
+    date: (item.videoPublishedAt ?? item.publishedAt).split('T')[0],
     duration: detail.durationSeconds,
     thumbnail: detail.thumbnail,
     youtubeId: item.videoId,
@@ -141,6 +148,12 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
   // Category playlists leave the sermon archive exactly like an excluded one, but
   // their members are kept so they can be served on their own page. This is why
   // 'excluded' and 'category' are separate kinds: one discards, one redirects.
+  //
+  // Precedence when a video sits in BOTH an excluded playlist and a category playlist:
+  // this loop fetches each category playlist's own membership directly, independent of
+  // the excludedIds set above, so the video is dropped from the archive AND published on
+  // its category page. Explicit routing (category) beats blanket exclusion (excluded) —
+  // deliberate, see final-review.md Minor 7.
   const categoryItems = new Map<string, PlaylistItem[]>()
   for (const cp of categoryPlaylists) {
     try {
@@ -221,7 +234,7 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
   for (const [slug, items] of categoryItems) {
     categories[slug] = items
       .filter((item) => detailMap.has(item.videoId))
-      .map((item) => toSermonData(item, detailMap.get(item.videoId)!, null))
+      .map((item) => toSermonData(item, detailMap.get(item.videoId)!, null, true))
       .sort((a, b) => b.date.localeCompare(a.date))
   }
 

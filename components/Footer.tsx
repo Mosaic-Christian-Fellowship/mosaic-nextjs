@@ -5,8 +5,8 @@ const linkColumns = [
   {
     heading: 'The Gospel',
     links: [
-      { label: 'Sermons', href: '/messages' },
-      { label: 'Testimonies', href: '#' },
+      { label: 'Sermons', href: '/messages/sermons' },
+      { label: 'Testimonies', href: '/messages/testimonies' },
     ],
   },
   {

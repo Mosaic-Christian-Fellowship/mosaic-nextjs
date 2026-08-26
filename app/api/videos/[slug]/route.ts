@@ -22,7 +22,10 @@ export async function GET(
 
   try {
     const videos = (await kvGet<VideoRecord[]>(`videos:${slug}`)) ?? []
-    return NextResponse.json({ data: videos, meta: { total: videos.length } })
+    return NextResponse.json(
+      { data: videos, meta: { total: videos.length } },
+      { headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' } }
+    )
   } catch (err) {
     console.error(`Failed to load videos:${slug}:`, err instanceof Error ? err.message : err)
     return NextResponse.json({ error: 'Failed to load collection' }, { status: 500 })

@@ -326,5 +326,108 @@ describe('syncSermons', () => {
       // last good collection keeps serving.
       expect(result.categories.testimonies).toBeUndefined()
     })
+
+    it('dates a category video from the video\'s own publish date, not the playlist-add date', async () => {
+      // t1 was uploaded to YouTube 2025-01-01 but only added to the Testimonies
+      // playlist on 2026-05-01 (publishedAt). The rendered date and sort order must
+      // come from videoPublishedAt, not from when staff filed it into the playlist.
+      mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
+        if (plId === 'PLmaster') {
+          return [
+            { videoId: 'sermon', title: '"Calling" by Pastor Dave Park', publishedAt: '2026-06-07T00:00:00Z', position: 0 },
+          ]
+        }
+        if (plId === 'PLtestimony') {
+          return [
+            {
+              videoId: 't1',
+              title: 'My Story — Grace',
+              publishedAt: '2026-05-01T00:00:00Z',
+              videoPublishedAt: '2025-01-01T00:00:00Z',
+              position: 0,
+            },
+          ]
+        }
+        return []
+      })
+      mockedYt.fetchVideoDetails.mockResolvedValue([
+        { id: 'sermon', title: '"Calling" by Pastor Dave Park', description: '', thumbnail: 's.jpg', durationSeconds: 5158 },
+        { id: 't1', title: 'My Story — Grace', description: 'd1', thumbnail: 't1.jpg', durationSeconds: 240 },
+      ])
+
+      const result = await syncSermons(CATEGORY_PLAYLISTS)
+
+      expect(result.categories.testimonies[0].date).toBe('2025-01-01')
+    })
+
+    it('falls back to publishedAt when videoPublishedAt is absent', async () => {
+      withTestimonies()
+
+      const result = await syncSermons(CATEGORY_PLAYLISTS)
+
+      // withTestimonies' fixtures carry no videoPublishedAt at all.
+      expect(result.categories.testimonies.map((v) => v.date)).toEqual(['2026-05-01', '2026-04-01'])
+    })
+
+    it('keeps the full raw title and leaves the speaker unattributed for category videos', async () => {
+      // "Saved by Grace" is personal-narrative phrasing, not the sermon convention
+      // parseSermonTitle targets. Its fallback would strip the trailing "by Grace" and
+      // report title "Saved", speaker "Grace" — wrong on both counts for a testimony.
+      mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
+        if (plId === 'PLmaster') {
+          return [
+            { videoId: 'sermon', title: '"Calling" by Pastor Dave Park', publishedAt: '2026-06-07T00:00:00Z', position: 0 },
+          ]
+        }
+        if (plId === 'PLtestimony') {
+          return [
+            { videoId: 't1', title: 'Saved by Grace', publishedAt: '2026-05-01T00:00:00Z', position: 0 },
+          ]
+        }
+        return []
+      })
+      mockedYt.fetchVideoDetails.mockResolvedValue([
+        { id: 'sermon', title: '"Calling" by Pastor Dave Park', description: '', thumbnail: 's.jpg', durationSeconds: 5158 },
+        { id: 't1', title: 'Saved by Grace', description: 'd1', thumbnail: 't1.jpg', durationSeconds: 240 },
+      ])
+
+      const result = await syncSermons(CATEGORY_PLAYLISTS)
+
+      expect(result.categories.testimonies[0].title).toBe('Saved by Grace')
+      expect(result.categories.testimonies[0].speaker).toBe(UNATTRIBUTED_SPEAKER)
+    })
+
+    it('keeps a video that is in both an excluded and a category playlist on the category page', async () => {
+      // Explicit routing (category) beats blanket exclusion (excluded): the video must
+      // be dropped from the sermon archive AND published on its category page.
+      const playlists: PlaylistConfig[] = [
+        ...CATEGORY_PLAYLISTS,
+        { id: 'PLclips', name: 'Sermon Clips', kind: 'excluded' },
+      ]
+
+      mockedYt.fetchPlaylistItems.mockImplementation(async (plId) => {
+        if (plId === 'PLmaster') {
+          return [
+            { videoId: 'sermon', title: '"Calling" by Pastor Dave Park', publishedAt: '2026-06-07T00:00:00Z', position: 0 },
+          ]
+        }
+        if (plId === 'PLtestimony') {
+          return [{ videoId: 't1', title: 'My Story — Grace', publishedAt: '2026-05-01T00:00:00Z', position: 0 }]
+        }
+        if (plId === 'PLclips') {
+          return [{ videoId: 't1', title: '', publishedAt: '', position: 0 }]
+        }
+        return []
+      })
+      mockedYt.fetchVideoDetails.mockResolvedValue([
+        { id: 'sermon', title: '"Calling" by Pastor Dave Park', description: '', thumbnail: 's.jpg', durationSeconds: 5158 },
+        { id: 't1', title: 'My Story — Grace', description: 'd1', thumbnail: 't1.jpg', durationSeconds: 240 },
+      ])
+
+      const result = await syncSermons(playlists)
+
+      expect(result.sermons.map((s) => s.id)).toEqual(['sermon'])
+      expect(result.categories.testimonies.map((v) => v.id)).toEqual(['t1'])
+    })
   })
 })

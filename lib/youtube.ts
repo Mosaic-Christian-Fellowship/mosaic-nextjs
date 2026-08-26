@@ -10,6 +10,15 @@ export interface PlaylistItem {
   videoId: string
   title: string
   publishedAt: string
+  /**
+   * The video's own publish date (`contentDetails.videoPublishedAt`), distinct from
+   * `publishedAt`, which is when the video was ADDED to this playlist. For the master
+   * (uploads) playlist the two are identical, but a hand-curated playlist like Testimonies
+   * can add an older video at any time — `publishedAt` would then read as the add date,
+   * not when the video went up. Optional because it isn't present on every fixture in
+   * tests; callers should prefer it and fall back to `publishedAt`.
+   */
+  videoPublishedAt?: string
   position: number
 }
 
@@ -35,6 +44,7 @@ export async function fetchPlaylistItems(playlistId: string): Promise<PlaylistIt
         videoId: item.contentDetails.videoId,
         title: item.snippet.title,
         publishedAt: item.snippet.publishedAt,
+        videoPublishedAt: item.contentDetails.videoPublishedAt,
         position: item.snippet.position,
       })
     }

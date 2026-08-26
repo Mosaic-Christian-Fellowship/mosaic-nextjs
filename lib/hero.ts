@@ -38,7 +38,7 @@ export interface HeroProps {
 export const HERO_FALLBACK = {
   heading: 'Welcome to Mosaic!\nJoin us in-person or online.',
   cta1: { text: 'Plan your visit', href: '/im-new' },
-  cta2: { text: 'Watch past sermons', href: '/messages' },
+  cta2: { text: 'Watch past sermons', href: '/messages/sermons' },
   videoUrl: '/hero-video.mp4',
 } as const
 
