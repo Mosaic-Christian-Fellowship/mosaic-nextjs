@@ -103,32 +103,6 @@ export async function fetchVideoDetails(videoIds: string[]): Promise<VideoDetail
   return allDetails
 }
 
-const SHORTS_BASE = 'https://www.youtube.com/shorts'
-
-/**
- * True when a video is a real YouTube Short.
- *
- * The Data API exposes no orientation or dimension signal — thumbnails are padded to
- * 16:9 for every video, and the one part carrying real stream dimensions
- * (fileDetails.videoStreams) needs OAuth as the channel owner. The public /shorts/<id>
- * route is the only test available to an API key: it serves a Short directly (200) and
- * redirects anything else to /watch (303).
- *
- * This is behaviour, not a documented contract, so a failure resolves to `false` —
- * keeping a promo clip in the archive is a far cheaper mistake than dropping a sermon.
- */
-export async function isShort(videoId: string): Promise<boolean> {
-  try {
-    const res = await fetch(`${SHORTS_BASE}/${videoId}`, {
-      method: 'HEAD',
-      redirect: 'manual',
-    })
-    return res.status === 200
-  } catch {
-    return false
-  }
-}
-
 export interface LiveStreamStatus {
   isLive: boolean
   videoId: string | null
