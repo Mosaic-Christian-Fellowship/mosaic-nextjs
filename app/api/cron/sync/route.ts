@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
   // 04:00 ET in winter, so the window never opened and sermons silently stopped syncing.
   // The cron is the throttle now; don't reintroduce a time gate here.
   try {
-    const { sermons, series } = await syncSermons(PLAYLISTS)
+    const { sermons, series, categories } = await syncSermons(PLAYLISTS)
 
     // Spotify enrichment — runs in its own try/catch so failure doesn't break sermon sync
     let enrichedSermons = sermons
@@ -62,6 +62,23 @@ export async function GET(req: NextRequest) {
 
     await kvSet('sermons:all', enrichedSermons)
     await kvSet('series:all', series)
+
+    // One key per category, each in its own try/catch (same isolation pattern as
+    // Spotify enrichment above) so a single category's kvSet throwing cannot mark
+    // sermon sync as failed and cannot stop the remaining categories from writing.
+    for (const [slug, videos] of Object.entries(categories)) {
+      try {
+        await kvSet(`videos:${slug}`, videos)
+        await kvSetSyncStatus(`videos:${slug}`, true, { itemCount: videos.length })
+        results[`videos:${slug}`] = { success: true, count: videos.length }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Unknown error'
+        console.error(`Category sync failed for "${slug}":`, msg)
+        await kvSetSyncStatus(`videos:${slug}`, false, { error: msg })
+        results[`videos:${slug}`] = { success: false, error: msg }
+      }
+    }
+
     await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
     results.sermons = { success: true, count: enrichedSermons.length }
   } catch (err) {

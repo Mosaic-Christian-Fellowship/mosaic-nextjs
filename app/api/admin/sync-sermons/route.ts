@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const { sermons, series } = await syncSermons(PLAYLISTS)
+    const { sermons, series, categories } = await syncSermons(PLAYLISTS)
 
     let enrichedSermons = sermons
     try {
@@ -23,6 +23,23 @@ export async function GET(req: NextRequest) {
 
     await kvSet('sermons:all', enrichedSermons)
     await kvSet('series:all', series)
+
+    // One key per category, each in its own try/catch (same isolation pattern as
+    // Spotify enrichment above) so a single category's kvSet throwing cannot mark
+    // sermon sync as failed and cannot stop the remaining categories from writing.
+    const categoryCounts: Record<string, number> = {}
+    for (const [slug, videos] of Object.entries(categories)) {
+      try {
+        await kvSet(`videos:${slug}`, videos)
+        await kvSetSyncStatus(`videos:${slug}`, true, { itemCount: videos.length })
+        categoryCounts[slug] = videos.length
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Unknown error'
+        console.error(`Category sync failed for "${slug}":`, msg)
+        await kvSetSyncStatus(`videos:${slug}`, false, { error: msg })
+      }
+    }
+
     await kvSetSyncStatus('sermons', true, { itemCount: enrichedSermons.length })
 
     const spotifyCount = enrichedSermons.filter((s) => s.spotifyUrl).length
@@ -31,6 +48,7 @@ export async function GET(req: NextRequest) {
       sermonCount: enrichedSermons.length,
       seriesCount: series.length,
       spotifyMatched: spotifyCount,
+      categoryCounts,
       syncedAt: new Date().toISOString(),
     })
   } catch (err) {

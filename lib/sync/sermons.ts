@@ -1,9 +1,9 @@
-import { fetchPlaylistItems, fetchVideoDetails, type PlaylistItem } from '../youtube'
+import { fetchPlaylistItems, fetchVideoDetails, type PlaylistItem, type VideoDetail } from '../youtube'
 import { parseSermonTitle, UNATTRIBUTED_SPEAKER } from '../parsers'
 import { fetchSpotifyEpisodes } from '../spotify'
 import { SPOTIFY_SHOW_ID } from './config'
 
-export type PlaylistKind = 'master' | 'series' | 'excluded'
+export type PlaylistKind = 'master' | 'series' | 'excluded' | 'category'
 
 // Minimum length for a video to count as a sermon. Also YouTube's Shorts ceiling, so this
 // single rule covers Shorts and landscape promo clips alike.
@@ -29,6 +29,11 @@ export interface PlaylistConfig {
   id: string
   name: string
   kind: PlaylistKind
+  /**
+   * Required when kind is 'category'. Used as the Redis key suffix
+   * (`videos:<slug>`) and the URL segment (`/messages/<slug>`).
+   */
+  slug?: string
 }
 
 export interface SermonData {
@@ -57,14 +62,51 @@ export interface SeriesData {
 export interface SyncSermonsResult {
   sermons: SermonData[]
   series: SeriesData[]
+  /** Videos routed out of the sermon archive into their own collection, keyed by slug. */
+  categories: Record<string, SermonData[]>
+}
+
+function toSermonData(
+  item: PlaylistItem,
+  detail: VideoDetail,
+  series: { id: string; name: string } | null,
+  isCategory = false
+): SermonData {
+  // parseSermonTitle assumes the `"Title" by Pastor X` sermon convention. Category
+  // playlists (testimonies, etc.) use personal-narrative titles that convention doesn't
+  // fit — the fallback's stripSpeakerTail would truncate "Saved by Grace" into title
+  // "Saved" / speaker "Grace". Category records keep the raw title and stay unattributed.
+  const parsed = isCategory ? { title: detail.title, speaker: null } : parseSermonTitle(detail.title)
+  return {
+    id: item.videoId,
+    title: parsed.title,
+    speaker: parsed.speaker ?? UNATTRIBUTED_SPEAKER,
+    seriesId: series?.id ?? null,
+    seriesName: series?.name ?? null,
+    // Prefer the video's own publish date over the playlist-add date (see PlaylistItem
+    // doc). Falls back to publishedAt for fixtures/records that predate this field.
+    date: (item.videoPublishedAt ?? item.publishedAt).split('T')[0],
+    duration: detail.durationSeconds,
+    thumbnail: detail.thumbnail,
+    youtubeId: item.videoId,
+    spotifyUrl: null, // Matched in a separate step
+    applePodcastUrl: null,
+    description: detail.description,
+  }
 }
 
 export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSermonsResult> {
   const masterPlaylist = playlists.find((p) => p.kind === 'master')
   const seriesPlaylists = playlists.filter((p) => p.kind === 'series')
   const excludedPlaylists = playlists.filter((p) => p.kind === 'excluded')
+  const categoryPlaylists = playlists.filter((p) => p.kind === 'category')
+  for (const cp of categoryPlaylists) {
+    if (!cp.slug) {
+      throw new Error(`Playlist "${cp.name}" has kind 'category' but no slug`)
+    }
+  }
 
-  if (!masterPlaylist) return { sermons: [], series: [] }
+  if (!masterPlaylist) return { sermons: [], series: [], categories: {} }
 
   // 1. Build the union of master + all series playlist items, deduped by videoId.
   //    Master items take precedence; series mapping uses first-encountered series.
@@ -103,11 +145,44 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
     console.log(`syncSermons: dropped ${droppedExcluded} items present in excluded playlists`)
   }
 
-  if (allItemsMap.size === 0) return { sermons: [], series: [] }
+  // Category playlists leave the sermon archive exactly like an excluded one, but
+  // their members are kept so they can be served on their own page. This is why
+  // 'excluded' and 'category' are separate kinds: one discards, one redirects.
+  //
+  // Precedence when a video sits in BOTH an excluded playlist and a category playlist:
+  // this loop fetches each category playlist's own membership directly, independent of
+  // the excludedIds set above, so the video is dropped from the archive AND published on
+  // its category page. Explicit routing (category) beats blanket exclusion (excluded) —
+  // deliberate, see final-review.md Minor 7.
+  const categoryItems = new Map<string, PlaylistItem[]>()
+  for (const cp of categoryPlaylists) {
+    try {
+      const items = await fetchPlaylistItems(cp.id)
+      categoryItems.set(cp.slug!, items)
+      for (const item of items) {
+        allItemsMap.delete(item.videoId)
+        videoToSeries.delete(item.videoId)
+      }
+    } catch (err) {
+      // A deleted or privated playlist 404s. Letting that throw would take the
+      // whole sermon sync down — which is precisely how the archive silently
+      // stopped updating for months. Skip the slug instead: the cron then
+      // writes no key for it, so the last good collection keeps serving.
+      console.error(
+        `syncSermons: category "${cp.name}" (${cp.slug}) failed to load:`,
+        err instanceof Error ? err.message : err
+      )
+    }
+  }
+
+  if (allItemsMap.size === 0) return { sermons: [], series: [], categories: {} }
 
   // 3. Fetch full video details for the union.
   const allItems = Array.from(allItemsMap.values())
-  const videoIds = allItems.map((i) => i.videoId)
+  const categoryVideoIds = Array.from(categoryItems.values())
+    .flat()
+    .map((i) => i.videoId)
+  const videoIds = Array.from(new Set([...allItems.map((i) => i.videoId), ...categoryVideoIds]))
   const details = await fetchVideoDetails(videoIds)
   const detailMap = new Map(details.map((d) => [d.id, d]))
 
@@ -133,25 +208,9 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
   }
 
   // 6. Build sermon records.
-  const sermons: SermonData[] = fullLengthItems.map((item) => {
-    const detail = detailMap.get(item.videoId)!
-    const parsed = parseSermonTitle(detail.title)
-    const series = videoToSeries.get(item.videoId)
-    return {
-      id: item.videoId,
-      title: parsed.title,
-      speaker: parsed.speaker ?? UNATTRIBUTED_SPEAKER,
-      seriesId: series?.id ?? null,
-      seriesName: series?.name ?? null,
-      date: item.publishedAt.split('T')[0],
-      duration: detail.durationSeconds,
-      thumbnail: detail.thumbnail,
-      youtubeId: item.videoId,
-      spotifyUrl: null, // Matched in a separate step
-      applePodcastUrl: null,
-      description: detail.description,
-    }
-  })
+  const sermons: SermonData[] = fullLengthItems.map((item) =>
+    toSermonData(item, detailMap.get(item.videoId)!, videoToSeries.get(item.videoId) ?? null)
+  )
 
   // 7. Build series records — only series that ended up with at least one sermon.
   const activeSeries = new Set(sermons.filter((s) => s.seriesId).map((s) => s.seriesId!))
@@ -168,7 +227,18 @@ export async function syncSermons(playlists: PlaylistConfig[]): Promise<SyncSerm
       }
     })
 
-  return { sermons, series }
+  // No duration floor here. The floor keeps promos out of the SERMON archive;
+  // a testimony is often short, and the playlist is curated by staff, so
+  // membership is the filter. Applying the floor would silently drop content.
+  const categories: Record<string, SermonData[]> = {}
+  for (const [slug, items] of categoryItems) {
+    categories[slug] = items
+      .filter((item) => detailMap.has(item.videoId))
+      .map((item) => toSermonData(item, detailMap.get(item.videoId)!, null, true))
+      .sort((a, b) => b.date.localeCompare(a.date))
+  }
+
+  return { sermons, series, categories }
 }
 
 function titleOverlap(a: string, b: string): number {

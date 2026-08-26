@@ -120,7 +120,7 @@ export default async function FeaturedSermonSection() {
           <div className="flex items-end justify-between gap-4">
             <SectionHeader overline="Latest Message" heading="This Week's Sermon" />
             <div className="hidden md:block">
-              <MoreLink href="/messages">Browse all messages</MoreLink>
+              <MoreLink href="/messages/sermons">Browse all messages</MoreLink>
             </div>
           </div>
           <div className="rounded-[12px] border border-[#E5E7EB] bg-[#F5F7FA] p-10 text-center">
@@ -150,7 +150,7 @@ export default async function FeaturedSermonSection() {
         <div className="flex items-end justify-between gap-4">
           <SectionHeader overline="Latest Message" heading="This Week's Sermon" />
           <div className="hidden md:block">
-            <MoreLink href="/messages">Browse all messages</MoreLink>
+            <MoreLink href="/messages/sermons">Browse all messages</MoreLink>
           </div>
         </div>
 
@@ -168,7 +168,7 @@ export default async function FeaturedSermonSection() {
         </div>
 
         <div className="md:hidden">
-          <MoreLink href="/messages" className="w-full justify-center">
+          <MoreLink href="/messages/sermons" className="w-full justify-center">
             Browse all messages
           </MoreLink>
         </div>
