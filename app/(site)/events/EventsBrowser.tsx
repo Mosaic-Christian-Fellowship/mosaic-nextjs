@@ -65,7 +65,7 @@ export default function EventsBrowser({ events }: Props) {
   }, [events, search, windowFilter, sortKey])
 
   return (
-    <section className="px-6 md:px-8 pb-20">
+    <section className="px-6 md:px-8 py-20">
       <div className="mx-auto max-w-[1200px]">
         <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
