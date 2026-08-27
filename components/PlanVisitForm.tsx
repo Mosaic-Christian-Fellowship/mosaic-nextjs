@@ -75,12 +75,26 @@ export default function PlanVisitForm() {
     )
   }
 
+  /*
+    White fill against the section's #F5F5F7 ground, so a field reads as
+    somewhere to type rather than as another panel. #D1D5DB borders instead of
+    #E5E7EB: the lighter grey disappeared against the tint. Corners are 8px —
+    enough to match the site, not so much that a one-line input reads as a pill.
+  */
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-xl border text-sm ${
-      errors[field] ? 'border-red-500' : 'border-[#E5E7EB]'
-    } focus:border-[#0066FF]`
+    `w-full px-4 py-3 rounded-lg border bg-white text-sm text-[#1E2024] transition-colors hover:border-[#9CA3AF] focus:outline-none focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/40 ${
+      errors[field] ? 'border-red-500' : 'border-[#D1D5DB]'
+    }`
 
   const labelClass = 'block text-sm font-semibold text-[#1E2024] mb-1.5'
+
+  /* Choice pills stay round — they are buttons, not fields. */
+  const optionClass = (selected: boolean) =>
+    `inline-flex items-center gap-1.5 px-4 py-2.5 min-h-11 rounded-full text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 ${
+      selected
+        ? 'bg-[#0066FF] text-white font-semibold hover:bg-[#0041A2]'
+        : 'bg-white border border-[#D1D5DB] text-[#1E2024] hover:border-[#0066FF] hover:text-[#0066FF]'
+    }`
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -155,9 +169,7 @@ export default function PlanVisitForm() {
           {VISITOR_TYPES.map((t) => (
             <button key={t} type="button" onClick={() => setForm({ ...form, visitorType: t })}
               aria-pressed={form.visitorType === t}
-              className={`inline-flex items-center gap-1.5 px-4 py-2.5 min-h-11 rounded-full text-sm ${
-                form.visitorType === t ? 'bg-[#0066FF] text-white font-semibold' : 'border border-[#E5E7EB]'
-              }`}>
+              className={optionClass(form.visitorType === t)}>
               {form.visitorType === t && <span aria-hidden="true">✓</span>}
               {t}
             </button>
@@ -190,7 +202,7 @@ export default function PlanVisitForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 min-h-11 bg-[#0066FF] text-white font-semibold rounded-[10px] hover:bg-[#0041A2] transition-colors disabled:opacity-50"
+        className="w-full py-3 min-h-11 bg-[#0066FF] text-white font-semibold rounded-lg transition-colors hover:bg-[#0041A2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 disabled:opacity-50 disabled:hover:bg-[#0066FF]"
       >
         {submitting ? 'Submitting...' : 'Plan My Visit'}
       </button>

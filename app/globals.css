@@ -19,6 +19,15 @@
   --color-framer-grey: #6B7280;
 }
 
+/*
+  In-page links glide rather than jump. The reduced-motion block below resets
+  this to `auto`, so anyone who has asked for less movement still gets an
+  instant jump.
+*/
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #FFFFFF;
   color: var(--color-framer-ink);

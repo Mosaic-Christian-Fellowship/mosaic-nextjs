@@ -5,6 +5,7 @@ import PlaceholderImage from '@/components/PlaceholderImage'
 import PlanVisitForm from '@/components/PlanVisitForm'
 import FaqAccordion from '@/components/FaqAccordion'
 import JumpLinks from '@/components/JumpLinks'
+import StepRail from '@/components/StepRail'
 
 export const metadata: Metadata = {
   title: "I'm New",
@@ -47,21 +48,21 @@ const services: Array<{ time: string; features: ServiceFeature[] }> = [
 ]
 
 const sundaySteps = [
-  { step: '1', heading: 'Arrive & Be Welcomed', detail: 'Greeters meet you at the door. Grab a coffee, find a seat. No pressure.' },
-  { step: '2', heading: 'Drop Off Your Kids', detail: 'Head to the welcome area to check your children in. Our kids team takes it from there.' },
-  { step: '3', heading: 'Worship Together', detail: '20-25 minutes of congregational worship — live music, familiar and new songs.' },
-  { step: '4', heading: 'The Message', detail: 'Our pastor teaches through books of the Bible, with historical context and practical application.' },
-  { step: '5', heading: 'Stay & Connect', detail: "Don't rush out. Some of the best conversations happen after the service. Stick around." },
+  { heading: 'Arrive & Be Welcomed', detail: 'Greeters meet you at the door. Grab a coffee, find a seat. No pressure.' },
+  { heading: 'Drop Off Your Kids', detail: 'Head to the welcome area to check your children in. Our kids team takes it from there.' },
+  { heading: 'Worship Together', detail: '20-25 minutes of congregational worship — live music, familiar and new songs.' },
+  { heading: 'The Message', detail: 'Our pastor teaches through books of the Bible, with historical context and practical application.' },
+  { heading: 'Stay & Connect', detail: "Don't rush out. Some of the best conversations happen after the service. Stick around." },
 ]
 
 // The jump bar and the page share one ordering — the links describe the page,
 // they are not a separate sequence that can drift from it.
 const JUMP_LINKS = [
   { id: 'what-to-expect', label: 'What to Expect' },
-  { id: 'when-and-where', label: 'When & Where' },
   { id: 'for-families', label: 'For Families' },
   { id: 'faqs', label: 'FAQs' },
   { id: 'your-journey', label: 'Your Journey' },
+  { id: 'when-and-where', label: 'When & Where' },
   { id: 'connect', label: 'Connect with Mosaic' },
 ]
 
@@ -70,10 +71,10 @@ const JUMP_LINKS = [
 const SECTION_OFFSET = 'scroll-mt-[140px] md:scroll-mt-[150px]'
 
 const getToKnowSteps = [
-  { step: 'Show Up', desc: 'Come to a Sunday service. Grab coffee. See if it feels right.' },
-  { step: 'Connect', desc: "Fill out a visit form or chat with someone after the service. We'll follow up — gently." },
-  { step: 'Go Deeper', desc: 'Join a community group, serve on a team, or start asking the bigger questions.' },
-  { step: 'Reach', desc: 'Once Mosaic feels like home, help someone else find theirs.' },
+  { heading: 'Show Up', detail: 'Come to a Sunday service. Grab coffee. See if it feels right.' },
+  { heading: 'Connect', detail: "Fill out a visit form or chat with someone after the service. We'll follow up — gently." },
+  { heading: 'Go Deeper', detail: 'Join a community group, serve on a team, or start asking the bigger questions.' },
+  { heading: 'Reach', detail: 'Once Mosaic feels like home, help someone else find theirs.' },
 ]
 
 export default function ImNew() {
@@ -92,27 +93,60 @@ export default function ImNew() {
         <div className="max-w-6xl mx-auto flex flex-col gap-10">
           <SectionHeader overline="What to Expect" heading="What a typical Sunday looks like" centered />
 
-          <ol className="flex flex-col lg:flex-row gap-6 lg:gap-4 lg:items-stretch">
-            {sundaySteps.map(({ step, heading, detail }, i) => (
-              <li
-                key={step}
-                className="flex-1 flex lg:flex-col gap-4 lg:gap-3 items-start lg:items-center lg:text-center"
-              >
-                <div className="flex lg:flex-col items-center gap-3 shrink-0">
-                  <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center shrink-0">
-                    {step}
-                  </span>
-                  {i < sundaySteps.length - 1 && (
-                    <span aria-hidden className="hidden lg:block w-px h-6 bg-[#E5E7EB]" />
-                  )}
+          <StepRail steps={sundaySteps} />
+        </div>
+      </section>
+
+      {/* Kids & Family */}
+      <section id="for-families" className={`py-20 px-6 bg-[#FFFFFF] ${SECTION_OFFSET}`}>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <PlaceholderImage label="Kids Ministry Photo" aspectRatio="aspect-[4/3]" />
+          <div className="flex flex-col gap-6">
+            <SectionHeader overline="Families Welcome" heading="Your Kids Are in Good Hands" />
+            <p className="text-[#6B7280]">
+              We have dedicated programming for every age group during the 9:30 and 11:30 AM services —
+              from the nursery through 5th grade. All children&apos;s workers are background-checked and trained.
+            </p>
+            <div className="flex flex-col gap-2">
+              {['Nursery (0-18 months)', 'Toddlers (18 months - 3 years)', 'Preschool (3-5 years)', 'Elementary (Grades 1-5)'].map((group) => (
+                <div key={group} className="flex gap-3 items-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
+                  <span className="text-[#6B7280]">{group}</span>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <h3 className="font-bold text-base text-[#1E2024]">{heading}</h3>
-                  <p className="text-sm text-[#6B7280]">{detail}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faqs" className={`py-20 px-6 ${SECTION_OFFSET}`}>
+        <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-2 md:gap-16">
+          <div className="flex flex-col gap-4">
+            <SectionHeader overline="Common Questions" heading="FAQ" />
+            <p className="text-[#6B7280] text-base leading-relaxed">
+              Have a question we haven&apos;t answered yet? We&apos;d love to hear from you — no question
+              is too small.
+            </p>
+            <a
+              href="mailto:welcoming@njmosaic.org"
+              className="text-[#0066FF] font-semibold hover:text-[#0041A2] transition-colors w-fit"
+            >
+              Get in touch →
+            </a>
+          </div>
+          <FaqAccordion items={faqs} />
+        </div>
+      </section>
+
+      {/* Ways to get to know Mosaic */}
+      <section id="your-journey" className={`py-20 px-6 bg-[#FFFFFF] ${SECTION_OFFSET}`}>
+        <div className="max-w-5xl mx-auto flex flex-col gap-8">
+          <SectionHeader overline="Your Journey" heading="Ways to get to know Mosaic" centered />
+          <p className="text-[#6B7280] text-center">
+            Some people show up for years before going deeper. Others jump in week one. Wherever you are, these are the doors that tend to be open.
+          </p>
+          <StepRail steps={getToKnowSteps} />
         </div>
       </section>
 
@@ -173,74 +207,24 @@ export default function ImNew() {
         </div>
       </section>
 
-      {/* Kids & Family */}
-      <section id="for-families" className={`py-20 px-6 bg-[#FFFFFF] ${SECTION_OFFSET}`}>
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <PlaceholderImage label="Kids Ministry Photo" aspectRatio="aspect-[4/3]" />
-          <div className="flex flex-col gap-6">
-            <SectionHeader overline="Families Welcome" heading="Your Kids Are in Good Hands" />
-            <p className="text-[#6B7280]">
-              We have dedicated programming for every age group during the 9:30 and 11:30 AM services —
-              from the nursery through 5th grade. All children&apos;s workers are background-checked and trained.
-            </p>
-            <div className="flex flex-col gap-2">
-              {['Nursery (0-18 months)', 'Toddlers (18 months - 3 years)', 'Preschool (3-5 years)', 'Elementary (Grades 1-5)'].map((group) => (
-                <div key={group} className="flex gap-3 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
-                  <span className="text-[#6B7280]">{group}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faqs" className={`py-20 px-6 ${SECTION_OFFSET}`}>
-        <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-2 md:gap-16">
-          <div className="flex flex-col gap-4">
-            <SectionHeader overline="Common Questions" heading="FAQ" />
-            <p className="text-[#6B7280] text-base leading-relaxed">
-              Have a question we haven&apos;t answered yet? We&apos;d love to hear from you — no question
-              is too small.
-            </p>
-            <a
-              href="mailto:welcoming@njmosaic.org"
-              className="text-[#0066FF] font-semibold hover:text-[#0041A2] transition-colors w-fit"
-            >
-              Get in touch →
-            </a>
-          </div>
-          <FaqAccordion items={faqs} />
-        </div>
-      </section>
-
-      {/* Ways to get to know Mosaic */}
-      <section id="your-journey" className={`py-20 px-6 bg-[#FFFFFF] ${SECTION_OFFSET}`}>
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
-          <SectionHeader overline="Your Journey" heading="Ways to get to know Mosaic" centered />
-          <p className="text-[#6B7280] text-center">
-            Some people show up for years before going deeper. Others jump in week one. Wherever you are, these are the doors that tend to be open.
-          </p>
-          <div className="grid md:grid-cols-4 gap-6">
-            {getToKnowSteps.map(({ step, desc }, i) => (
-              <div key={step} className="flex flex-col gap-3 text-center">
-                <span className="w-10 h-10 rounded-full bg-[#0066FF] text-white font-bold flex items-center justify-center mx-auto">{i + 1}</span>
-                <h3 className="font-bold text-[#1E2024]">{step}</h3>
-                <p className="text-sm text-[#6B7280]">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Connect with Mosaic */}
       <section id="connect" className={`py-20 px-6 bg-[#F5F5F7] ${SECTION_OFFSET}`}>
-        <div className="max-w-lg mx-auto flex flex-col gap-8">
-          <SectionHeader overline="We'd Love to Hear From You" heading="Connect with Mosaic" centered />
-          <p className="text-[#6B7280] text-center">
-            Tell us you&apos;re coming and someone from our community will reach out — to answer questions, walk you through what to expect, or just be a familiar face at the door on Sunday. No pressure, no pitch. Just a way to make finding the right church a little easier.
-          </p>
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="flex flex-col gap-6">
+            <SectionHeader overline="We'd Love to Hear From You" heading="Connect with Mosaic" />
+            <p className="text-[#6B7280] leading-relaxed">
+              Tell us you&apos;re coming and someone from our community will reach out — to answer questions, walk you through what to expect, or just be a familiar face at the door on Sunday. No pressure, no pitch. Just a way to make finding the right church a little easier.
+            </p>
+            <p className="text-[#6B7280] leading-relaxed">
+              Rather write to us directly?{' '}
+              <a
+                href="mailto:welcoming@njmosaic.org"
+                className="text-[#0066FF] font-semibold hover:text-[#0041A2] transition-colors"
+              >
+                welcoming@njmosaic.org
+              </a>
+            </p>
+          </div>
           <PlanVisitForm />
         </div>
       </section>
