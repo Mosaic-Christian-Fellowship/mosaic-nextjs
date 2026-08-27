@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json() as Record<string, unknown>
 
     const validation = validateFormInput(body, {
-      required: ['firstName', 'lastName', 'email', 'visitorType', 'ageRange', 'service'],
+      required: ['firstName', 'lastName', 'email', 'visitorType'],
       emailField: 'email',
     })
     if (!validation.valid) {
@@ -21,19 +21,18 @@ export async function POST(req: NextRequest) {
       phone: body.phone as string | undefined,
     })
 
-    // Build structured note with all form fields
-    const lines = [
-      `Visitor Type: ${body.visitorType}`,
-      `Age Range: ${body.ageRange}`,
-      `Service: ${body.service}`,
-    ]
+    // The note is what the welcome team actually reads on the person's record,
+    // so every line has to be plain English. The visitor type used to arrive as
+    // a Planning Center option ID and printed as "Visitor Type: 6660965"; the
+    // form sends the label now.
+    //
+    // Age range, service time and children are no longer asked for. Anything a
+    // visitor wants to share about them comes through "about", where they chose
+    // to say it.
+    const lines = [`Visitor type: ${body.visitorType}`]
     if (body.phone) lines.push(`Phone: ${body.phone}`)
-    if (body.children) {
-      const children = Array.isArray(body.children) ? body.children.join(', ') : body.children
-      lines.push(`Children: ${children}`)
-    }
-    if (body.heardAbout) lines.push(`How did you hear: ${body.heardAbout}`)
-    if (body.anythingElse) lines.push(`Additional: ${body.anythingElse}`)
+    if (body.heardAbout) lines.push(`How they heard about us: ${body.heardAbout}`)
+    if (body.aboutYou) lines.push(`About them: ${body.aboutYou}`)
 
     await addNoteToPerson(
       person.id,
