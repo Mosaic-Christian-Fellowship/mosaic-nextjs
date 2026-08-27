@@ -63,7 +63,7 @@ const JUMP_LINKS = [
   { id: 'faqs', label: 'FAQs' },
   { id: 'your-journey', label: 'Your Journey' },
   { id: 'when-and-where', label: 'When & Where' },
-  { id: 'connect', label: 'Connect with Mosaic' },
+  { id: 'connect', label: 'Connect with Us' },
 ]
 
 // Clears the sticky nav (80px on a phone, 90px once its CTA shows) plus this
@@ -207,11 +207,11 @@ export default function ImNew() {
         </div>
       </section>
 
-      {/* Connect with Mosaic */}
+      {/* Connect with Us */}
       <section id="connect" className={`py-20 px-6 bg-[#F5F5F7] ${SECTION_OFFSET}`}>
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div className="flex flex-col gap-6">
-            <SectionHeader overline="We'd Love to Hear From You" heading="Connect with Mosaic" />
+            <SectionHeader overline="We'd Love to Hear From You" heading="Connect with Us" />
             <p className="text-[#6B7280] leading-relaxed">
               Tell us you&apos;re coming and someone from our community will reach out — to answer questions, walk you through what to expect, or just be a familiar face at the door on Sunday. No pressure, no pitch. Just a way to make finding the right church a little easier.
             </p>
