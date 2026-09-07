@@ -1,0 +1,1032 @@
+{
+  "note": "Curated by the Mosaic team. Book blurbs are written for this site; cover art comes from the publishers. Regenerate with the harvest scripts in assets/resources/ — see docs/resources-data.md.",
+  "harvested": "2026-08-27",
+  "sections": [
+    {
+      "slug": "general",
+      "title": "General Resources",
+      "groups": [
+        {
+          "title": "New Believer: What Is Christianity All About?",
+          "books": [
+            {
+              "slug": "what-is-the-gospel-greg-gilbert",
+              "title": "What Is the Gospel?",
+              "author": "Greg Gilbert",
+              "description": "A short, plain answer to the question the whole faith rests on. Gilbert walks through God, humanity, Christ and our response, keeping to what the Bible itself says the good news is.",
+              "cover": {
+                "src": "/resources/covers/what-is-the-gospel-greg-gilbert.jpg",
+                "width": 575,
+                "height": 766
+              }
+            },
+            {
+              "slug": "who-is-jesus-greg-gilbert",
+              "title": "Who Is Jesus?",
+              "author": "Greg Gilbert",
+              "description": "An introduction for anyone who wants to know who Jesus actually was before deciding what to make of him. Gilbert works from the Gospel accounts rather than from later assumptions about them.",
+              "cover": {
+                "src": "/resources/covers/who-is-jesus-greg-gilbert.jpg",
+                "width": 357,
+                "height": 500
+              }
+            },
+            {
+              "slug": "am-i-really-a-christian-mike-mckinley",
+              "title": "Am I Really a Christian?",
+              "author": "Mike McKinley",
+              "description": "A frank book for people who assume they already know the answer. McKinley tests the question against what Scripture says marks a genuine believer, written with warmth rather than suspicion.",
+              "cover": {
+                "src": "/resources/covers/am-i-really-a-christian-mike-mckinley.jpg",
+                "width": 575,
+                "height": 903
+              }
+            }
+          ]
+        },
+        {
+          "title": "Where Can I Find Answers for My Skepticism?",
+          "books": [
+            {
+              "slug": "the-reason-for-god-timothy-keller",
+              "title": "The Reason for God",
+              "author": "Timothy Keller",
+              "description": "Keller takes the seven objections he heard most often as a Manhattan pastor, gives each one its full weight, and then makes the positive case for Christian faith. Written for the genuinely unconvinced.",
+              "cover": {
+                "src": "/resources/covers/the-reason-for-god-timothy-keller.jpg",
+                "width": 575,
+                "height": 868
+              }
+            },
+            {
+              "slug": "making-sense-of-god-timothy-keller",
+              "title": "Making Sense of God",
+              "author": "Timothy Keller",
+              "description": "The book Keller wrote for people not yet ready for The Reason for God. It asks whether secularism can actually deliver the meaning, freedom and identity it promises, before arguing anything about Christianity.",
+              "cover": {
+                "src": "/resources/covers/making-sense-of-god-timothy-keller.jpg",
+                "width": 575,
+                "height": 868
+              }
+            },
+            {
+              "slug": "evidence-that-demands-a-verdict-josh-mcdowell",
+              "title": "Evidence That Demands a Verdict",
+              "author": "Josh McDowell and Sean McDowell",
+              "description": "A reference volume rather than a read-through: manuscript evidence, archaeology and historical testimony assembled for people whose questions are evidential. Revised with Sean McDowell for contemporary objections.",
+              "cover": {
+                "src": "/resources/covers/evidence-that-demands-a-verdict-josh-mcdowell.jpg",
+                "width": 348,
+                "height": 500
+              }
+            }
+          ]
+        },
+        {
+          "title": "Spirituality: How Do I Live as a Christian?",
+          "books": [
+            {
+              "slug": "the-discipline-of-grace-jerry-bridges",
+              "title": "The Discipline of Grace",
+              "author": "Jerry Bridges",
+              "description": "Bridges works out how grace and effort fit together in daily Christian life, arguing that the gospel is not just how you begin but how you keep going. A steady, unhurried book.",
+              "cover": {
+                "src": "/resources/covers/the-discipline-of-grace-jerry-bridges.jpg",
+                "width": 333,
+                "height": 500
+              }
+            },
+            {
+              "slug": "now-that-i-m-a-christian-c-michael-patton",
+              "title": "Now That I'm a Christian",
+              "author": "C. Michael Patton",
+              "description": "Written for the first year of faith. Patton covers what a new Christian is expected to already understand but usually doesn't: the Trinity, Scripture, prayer, church and doubt.",
+              "cover": {
+                "src": "/resources/covers/now-that-i-m-a-christian-c-michael-patton.jpg",
+                "width": 575,
+                "height": 849
+              }
+            },
+            {
+              "slug": "desiring-god-john-piper",
+              "title": "Desiring God",
+              "author": "John Piper",
+              "description": "Piper's central argument, that God is most glorified in us when we are most satisfied in him. Reframes duty-driven faith around joy. Dense in places and worth the slower reading.",
+              "cover": {
+                "src": "/resources/covers/desiring-god-john-piper.jpg",
+                "width": 334,
+                "height": 500
+              }
+            },
+            {
+              "slug": "celebration-of-discipline-richard-j-foster",
+              "title": "Celebration of Discipline",
+              "author": "Richard J. Foster",
+              "description": "The modern classic on spiritual practice, covering meditation, prayer, fasting, study, simplicity, solitude, submission, service, confession, worship, guidance and celebration. Written across traditions rather than from one.",
+              "cover": {
+                "src": "/resources/covers/celebration-of-discipline-richard-j-foster.jpg",
+                "width": 437,
+                "height": 648
+              }
+            }
+          ]
+        },
+        {
+          "title": "What Does It Mean to Be a Disciple of Jesus?",
+          "books": [
+            {
+              "slug": "the-cost-of-discipleship-dietrich-bonhoeffer",
+              "title": "The Cost of Discipleship",
+              "author": "Dietrich Bonhoeffer",
+              "description": "Bonhoeffer's account of what following Christ actually costs, written in Germany in 1937 and shaped by that pressure. The source of the distinction between cheap grace and costly grace.",
+              "cover": {
+                "src": "/resources/covers/the-cost-of-discipleship-dietrich-bonhoeffer.jpg",
+                "width": 315,
+                "height": 500
+              }
+            },
+            {
+              "slug": "multiply-francis-chan",
+              "title": "Multiply",
+              "author": "Francis Chan",
+              "description": "A workbook built for two people to use together, on the assumption that disciples are made by other disciples rather than by programmes. Structured for someone discipling a newer believer.",
+              "cover": {
+                "src": "/resources/covers/multiply-francis-chan.jpg",
+                "width": 333,
+                "height": 500
+              }
+            },
+            {
+              "slug": "radical-david-platt",
+              "title": "Radical",
+              "author": "David Platt",
+              "description": "Platt sets the American dream against what Jesus asked of his followers and argues the two have quietly merged. A confrontational book, written by a pastor about his own congregation.",
+              "cover": {
+                "src": "/resources/covers/radical-david-platt.jpg",
+                "width": 575,
+                "height": 887
+              }
+            }
+          ]
+        },
+        {
+          "title": "How Do I Read the Bible?",
+          "books": [
+            {
+              "slug": "god-s-big-picture-vaughan-roberts",
+              "title": "God's Big Picture",
+              "author": "Vaughan Roberts",
+              "description": "Traces the storyline of Scripture through the theme of God's kingdom, showing how sixty-six books hold together as one narrative. Short, and the usual first recommendation for whole-Bible orientation.",
+              "cover": {
+                "src": "/resources/covers/god-s-big-picture-vaughan-roberts.jpg",
+                "width": 575,
+                "height": 863
+              }
+            },
+            {
+              "slug": "how-to-read-the-bible-for-all-its-worth-gordon-d-fee",
+              "title": "How to Read the Bible for All Its Worth",
+              "author": "Gordon D. Fee and Douglas Stuart",
+              "description": "The standard guide to reading each biblical genre on its own terms — narrative, law, psalm, prophecy, parable, epistle. Explains why a passage means what it means, not just what it means.",
+              "cover": {
+                "src": "/resources/covers/how-to-read-the-bible-for-all-its-worth-gordon-d-fee.jpg",
+                "width": 364,
+                "height": 500
+              }
+            },
+            {
+              "slug": "40-questions-about-interpreting-the-bible-robert-l-plummer",
+              "title": "40 Questions About Interpreting the Bible",
+              "author": "Robert L. Plummer",
+              "description": "A question-and-answer reference covering interpretation, from how to handle difficult texts to what the church has historically done with them. Useful to consult rather than to read straight through.",
+              "cover": {
+                "src": "/resources/covers/40-questions-about-interpreting-the-bible-robert-l-plummer.jpg",
+                "width": 575,
+                "height": 863
+              }
+            },
+            {
+              "slug": "ephesians-for-everyone-n-t-wright",
+              "title": "Ephesians for Everyone",
+              "author": "N. T. Wright",
+              "description": "Wright's own translation with short, accessible commentary section by section. Written for readers with no training, and suited to personal study or a small group working through the letter.",
+              "cover": {
+                "src": "/resources/covers/ephesians-for-everyone-n-t-wright.jpg",
+                "width": 575,
+                "height": 863
+              }
+            }
+          ]
+        },
+        {
+          "title": "New Members: What Does It Mean to Be a Church Member?",
+          "books": [
+            {
+              "slug": "what-is-a-healthy-church-mark-dever",
+              "title": "What Is a Healthy Church?",
+              "author": "Mark Dever",
+              "description": "Dever's short account of what a church is for and what marks one that is functioning as it should. The starting point of the nine marks framework.",
+              "cover": {
+                "src": "/resources/covers/what-is-a-healthy-church-mark-dever.jpg",
+                "width": 575,
+                "height": 805
+              }
+            },
+            {
+              "slug": "what-is-a-healthy-church-member-thabiti-m-anyabwile",
+              "title": "What Is a Healthy Church Member?",
+              "author": "Thabiti M. Anyabwile",
+              "description": "The companion volume, turning the question from the institution to the individual. Describes what it looks like to be a member who actually contributes to a church's health.",
+              "cover": {
+                "src": "/resources/covers/what-is-a-healthy-church-member-thabiti-m-anyabwile.jpg",
+                "width": 575,
+                "height": 805
+              }
+            },
+            {
+              "slug": "church-membership-jonathan-leeman",
+              "title": "Church Membership",
+              "author": "Jonathan Leeman",
+              "description": "Makes the case that membership is a real commitment to a particular body of people rather than an administrative formality. Short, and directly useful to someone deciding whether to join.",
+              "cover": {
+                "src": "/resources/covers/church-membership-jonathan-leeman.jpg",
+                "width": 575,
+                "height": 813
+              }
+            }
+          ]
+        },
+        {
+          "title": "How Can I Learn More About Who God Is?",
+          "books": [
+            {
+              "slug": "more-than-a-carpenter-josh-mcdowell",
+              "title": "More Than a Carpenter",
+              "author": "Josh McDowell",
+              "description": "A brief apologetic centred on the identity and resurrection of Jesus, written from McDowell's own move from skepticism. Frequently given away because it can be read in a sitting.",
+              "cover": {
+                "src": "/resources/covers/more-than-a-carpenter-josh-mcdowell.jpg",
+                "width": 600,
+                "height": 981
+              }
+            },
+            {
+              "slug": "it-is-well-mark-dever",
+              "title": "It Is Well",
+              "author": "Mark Dever and Michael Lawrence",
+              "description": "Fourteen expositions on substitutionary atonement, working from Exodus through the Gospels and epistles. Preached sermons rather than a systematic treatment, so it reads more warmly than the subject suggests.",
+              "cover": {
+                "src": "/resources/covers/it-is-well-mark-dever.jpg",
+                "width": 575,
+                "height": 766
+              }
+            },
+            {
+              "slug": "the-cross-of-christ-john-r-w-stott",
+              "title": "The Cross of Christ",
+              "author": "John R. W. Stott",
+              "description": "Stott's major work, and the standard modern treatment of the crucifixion — what happened, what it achieved and what it asks of those who accept it. Substantial and rewarding.",
+              "cover": {
+                "src": "/resources/covers/the-cross-of-christ-john-r-w-stott.jpg",
+                "width": 575,
+                "height": 862
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "singles-couples",
+      "title": "Singles & Couples",
+      "groups": [
+        {
+          "title": "For Women",
+          "books": [
+            {
+              "slug": "in-his-image-jen-wilkin",
+              "title": "In His Image",
+              "author": "Jen Wilkin",
+              "description": "Ten attributes of God that Christians are called to reflect rather than admire from a distance. A companion to Wilkin's None Like Him, and written for study alone or in a group.",
+              "cover": {
+                "src": "/resources/covers/in-his-image-jen-wilkin.jpg",
+                "width": 575,
+                "height": 875
+              }
+            },
+            {
+              "slug": "good-news-for-weary-women-elyse-m-fitzpatrick",
+              "title": "Good News for Weary Women",
+              "author": "Elyse M. Fitzpatrick",
+              "description": "Fitzpatrick names the extra rules Christian women are handed about marriage, motherhood and appearance, and sets them against what the gospel actually requires. Written for exhaustion rather than for improvement.",
+              "cover": {
+                "src": "/resources/covers/good-news-for-weary-women-elyse-m-fitzpatrick.jpg",
+                "width": 600,
+                "height": 900
+              }
+            },
+            {
+              "slug": "the-set-apart-woman-leslie-ludy",
+              "title": "The Set-Apart Woman",
+              "author": "Leslie Ludy",
+              "description": "Ludy argues for a life deliberately set apart for God and works through what gets in the way — distraction, comparison, comfort. Devotional in tone and direct in its challenge.",
+              "cover": {
+                "src": "/resources/covers/the-set-apart-woman-leslie-ludy.jpg",
+                "width": 600,
+                "height": 900
+              }
+            },
+            {
+              "slug": "having-a-mary-heart-in-a-martha-world-joanna-weaver",
+              "title": "Having a Mary Heart in a Martha World",
+              "author": "Joanna Weaver",
+              "description": "Built on the Luke 10 account of the two sisters, for women caught between service and stillness. A long-running favourite in women's groups, with study questions included.",
+              "cover": {
+                "src": "/resources/covers/having-a-mary-heart-in-a-martha-world-joanna-weaver.jpg",
+                "width": 575,
+                "height": 873
+              }
+            },
+            {
+              "slug": "women-of-the-word-jen-wilkin",
+              "title": "Women of the Word",
+              "author": "Jen Wilkin",
+              "description": "A method book: how to study the Bible with both heart and mind rather than looking for a feeling. Wilkin teaches comprehension before interpretation before application.",
+              "cover": {
+                "src": "/resources/covers/women-of-the-word-jen-wilkin.jpg",
+                "width": 575,
+                "height": 882
+              }
+            },
+            {
+              "slug": "the-well-watered-woman-gretchen-saffles",
+              "title": "The Well-Watered Woman",
+              "author": "Gretchen Saffles",
+              "description": "Saffles writes about rootedness in Scripture as the alternative to running dry, mixing teaching with her own account. Reflective, and structured around gospel fullness, transformation and obedience.",
+              "cover": {
+                "src": "/resources/covers/the-well-watered-woman-gretchen-saffles.jpg",
+                "width": 600,
+                "height": 803
+              }
+            },
+            {
+              "slug": "the-emotionally-healthy-woman-geri-scazzero",
+              "title": "The Emotionally Healthy Woman",
+              "author": "Geri Scazzero",
+              "description": "Scazzero names eight things she had to quit — being afraid of what others think, lying, dying to the wrong things — to become spiritually and emotionally whole. Unusually candid.",
+              "cover": {
+                "src": "/resources/covers/the-emotionally-healthy-woman-geri-scazzero.jpg",
+                "width": 403,
+                "height": 600
+              }
+            }
+          ]
+        },
+        {
+          "title": "For Men",
+          "books": [
+            {
+              "slug": "the-masculine-mandate-richard-d-phillips",
+              "title": "The Masculine Mandate",
+              "author": "Richard D. Phillips",
+              "description": "Phillips builds a definition of biblical manhood from Genesis 2, working outward to a man's role in marriage, family, church and work. Argues from the text rather than from culture.",
+              "cover": {
+                "src": "/resources/covers/the-masculine-mandate-richard-d-phillips.jpg",
+                "width": 343,
+                "height": 500
+              }
+            },
+            {
+              "slug": "disciplines-of-a-godly-man-r-kent-hughes",
+              "title": "Disciplines of a Godly Man",
+              "author": "R. Kent Hughes",
+              "description": "A wide-ranging book on the habits that shape a man's character — purity, marriage, fatherhood, friendship, mind, work, prayer. Includes a study guide and is often used in men's groups.",
+              "cover": {
+                "src": "/resources/covers/disciplines-of-a-godly-man-r-kent-hughes.jpg",
+                "width": 575,
+                "height": 880
+              }
+            },
+            {
+              "slug": "the-dude-s-guide-to-manhood-darrin-patrick",
+              "title": "The Dude's Guide to Manhood",
+              "author": "Darrin Patrick",
+              "description": "Patrick works through what a man is meant to be — determined, dependable, disciplined, faithful — in short, plainly written chapters. Aimed at men who would not usually pick up a Christian book.",
+              "cover": {
+                "src": "/resources/covers/the-dude-s-guide-to-manhood-darrin-patrick.jpg",
+                "width": 330,
+                "height": 500
+              }
+            },
+            {
+              "slug": "raising-men-not-boys-mike-fabarez",
+              "title": "Raising Men, Not Boys",
+              "author": "Mike Fabarez",
+              "description": "On raising sons toward maturity and responsibility rather than prolonged adolescence. Fabarez writes for parents wanting a long view of what they are actually forming.",
+              "cover": {
+                "src": "/resources/covers/raising-men-not-boys-mike-fabarez.jpg",
+                "width": 324,
+                "height": 500
+              }
+            }
+          ]
+        },
+        {
+          "title": "For Married Couples",
+          "books": [
+            {
+              "slug": "marriage-matters-winston-t-smith",
+              "title": "Marriage Matters",
+              "author": "Winston T. Smith",
+              "description": "A counsellor's book on the ordinary moments where marriages are actually made or lost. Practical, focused on daily interaction rather than on principles held at a distance.",
+              "cover": {
+                "src": "/resources/covers/marriage-matters-winston-t-smith.jpg",
+                "width": 330,
+                "height": 500
+              }
+            },
+            {
+              "slug": "the-meaning-of-marriage-timothy-keller",
+              "title": "The Meaning of Marriage",
+              "author": "Timothy Keller",
+              "description": "Keller, with Kathy Keller, on marriage as covenant rather than contract — what it is for, why it is hard, and how the gospel bears on it. Includes a chapter addressed to single readers.",
+              "cover": {
+                "src": "/resources/covers/the-meaning-of-marriage-timothy-keller.jpg",
+                "width": 575,
+                "height": 906
+              }
+            },
+            {
+              "slug": "love-that-lasts-gary-ricucci",
+              "title": "Love That Lasts",
+              "author": "Gary Ricucci and Betsy Ricucci",
+              "description": "Gary and Betsy Ricucci write from long marriage on communication, conflict, romance and forgiveness. Warm and concrete, with the kind of specificity that comes from having done it.",
+              "cover": {
+                "src": "/resources/covers/love-that-lasts-gary-ricucci.jpg",
+                "width": 319,
+                "height": 475
+              }
+            },
+            {
+              "slug": "sacred-marriage-gary-thomas",
+              "title": "Sacred Marriage",
+              "author": "Gary Thomas",
+              "description": "Thomas's question is whether God designed marriage to make us holy more than to make us happy. Reframes the difficulties as formation rather than as evidence something has gone wrong.",
+              "cover": {
+                "src": "/resources/covers/sacred-marriage-gary-thomas.jpg",
+                "width": 575,
+                "height": 766
+              }
+            },
+            {
+              "slug": "you-and-me-forever-francis-chan",
+              "title": "You and Me Forever",
+              "author": "Francis Chan and Lisa Chan",
+              "description": "Francis and Lisa Chan argue that a marriage aimed only at itself will disappoint, and that couples do better aimed together at something beyond them. Short chapters, written jointly.",
+              "cover": {
+                "src": "/resources/covers/you-and-me-forever-francis-chan.jpg",
+                "width": 575,
+                "height": 860
+              }
+            },
+            {
+              "slug": "loving-him-well-gary-thomas",
+              "title": "Loving Him Well",
+              "author": "Gary Thomas",
+              "description": "A revision of Thomas's earlier Sacred Influence, on how a wife actually shapes her husband. Practical, and honest that influence is not the same as control.",
+              "cover": {
+                "src": "/resources/covers/loving-him-well-gary-thomas.jpg",
+                "width": 324,
+                "height": 500
+              }
+            }
+          ]
+        },
+        {
+          "title": "For Families",
+          "books": [
+            {
+              "slug": "gospel-centered-family-tim-chester",
+              "title": "Gospel-Centered Family",
+              "author": "Tim Chester and Ed Moll",
+              "description": "Chester and Ed Moll on ordering family life around grace rather than around performance or control. Short, practical, and written to be used by parents rather than studied.",
+              "cover": {
+                "src": "/resources/covers/gospel-centered-family-tim-chester.jpg",
+                "width": 575,
+                "height": 864
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "leadership",
+      "title": "Leadership & Discipleship",
+      "groups": [
+        {
+          "title": "How Can I Be a Christian at Work?",
+          "books": [
+            {
+              "slug": "every-good-endeavor-timothy-keller",
+              "title": "Every Good Endeavor",
+              "author": "Timothy Keller",
+              "description": "Keller on why work matters to God, why it frustrates us, and how the gospel changes the way it is done. The fullest treatment of vocation on this list.",
+              "cover": {
+                "src": "/resources/covers/every-good-endeavor-timothy-keller.jpg",
+                "width": 575,
+                "height": 872
+              }
+            },
+            {
+              "slug": "the-call-os-guinness",
+              "title": "The Call",
+              "author": "Os Guinness",
+              "description": "Guinness on calling as the organising centre of a life — not just a job, but the whole of what a person is for. Reflective, drawing widely on history and biography.",
+              "cover": {
+                "src": "/resources/covers/the-call-os-guinness.jpg",
+                "width": 333,
+                "height": 500
+              }
+            },
+            {
+              "slug": "work-matters-tom-nelson",
+              "title": "Work Matters",
+              "author": "Tom Nelson",
+              "description": "Nelson argues that Sunday and Monday belong to the same life, and that pastors have often failed to connect them. Written by a pastor correcting his own earlier teaching.",
+              "cover": {
+                "src": "/resources/covers/work-matters-tom-nelson.jpg",
+                "width": 575,
+                "height": 889
+              }
+            },
+            {
+              "slug": "work-daniel-m-doriani",
+              "title": "Work",
+              "author": "Daniel M. Doriani",
+              "description": "A biblical theology of work covering purpose, dignity and transformation, including the harder questions about difficult jobs and unjust workplaces. More systematic than the others here.",
+              "cover": {
+                "src": "/resources/covers/work-daniel-m-doriani.jpg",
+                "width": 324,
+                "height": 500
+              }
+            }
+          ]
+        },
+        {
+          "title": "How Can I Share My Faith?",
+          "books": [
+            {
+              "slug": "honest-evangelism-rico-tice",
+              "title": "Honest Evangelism",
+              "author": "Rico Tice",
+              "description": "Tice is candid that evangelism is uncomfortable and does it anyway. Short, realistic about hostility, and more concerned with courage than with technique.",
+              "cover": {
+                "src": "/resources/covers/honest-evangelism-rico-tice.jpg",
+                "width": 575,
+                "height": 882
+              }
+            },
+            {
+              "slug": "out-of-the-saltshaker-and-into-the-world-rebecca-manley-pippert",
+              "title": "Out of the Saltshaker and Into the World",
+              "author": "Rebecca Manley Pippert",
+              "description": "A long-standing classic arguing that evangelism is a way of life rather than an event. Pippert writes about friendship, honesty and asking real questions.",
+              "cover": {
+                "src": "/resources/covers/out-of-the-saltshaker-and-into-the-world-rebecca-manley-pippert.jpg",
+                "width": 334,
+                "height": 475
+              }
+            },
+            {
+              "slug": "learning-evangelism-from-jesus-jerram-barrs",
+              "title": "Learning Evangelism from Jesus",
+              "author": "Jerram Barrs",
+              "description": "Barrs works through the encounters in the Gospels one by one, drawing out how Jesus actually spoke to people. A study of method by observation rather than by rule.",
+              "cover": {
+                "src": "/resources/covers/learning-evangelism-from-jesus-jerram-barrs.jpg",
+                "width": 575,
+                "height": 889
+              }
+            },
+            {
+              "slug": "the-gospel-and-personal-evangelism-mark-dever",
+              "title": "The Gospel and Personal Evangelism",
+              "author": "Mark Dever",
+              "description": "Dever answers the practical questions directly: who should evangelise, what the message is, and what does not count as evangelism. Brief and clarifying.",
+              "cover": {
+                "src": "/resources/covers/the-gospel-and-personal-evangelism-mark-dever.jpg",
+                "width": 575,
+                "height": 904
+              }
+            }
+          ]
+        },
+        {
+          "title": "Leadership: How Can I Lead?",
+          "books": [
+            {
+              "slug": "the-conviction-to-lead-r-albert-mohler",
+              "title": "The Conviction to Lead",
+              "author": "R. Albert Mohler",
+              "description": "Twenty-five principles arguing that leadership begins with conviction rather than technique. Mohler writes for people responsible for institutions as well as for teams.",
+              "cover": {
+                "src": "/resources/covers/the-conviction-to-lead-r-albert-mohler.jpg",
+                "width": 575,
+                "height": 866
+              }
+            },
+            {
+              "slug": "spiritual-leadership-j-oswald-sanders",
+              "title": "Spiritual Leadership",
+              "author": "J. Oswald Sanders",
+              "description": "The older classic on this list, and still the most quoted. Sanders sets out the qualifications and cost of spiritual leadership, drawing heavily on biography.",
+              "cover": {
+                "src": "/resources/covers/spiritual-leadership-j-oswald-sanders.jpg",
+                "width": 355,
+                "height": 500
+              }
+            },
+            {
+              "slug": "spiritual-leadership-henry-t-blackaby",
+              "title": "Spiritual Leadership",
+              "author": "Henry T. Blackaby and Richard Blackaby",
+              "description": "Henry and Richard Blackaby on moving people onto God's agenda rather than the leader's. Written with organisations in view, and often used for elder and staff training.",
+              "cover": {
+                "src": "/resources/covers/spiritual-leadership-henry-t-blackaby.jpg",
+                "width": 575,
+                "height": 709
+              }
+            },
+            {
+              "slug": "leading-with-a-limp-dan-b-allender",
+              "title": "Leading with a Limp",
+              "author": "Dan B. Allender",
+              "description": "Allender argues that a leader's brokenness is not a disqualification but the ground of real influence. Counterintuitive, and unusually honest about failure.",
+              "cover": {
+                "src": "/resources/covers/leading-with-a-limp-dan-b-allender.jpg",
+                "width": 575,
+                "height": 862
+              }
+            }
+          ]
+        },
+        {
+          "title": "What Is World Mission?",
+          "books": [
+            {
+              "slug": "let-the-nations-be-glad-john-piper",
+              "title": "Let the Nations Be Glad!",
+              "author": "John Piper",
+              "description": "Piper's case that worship is both the fuel and the goal of missions. The standard theological argument for why the church sends anyone anywhere.",
+              "cover": {
+                "src": "/resources/covers/let-the-nations-be-glad-john-piper.jpg",
+                "width": 331,
+                "height": 500
+              }
+            },
+            {
+              "slug": "what-is-the-mission-of-the-church-kevin-deyoung",
+              "title": "What Is the Mission of the Church?",
+              "author": "Kevin DeYoung and Greg Gilbert",
+              "description": "DeYoung and Greg Gilbert ask what the church is actually sent to do, and press on whether social justice, cultural renewal and evangelism are the same task. Argumentative in a useful way.",
+              "cover": {
+                "src": "/resources/covers/what-is-the-mission-of-the-church-kevin-deyoung.jpg",
+                "width": 575,
+                "height": 889
+              }
+            },
+            {
+              "slug": "christian-mission-in-the-modern-world-john-r-w-stott",
+              "title": "Christian Mission in the Modern World",
+              "author": "John R. W. Stott",
+              "description": "Stott takes five contested words — mission, evangelism, dialogue, salvation, conversion — and defines each carefully. A short book that settles a lot of vocabulary.",
+              "cover": {
+                "src": "/resources/covers/christian-mission-in-the-modern-world-john-r-w-stott.jpg",
+                "width": 575,
+                "height": 948
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "emotional-health",
+      "title": "Emotional, Mental & Spiritual Health",
+      "groups": [
+        {
+          "title": "Why Am I So Anxious and Worried?",
+          "books": [
+            {
+              "slug": "emotionally-healthy-spirituality-peter-scazzero",
+              "title": "Emotionally Healthy Spirituality",
+              "author": "Peter Scazzero",
+              "description": "Scazzero's argument that it is not possible to be spiritually mature while remaining emotionally immature. Written after his own breakdown, and the root of a wider body of material.",
+              "cover": {
+                "src": "/resources/covers/emotionally-healthy-spirituality-peter-scazzero.jpg",
+                "width": 324,
+                "height": 500
+              }
+            },
+            {
+              "slug": "when-i-am-afraid-edward-t-welch",
+              "title": "When I Am Afraid",
+              "author": "Edward T. Welch",
+              "description": "A guided workbook rather than a book to read through, taking fear and anxiety a step at a time. Designed to be worked slowly, alone or with a counsellor.",
+              "cover": {
+                "src": "/resources/covers/when-i-am-afraid-edward-t-welch.jpg",
+                "width": 334,
+                "height": 500
+              }
+            },
+            {
+              "slug": "running-scared-edward-t-welch",
+              "title": "Running Scared",
+              "author": "Edward T. Welch",
+              "description": "Welch on fear, worry and rest, moving through the specific things people are afraid of — money, people, death — and what Scripture says to each. Substantial and pastoral.",
+              "cover": {
+                "src": "/resources/covers/running-scared-edward-t-welch.jpg",
+                "width": 333,
+                "height": 500
+              }
+            }
+          ]
+        },
+        {
+          "title": "What Do I Do with My Shame?",
+          "books": [
+            {
+              "slug": "the-soul-of-shame-curt-thompson",
+              "title": "The Soul of Shame",
+              "author": "Curt Thompson",
+              "description": "Thompson, a psychiatrist, brings neuroscience and Scripture together on how shame forms and how it is undone in relationship. The most clinically grounded book on this list.",
+              "cover": {
+                "src": "/resources/covers/the-soul-of-shame-curt-thompson.jpg",
+                "width": 575,
+                "height": 863
+              }
+            },
+            {
+              "slug": "unashamed-heather-davis-nelson",
+              "title": "Unashamed",
+              "author": "Heather Davis Nelson",
+              "description": "Nelson on the difference between guilt and shame, and how the gospel addresses the second. Foreword by Edward Welch, which is why the old site listed it under his name.",
+              "cover": {
+                "src": "/resources/covers/unashamed-heather-davis-nelson.jpg",
+                "width": 575,
+                "height": 875
+              }
+            },
+            {
+              "slug": "shame-interrupted-edward-t-welch",
+              "title": "Shame Interrupted",
+              "author": "Edward T. Welch",
+              "description": "Welch's fuller treatment of shame — where it comes from, how it operates, and what Christ does about it. Longer and more thorough than Unashamed, and often read after it.",
+              "cover": {
+                "src": "/resources/covers/shame-interrupted-edward-t-welch.jpg",
+                "width": 332,
+                "height": 500
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "justice-mercy",
+      "title": "Justice & Mercy",
+      "groups": [
+        {
+          "title": "Books",
+          "books": [
+            {
+              "slug": "the-good-news-about-injustice-gary-a-haugen",
+              "title": "The Good News About Injustice",
+              "author": "Gary A. Haugen",
+              "description": "Written by the founder of International Justice Mission, on why Christians should expect to act against injustice and what that has looked like in practice. The entry point to this section.",
+              "cover": {
+                "src": "/resources/covers/the-good-news-about-injustice-gary-a-haugen.jpg",
+                "width": 575,
+                "height": 863
+              }
+            },
+            {
+              "slug": "the-locust-effect-gary-a-haugen",
+              "title": "The Locust Effect",
+              "author": "Gary A. Haugen",
+              "description": "Haugen and Victor Boutros argue that the poor cannot escape poverty while everyday violence goes unpoliced, and that aid has largely ignored this. The most data-driven book here.",
+              "cover": {
+                "src": "/resources/covers/the-locust-effect-gary-a-haugen.jpg",
+                "width": 575,
+                "height": 867
+              }
+            },
+            {
+              "slug": "the-insanity-of-god-nik-ripken",
+              "title": "The Insanity of God",
+              "author": "Nik Ripken",
+              "description": "Ripken's account of interviewing believers in persecuted countries after his own faith collapsed on the mission field. Narrative rather than argument, and difficult in places.",
+              "cover": {
+                "src": "/resources/covers/the-insanity-of-god-nik-ripken.jpg",
+                "width": 333,
+                "height": 500
+              }
+            },
+            {
+              "slug": "generous-justice-timothy-keller",
+              "title": "Generous Justice",
+              "author": "Timothy Keller",
+              "description": "Keller on why the biblical case for doing justice runs through grace rather than guilt, and why that changes how it is sustained. Short, and a good bridge for skeptical readers.",
+              "cover": {
+                "src": "/resources/covers/generous-justice-timothy-keller.jpg",
+                "width": 349,
+                "height": 500
+              }
+            },
+            {
+              "slug": "shrewd-samaritan-bruce-wydick",
+              "title": "Shrewd Samaritan",
+              "author": "Bruce Wydick",
+              "description": "An economist asks which forms of helping actually help. Wydick tests common assumptions about aid against evidence, without arguing anyone should do less.",
+              "cover": {
+                "src": "/resources/covers/shrewd-samaritan-bruce-wydick.jpg",
+                "width": 333,
+                "height": 500
+              }
+            },
+            {
+              "slug": "ministries-of-mercy-timothy-keller",
+              "title": "Ministries of Mercy",
+              "author": "Timothy Keller",
+              "description": "Keller's earliest book, on how a local church organises practical mercy — who it serves, how, and where the limits are. Written for churches rather than for individuals.",
+              "cover": {
+                "src": "/resources/covers/ministries-of-mercy-timothy-keller.jpg",
+                "width": 332,
+                "height": 500
+              }
+            }
+          ]
+        }
+      ],
+      "organizations": [
+        {
+          "name": "International Justice Mission",
+          "shortName": "IJM",
+          "url": "https://www.ijm.org"
+        },
+        {
+          "name": "Compassion International",
+          "url": "https://www.compassion.com",
+          "linkNote": "old site linked compassion.org, which no longer resolves"
+        },
+        {
+          "name": "World Vision",
+          "url": "https://www.worldvision.org"
+        },
+        {
+          "name": "World Relief",
+          "url": "https://worldrelief.org"
+        },
+        {
+          "name": "Open Doors",
+          "url": "https://www.opendoors.org"
+        },
+        {
+          "name": "Voice of the Martyrs",
+          "url": "https://www.persecution.com"
+        },
+        {
+          "name": "The Bowery Mission",
+          "url": "https://www.bowery.org",
+          "linkNote": "old site linked my.bowery.org, which redirects here"
+        }
+      ]
+    },
+    {
+      "slug": "race-reconciliation",
+      "title": "Race, Reconciliation & the Church",
+      "groups": [
+        {
+          "title": "Books",
+          "books": [
+            {
+              "slug": "the-color-of-compromise-jemar-tisby",
+              "title": "The Color of Compromise",
+              "author": "Jemar Tisby",
+              "description": "A historical account of the American church's complicity in racism, from slavery through the civil rights era to the present. Tisby's case is documentary rather than rhetorical.",
+              "cover": {
+                "src": "/resources/covers/the-color-of-compromise-jemar-tisby.jpg",
+                "width": 324,
+                "height": 500
+              }
+            },
+            {
+              "slug": "divided-by-faith-michael-o-emerson",
+              "title": "Divided by Faith",
+              "author": "Michael O. Emerson and Christian Smith",
+              "description": "Emerson and Christian Smith's sociological study of why American evangelicals, sincerely opposed to racism, have tended to reinforce racial division. Research-based, and frequently cited since.",
+              "cover": {
+                "src": "/resources/covers/divided-by-faith-michael-o-emerson.jpg",
+                "width": 575,
+                "height": 878
+              }
+            },
+            {
+              "slug": "woke-church-eric-mason",
+              "title": "Woke Church",
+              "author": "Eric Mason",
+              "description": "Mason calls the church to be aware, awakened and accountable on questions of justice, arguing the case from Scripture. Written by a pastor to other pastors.",
+              "cover": {
+                "src": "/resources/covers/woke-church-eric-mason.jpg",
+                "width": 324,
+                "height": 500
+              }
+            },
+            {
+              "slug": "just-mercy-bryan-stevenson",
+              "title": "Just Mercy",
+              "author": "Bryan Stevenson",
+              "description": "Stevenson's account of founding the Equal Justice Initiative and defending Walter McMillian, wrongly sentenced to death. Memoir rather than theology, and the basis for the 2019 film.",
+              "cover": {
+                "src": "/resources/covers/just-mercy-bryan-stevenson.jpg",
+                "width": 575,
+                "height": 885
+              }
+            }
+          ]
+        }
+      ],
+      "films": [
+        {
+          "title": "Just Mercy",
+          "year": 2019,
+          "platform": "Amazon Prime Video",
+          "note": "Old site note: free to rent for the month of June"
+        },
+        {
+          "title": "13th",
+          "year": 2016,
+          "platform": "Netflix"
+        },
+        {
+          "title": "When They See Us",
+          "year": 2019,
+          "platform": "Netflix"
+        }
+      ],
+      "talks": [
+        {
+          "title": "Race and Reconciliation",
+          "date": "2017-07-23",
+          "source": "Mosaic sermon",
+          "url": "https://www.njmosaic.org/sermons/2017/7/23/modern-crisis-race-and-reconciliation"
+        },
+        {
+          "title": "Breaking Ethnocentrism",
+          "date": "2019-03-17",
+          "source": "Mosaic sermon",
+          "url": "https://www.njmosaic.org/sermons/2019/3/17/acts-breaking-ethnocentrism"
+        },
+        {
+          "title": "Engaging in Politics",
+          "date": "2017-07-16",
+          "source": "Mosaic sermon",
+          "url": "https://www.njmosaic.org/sermons/2017/7/16/modern-crisis-the-christian-and-politics"
+        },
+        {
+          "title": "Overcoming Conflict",
+          "date": "2018-04-08",
+          "source": "Mosaic sermon",
+          "url": "https://www.njmosaic.org/sermons/2018/4/8/becoming-one-conflict"
+        },
+        {
+          "title": "Binding Up Our Achilles Heel",
+          "date": "2015-03-02",
+          "author": "K. A. Ellis",
+          "source": "ERLC",
+          "url": "https://erlc.com/resource-library/articles/binding-up-our-achilles-heel"
+        },
+        {
+          "title": "Race Is More Than Just a Social Cause",
+          "date": "2017-08-26",
+          "author": "John Piper",
+          "source": "YouTube",
+          "url": "https://www.youtube.com/watch?v=K8CLHViMKR4"
+        },
+        {
+          "title": "How Can Blacks and Whites Stand Together on Racial Injustice?",
+          "date": "2016-07-08",
+          "source": "The Gospel Coalition",
+          "url": "https://www.youtube.com/watch?v=uc0OaQM8USM"
+        },
+        {
+          "title": "What Was the Turning Point in Your Church Regarding Race?",
+          "date": "2016-04-30",
+          "source": "The Gospel Coalition",
+          "url": "https://www.youtube.com/watch?v=O-tpZyv4R7c"
+        }
+      ]
+    }
+  ]
+}
