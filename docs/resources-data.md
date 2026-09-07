@@ -63,13 +63,15 @@ image content — a standard-deviation floor plus a perceptual match against the
 placeholder cards — and writes to a staging directory for review rather than over the
 live files.
 
+All 72 books have cover art. Four of them came from publisher sources rather than the
+generic ones, because the ISBN in the book metadata pointed at the wrong product — a
+workbook, an audiobook, or nothing at all. When a cover looks like the wrong edition,
+open the publisher's product page for the print ISBN and take its `og:image`; Tyndale
+also serves hi-res art directly at
+`files.tyndale.com/thpdata/images--covers/HiResJPG/<hyphenated-isbn13>.jpg`.
+
 ## Known gaps
 
-- Two books have no cover: *In His Image* (Jen Wilkin) and *Good News for Weary Women*
-  (Elyse Fitzpatrick). No free source has art for either edition.
-- *Emotionally Healthy Spirituality* shows the workbook edition's cover, and
-  *The Well-Watered Woman* shows the audio edition's. Both are the right book, wrong
-  packaging.
 - The talks in the race section link to `njmosaic.org` sermon pages on the old site.
   Those resolve today and will need revisiting at the domain cutover.
 - The section intros on the page are drafts written from the book lists. They are not

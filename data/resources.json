@@ -308,14 +308,22 @@
               "title": "In His Image",
               "author": "Jen Wilkin",
               "description": "Ten attributes of God that Christians are called to reflect rather than admire from a distance. A companion to Wilkin's None Like Him, and written for study alone or in a group.",
-              "cover": null
+              "cover": {
+                "src": "/resources/covers/in-his-image-jen-wilkin.jpg",
+                "width": 575,
+                "height": 875
+              }
             },
             {
               "slug": "good-news-for-weary-women-elyse-m-fitzpatrick",
               "title": "Good News for Weary Women",
               "author": "Elyse M. Fitzpatrick",
               "description": "Fitzpatrick names the extra rules Christian women are handed about marriage, motherhood and appearance, and sets them against what the gospel actually requires. Written for exhaustion rather than for improvement.",
-              "cover": null
+              "cover": {
+                "src": "/resources/covers/good-news-for-weary-women-elyse-m-fitzpatrick.jpg",
+                "width": 600,
+                "height": 900
+              }
             },
             {
               "slug": "the-set-apart-woman-leslie-ludy",
@@ -358,7 +366,7 @@
               "cover": {
                 "src": "/resources/covers/the-well-watered-woman-gretchen-saffles.jpg",
                 "width": 600,
-                "height": 600
+                "height": 803
               }
             },
             {
@@ -717,8 +725,8 @@
               "description": "Scazzero's argument that it is not possible to be spiritually mature while remaining emotionally immature. Written after his own breakdown, and the root of a wider body of material.",
               "cover": {
                 "src": "/resources/covers/emotionally-healthy-spirituality-peter-scazzero.jpg",
-                "width": 575,
-                "height": 863
+                "width": 324,
+                "height": 500
               }
             },
             {

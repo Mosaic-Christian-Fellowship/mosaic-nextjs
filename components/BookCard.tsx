@@ -10,8 +10,9 @@ import type { Book } from '@/lib/resources'
   very long scroll and buries the blurb — and the blurb is what answers "is this
   for me?". The cover stays a fixed width and the text takes the rest.
 
-  Two of the 72 books have no cover art we can use. Rather than a grey box, the
-  fallback sets the title in the same space, so the row still reads as a book.
+  Every book has cover art today. The fallback stays because the data allows a
+  null cover: rather than a grey box, it sets the title in the same space, so
+  the row still reads as a book.
 */
 export default function BookCard({ book }: { book: Book }) {
   return (
