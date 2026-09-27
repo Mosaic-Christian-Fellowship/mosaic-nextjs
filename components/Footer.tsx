@@ -13,9 +13,9 @@ const linkColumns = [
     heading: 'Quick Links',
     links: [
       { label: 'Our Beliefs', href: '/about' },
-      { label: 'Our Team', href: '/about' },
+      { label: 'Our Team', href: '/about/staff' },
       { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Training', href: '#' },
+      { label: 'Discipleship Academy', href: '#' },
       { label: 'Resources', href: '#' },
     ],
   },
@@ -23,7 +23,7 @@ const linkColumns = [
     heading: 'Community Links',
     links: [
       { label: 'Our Ministries', href: '/connect' },
-      { label: 'Community Groups', href: '/connect' },
+      { label: 'Formation Groups', href: '/connect' },
       { label: 'Education Department', href: '#' },
       { label: 'Missions', href: '#' },
       { label: 'Gallery', href: '#' },

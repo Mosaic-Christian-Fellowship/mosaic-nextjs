@@ -8,16 +8,15 @@ import ProgressiveBlur from '@/components/ProgressiveBlur'
 type Card = { image: string; title: string; href: string; description?: string }
 
 const cards: Card[] = [
-  { image: '/framer/stage-of-life/SxhzxV8ao1HtFEGdS1v6nT8KFw.jpg', title: 'Community Groups', href: '/connect' },
+  { image: '/framer/stage-of-life/SxhzxV8ao1HtFEGdS1v6nT8KFw.jpg', title: 'Formation Groups', href: '/connect' },
   { image: '/framer/stage-of-life/ULigcCSyd0TmrohdwqwgMb67Nrw.jpg', title: 'Education Department', href: '#' },
   { image: '/framer/stage-of-life/YRLYlc5g2NeUUHNg9EKHwwsLeKw.jpg', title: 'Ministries Directory', href: '/connect' },
   { image: '/framer/stage-of-life/Cpk7jBgsOKx9HczmVdH3AOE9pjg.jpg', title: 'Mosaic Team', href: '/about' },
   { image: '/framer/stage-of-life/zSVrJnDUK64kiEjToVnYgtBCOxc.jpg', title: 'Community Gallery', href: '#' },
   { image: '/framer/stage-of-life/MUKMullc3RpovcMHfY2iLUrJ3s.jpg', title: 'Testimonies', href: '/messages/testimonies' },
   { image: '/framer/stage-of-life/psZwfs8AeLrbTtHECDGwhd6rx0.jpg', title: 'Resources', href: '#' },
-  { image: '/framer/stage-of-life/gSKDv0TsW9e19h9d9UB7CClHZg.jpg', title: 'Discipleship Training', href: '#' },
+  { image: '/framer/stage-of-life/gSKDv0TsW9e19h9d9UB7CClHZg.jpg', title: 'Discipleship Academy', href: '#' },
   { image: '/framer/stage-of-life/VlWjAVp8XQYKAZvnXG20aiBTcY.jpg', title: 'Sermons', href: '/messages/sermons' },
-  { image: '/framer/stage-of-life/uEaQ32le3R0KwRr7fryPQzxkPVQ.jpg', title: 'Community Group', href: '/connect' },
 ]
 
 const CARD_W = 300

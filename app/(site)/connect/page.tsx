@@ -11,7 +11,7 @@ import ContactForm from '@/components/ContactForm'
 export const metadata: Metadata = {
   title: 'Connect',
   description:
-    'Find a community group, join a serve team, see upcoming events, and get in touch. There’s a place for you at Mosaic.',
+    'Find a formation group, join a serve team, see upcoming events, and get in touch. There’s a place for you at Mosaic.',
 }
 
 export default function Connect() {
@@ -23,10 +23,10 @@ export default function Connect() {
         subtitle="Connection at Mosaic happens in groups, at events, and through serving together. There's a place for you here."
       />
 
-      {/* Community Groups */}
+      {/* Formation Groups */}
       <section id="community-groups" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Community Groups" heading="Find Your People"/>
+          <SectionHeader overline="Formation Groups" heading="Find Your People"/>
           <GroupFinder />
         </div>
       </section>
@@ -43,17 +43,23 @@ export default function Connect() {
       {/* Serve Teams */}
       <section id="ways-to-serve" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Ways to Serve" heading="Join a Serve Team" />
+          <div className="flex flex-col gap-4">
+            <SectionHeader overline="Ways to Serve" heading="Join a Serve Team" />
+            <p className="text-[#6B7280] max-w-2xl">
+              The time it takes depends on the team. Most teams serve during one Sunday service and attend a
+              full service too. A few meet during the week, for an hour at most.
+            </p>
+          </div>
           <ServeTeamCarousel />
         </div>
       </section>
 
       {/* Contact */}
-      <section id="get-in-touch" className="py-20 px-6">
+      <section id="get-in-touch" className="py-20 px-6 scroll-mt-24">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="Get in Touch" heading="Contact Us" centered />
           <p className="text-[#6B7280] text-center">
-            Have a question or want to connect? Drop us a message and we&apos;ll get back to you.
+            Have a question or want to connect? Drop us a message and we&apos;ll get back to you within 24 hours.
           </p>
           <ContactForm />
         </div>
