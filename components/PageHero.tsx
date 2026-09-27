@@ -7,6 +7,12 @@ type PageHeroProps = {
   align?: 'left' | 'center'
   /** Optional CTA row or other content rendered below the subtitle. */
   children?: ReactNode
+  /**
+   * Optional wide image (or other media) shown below the text. It straddles
+   * the bottom edge of the dark band: the top half sits on the hero, the
+   * bottom half on the page. Text never overlaps it, so faces stay clear.
+   */
+  media?: ReactNode
 }
 
 /*
@@ -22,30 +28,38 @@ export default function PageHero({
   subtitle,
   align = 'left',
   children,
+  media,
 }: PageHeroProps) {
   const alignment =
     align === 'center' ? 'mx-auto text-center items-center' : 'text-left items-start'
 
   return (
-    <section className="relative overflow-hidden bg-[#1E2024] text-white">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_120%_at_50%_0%,rgba(0,102,255,0.20),transparent_70%)]"
-      />
-      <div className="relative max-w-4xl mx-auto px-6 py-24">
-        <div className={`flex flex-col gap-4 ${alignment}`}>
-          {overline && (
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#7AA9FF]">
-              {overline}
-            </span>
-          )}
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">{title}</h1>
-          {subtitle && (
-            <p className="text-white/80 text-lg max-w-2xl leading-relaxed">{subtitle}</p>
-          )}
-          {children && <div className="pt-2">{children}</div>}
+    <>
+      <section className="relative overflow-hidden bg-[#1E2024] text-white">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_120%_at_50%_0%,rgba(0,102,255,0.20),transparent_70%)]"
+        />
+        <div className={`relative max-w-4xl mx-auto px-6 ${media ? 'pt-24 pb-12' : 'py-24'}`}>
+          <div className={`flex flex-col gap-4 ${alignment}`}>
+            {overline && (
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#7AA9FF]">
+                {overline}
+              </span>
+            )}
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight">{title}</h1>
+            {subtitle && (
+              <p className="text-white/80 text-lg max-w-2xl leading-relaxed">{subtitle}</p>
+            )}
+            {children && <div className="pt-2">{children}</div>}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {media && (
+        <div className="px-6 bg-[linear-gradient(to_bottom,#1E2024_50%,transparent_50%)]">
+          <div className="max-w-6xl mx-auto">{media}</div>
+        </div>
+      )}
+    </>
   )
 }

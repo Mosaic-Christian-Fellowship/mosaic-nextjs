@@ -120,20 +120,19 @@ export default function Staff() {
         title="Meet Our Staff"
         subtitle="The people who lead, serve, and care for the Mosaic community every day."
         align="center"
+        media={
+          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl shadow-[0_24px_60px_-20px_rgba(0,0,0,0.45)]">
+            <Image
+              src="/staff/team.jpg"
+              alt="The Mosaic staff team together"
+              fill
+              priority
+              sizes="(min-width: 1200px) 1152px, calc(100vw - 48px)"
+              className="object-cover"
+            />
+          </div>
+        }
       />
-
-      <section className="px-6">
-        <div className="max-w-6xl mx-auto relative aspect-[16/9] overflow-hidden rounded-2xl">
-          <Image
-            src="/staff/team.jpg"
-            alt="The Mosaic staff team together"
-            fill
-            priority
-            sizes="(min-width: 1152px) 1152px, 100vw"
-            className="object-cover"
-          />
-        </div>
-      </section>
 
       {/* Staff Grid */}
       <section className="py-20 px-6">
