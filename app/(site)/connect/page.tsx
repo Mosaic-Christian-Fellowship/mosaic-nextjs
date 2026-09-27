@@ -43,7 +43,13 @@ export default function Connect() {
       {/* Serve Teams */}
       <section id="ways-to-serve" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Ways to Serve" heading="Join a Serve Team" />
+          <div className="flex flex-col gap-4">
+            <SectionHeader overline="Ways to Serve" heading="Join a Serve Team" />
+            <p className="text-[#6B7280] max-w-2xl">
+              The time it takes depends on the team. Most teams serve during one Sunday service and attend a
+              full service too. A few meet during the week, for an hour at most.
+            </p>
+          </div>
           <ServeTeamCarousel />
         </div>
       </section>
