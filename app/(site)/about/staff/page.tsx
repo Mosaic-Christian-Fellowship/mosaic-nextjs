@@ -167,7 +167,7 @@ export default function Staff() {
         heading="We'd love to hear from you."
         subtext="Reach out anytime — our team is here to help you find your place at Mosaic."
         cta="Contact Us"
-        href="/connect"
+        href="/connect#get-in-touch"
       />
     </div>
   )

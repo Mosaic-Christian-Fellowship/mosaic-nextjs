@@ -55,7 +55,7 @@ export default function Connect() {
       </section>
 
       {/* Contact */}
-      <section id="get-in-touch" className="py-20 px-6">
+      <section id="get-in-touch" className="py-20 px-6 scroll-mt-24">
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="Get in Touch" heading="Contact Us" centered />
           <p className="text-[#6B7280] text-center">
