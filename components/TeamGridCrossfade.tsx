@@ -4,19 +4,42 @@ import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const photos = Array.from({ length: 12 }, (_, i) =>
-  `/team-photos/staff-${String(i + 1).padStart(2, '0')}.png`
-)
+const photos = [
+  'dave-park',
+  'andre-choi',
+  'patrick-chi',
+  'samuel-an',
+  'william-gill',
+  'christy-kim',
+  'harvey-choi',
+  'daniel-godsave',
+  'eden-hong',
+  'ij-hur',
+  'young-lee',
+].map((name) => `/staff/square/${name}.jpg`)
 
-// Deterministic pairing for the server + first client render (avoids a
-// hydration mismatch); the random shuffle happens after mount in useEffect.
+const TILE_COUNT = 6
+
+// Each tile holds two slots: the photo showing and the one it fades to next.
+// The server and first client render use a fixed order (avoids a hydration
+// mismatch); the shuffle happens after mount.
 function defaultTileAssignments(): string[][] {
-  return Array.from({ length: 6 }, (_, i) => [photos[i], photos[i + 6]])
+  return Array.from({ length: TILE_COUNT }, (_, i) => [photos[i], photos[(i + TILE_COUNT) % photos.length]])
 }
 
-function buildTileAssignments(): string[][] {
-  const shuffled = [...photos].sort(() => Math.random() - 0.5)
-  return Array.from({ length: 6 }, (_, i) => [shuffled[i], shuffled[i + 6]])
+function shuffled<T>(items: T[]): T[] {
+  return [...items].sort(() => Math.random() - 0.5)
+}
+
+// Picks a photo that no tile is showing or about to show, so the same face
+// never appears twice in the grid.
+function pickUnused(assignments: string[][], activeIndices: number[]): string {
+  const inUse = new Set(assignments.flatMap((slots, i) => [slots[activeIndices[i]]]))
+  const nextUp = new Set(assignments.map((slots, i) => slots[activeIndices[i] === 0 ? 1 : 0]))
+  const free = photos.filter((p) => !inUse.has(p) && !nextUp.has(p))
+  const fallback = photos.filter((p) => !inUse.has(p))
+  const pool = free.length > 0 ? free : fallback
+  return pool[Math.floor(Math.random() * pool.length)]
 }
 
 interface TileProps {
@@ -30,7 +53,7 @@ function Tile({ images, activeIndex, eager = false }: TileProps) {
     <div className="relative aspect-square overflow-hidden rounded-xl bg-[#0A0C0F]">
       {images.map((src, i) => (
         <Image
-          key={src}
+          key={i}
           src={src}
           alt=""
           fill
@@ -46,30 +69,32 @@ function Tile({ images, activeIndex, eager = false }: TileProps) {
 
 export default function TeamGridCrossfade() {
   const [assignments, setAssignments] = useState<string[][]>(defaultTileAssignments)
-  const [activeIndices, setActiveIndices] = useState(() => Array(6).fill(0))
+  const [activeIndices, setActiveIndices] = useState<number[]>(() => Array(TILE_COUNT).fill(0))
 
-  // Randomize tile pairings only on the client, after hydration.
+  // Randomize the starting photos only on the client, after hydration.
   useEffect(() => {
-    setAssignments(buildTileAssignments())
+    const order = shuffled(photos)
+    setAssignments(
+      Array.from({ length: TILE_COUNT }, (_, i) => [order[i], order[(i + TILE_COUNT) % order.length]])
+    )
   }, [])
 
-  const flipNext = useCallback(() => {
-    const order = [0, 1, 2, 3, 4, 5].sort(() => Math.random() - 0.5)
-    let step = 0
-
-    const interval = setInterval(() => {
-      if (step >= order.length) {
-        clearInterval(interval)
-        return
-      }
-      const tileIndex = order[step]
-      setActiveIndices((prev) => {
-        const next = [...prev]
-        next[tileIndex] = next[tileIndex] === 0 ? 1 : 0
-        return next
-      })
-      step++
-    }, 800)
+  const flipTile = useCallback((tileIndex: number) => {
+    setActiveIndices((prevActive) => {
+      const nextActive = [...prevActive]
+      nextActive[tileIndex] = prevActive[tileIndex] === 0 ? 1 : 0
+      // Once the fade finishes, load a fresh photo into the slot that just
+      // went hidden, ready for this tile's next turn.
+      setTimeout(() => {
+        setAssignments((prevAssign) => {
+          const next = prevAssign.map((slots) => [...slots])
+          const hiddenSlot = nextActive[tileIndex] === 0 ? 1 : 0
+          next[tileIndex][hiddenSlot] = pickUnused(next, nextActive)
+          return next
+        })
+      }, 1400)
+      return nextActive
+    })
   }, [])
 
   useEffect(() => {
@@ -77,14 +102,32 @@ export default function TeamGridCrossfade() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion) return
 
+    let flipTimer: ReturnType<typeof setInterval> | undefined
+    const runCycle = () => {
+      const order = shuffled([...Array(TILE_COUNT).keys()])
+      let step = 0
+      flipTimer = setInterval(() => {
+        if (step >= order.length) {
+          clearInterval(flipTimer)
+          return
+        }
+        flipTile(order[step])
+        step++
+      }, 800)
+    }
+
+    let cycleTimer: ReturnType<typeof setInterval> | undefined
     const startDelay = setTimeout(() => {
-      flipNext()
-      const cycleInterval = setInterval(flipNext, 7000)
-      return () => clearInterval(cycleInterval)
+      runCycle()
+      cycleTimer = setInterval(runCycle, 7000)
     }, 1500)
 
-    return () => clearTimeout(startDelay)
-  }, [flipNext])
+    return () => {
+      clearTimeout(startDelay)
+      clearInterval(cycleTimer)
+      clearInterval(flipTimer)
+    }
+  }, [flipTile])
 
   return (
     <section className="py-20 px-6 bg-[#1E2024]">
