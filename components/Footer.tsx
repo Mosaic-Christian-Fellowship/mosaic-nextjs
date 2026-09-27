@@ -13,7 +13,7 @@ const linkColumns = [
     heading: 'Quick Links',
     links: [
       { label: 'Our Beliefs', href: '/about' },
-      { label: 'Our Team', href: '/about' },
+      { label: 'Our Team', href: '/about/staff' },
       { label: 'Internships & Counseling', href: '#' },
       { label: 'Discipleship Academy', href: '#' },
       { label: 'Resources', href: '#' },
