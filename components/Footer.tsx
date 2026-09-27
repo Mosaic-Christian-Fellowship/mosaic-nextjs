@@ -15,7 +15,7 @@ const linkColumns = [
       { label: 'Our Beliefs', href: '/about' },
       { label: 'Our Team', href: '/about' },
       { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Training', href: '#' },
+      { label: 'Discipleship Academy', href: '#' },
       { label: 'Resources', href: '#' },
     ],
   },

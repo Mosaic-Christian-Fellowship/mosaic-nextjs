@@ -28,7 +28,7 @@ export const NAV_ITEMS: NavItem[] = [
       { label: 'Events', href: '/events' },
       { label: 'Formation Groups', href: '/connect' },
       { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Training', href: '#' },
+      { label: 'Discipleship Academy', href: '#' },
       { label: 'Gallery', href: '#' },
     ],
   },
