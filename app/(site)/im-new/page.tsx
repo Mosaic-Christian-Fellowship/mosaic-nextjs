@@ -73,7 +73,7 @@ const SECTION_OFFSET = 'scroll-mt-[140px] md:scroll-mt-[150px]'
 const getToKnowSteps = [
   { heading: 'Show Up', detail: 'Come to a Sunday service. Grab coffee. See if it feels right.' },
   { heading: 'Connect', detail: "Fill out a visit form or chat with someone after the service. We'll follow up — gently." },
-  { heading: 'Go Deeper', detail: 'Join a community group, serve on a team, or start asking the bigger questions.' },
+  { heading: 'Go Deeper', detail: 'Join a formation group, serve on a team, or start asking the bigger questions.' },
   { heading: 'Reach', detail: 'Once Mosaic feels like home, help someone else find theirs.' },
 ]
 

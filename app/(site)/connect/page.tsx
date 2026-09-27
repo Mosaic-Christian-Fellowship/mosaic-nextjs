@@ -11,7 +11,7 @@ import ContactForm from '@/components/ContactForm'
 export const metadata: Metadata = {
   title: 'Connect',
   description:
-    'Find a community group, join a serve team, see upcoming events, and get in touch. There’s a place for you at Mosaic.',
+    'Find a formation group, join a serve team, see upcoming events, and get in touch. There’s a place for you at Mosaic.',
 }
 
 export default function Connect() {
@@ -23,10 +23,10 @@ export default function Connect() {
         subtitle="Connection at Mosaic happens in groups, at events, and through serving together. There's a place for you here."
       />
 
-      {/* Community Groups */}
+      {/* Formation Groups */}
       <section id="community-groups" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
-          <SectionHeader overline="Community Groups" heading="Find Your People"/>
+          <SectionHeader overline="Formation Groups" heading="Find Your People"/>
           <GroupFinder />
         </div>
       </section>
