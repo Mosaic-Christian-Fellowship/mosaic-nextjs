@@ -6,6 +6,7 @@ import PlanVisitForm from '@/components/PlanVisitForm'
 import FaqAccordion from '@/components/FaqAccordion'
 import JumpLinks from '@/components/JumpLinks'
 import StepRail from '@/components/StepRail'
+import Callout from '@/components/Callout'
 
 export const metadata: Metadata = {
   title: "I'm New",
@@ -174,17 +175,15 @@ export default function ImNew() {
               ))}
             </div>
 
-            <div className="rounded-xl border border-[#0066FF]/25 bg-[#0066FF]/10 px-4 py-3 text-sm">
-              <p className="font-semibold text-[#0041A2]">Parking</p>
-              <p className="text-[#0041A2]/80">147 Walnut St, Northvale — our new lot, right next door.</p>
-            </div>
+            <Callout title="Parking">
+              <p>147 Walnut St, Northvale — our new lot, right next door.</p>
+            </Callout>
 
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm">
-              <p className="font-semibold text-emerald-900">First time?</p>
-              <p className="text-emerald-900/80">
+            <Callout tone="success" title="First time?">
+              <p>
                 Arrive about 10 minutes early. Look for greeters outside — they&apos;ll show you where to go, help you check in your kids, and point you to coffee.
               </p>
-            </div>
+            </Callout>
           </div>
 
           <div className="flex flex-col gap-3">
