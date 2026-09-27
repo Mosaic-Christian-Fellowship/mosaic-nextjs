@@ -4,6 +4,7 @@ import PageHero from '@/components/PageHero'
 import PlaceholderImage from '@/components/PlaceholderImage'
 import TeamGridCrossfade from '@/components/TeamGridCrossfade'
 import CTASection from '@/components/CTASection'
+import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -11,11 +12,28 @@ export const metadata: Metadata = {
     'Who we are at Mosaic Christian Fellowship — our mission to Reach, Embrace, and Disciple, what we believe, and the story behind the name.',
 }
 
-const beliefs = [
-  { heading: 'The Bible', text: 'We believe the Bible is the inspired, authoritative Word of God — our foundation for faith and practice.' },
-  { heading: 'The Trinity', text: 'We believe in one God, eternally existing in three persons: Father, Son, and Holy Spirit.' },
-  { heading: 'Salvation', text: 'We believe salvation is by grace alone through faith alone in Christ alone.' },
-  { heading: 'The Church', text: "We believe the local church is God's primary vehicle for discipleship, community, and mission in the world." },
+const CORE_VALUES = [
+  'Gospel Centered',
+  'Grace Based',
+  'Scripture Anchored',
+  'Discipleship Focused',
+  'Missions Minded',
+  'Local & Global',
+  'Movement & Multiplication',
+]
+
+// Statement of faith as supplied by staff in the content review doc (Sep 2026).
+const STATEMENT_OF_FAITH = [
+  { q: 'Trinity', a: 'We believe there is one God who made everything that exists, and that this one God has always existed as three persons: the Father, the Son, and the Holy Spirit. They are equally God, perfectly loving one another, and have invited us into that love.' },
+  { q: 'Holy Spirit', a: "We believe the Holy Spirit is God's living presence with us today. He opens our eyes to the truth about Jesus, awakens our hearts when we are spiritually dead, lives inside every believer, and gives us the power to grow, to love, and to live in a way that honors God." },
+  { q: 'Scriptures', a: "We believe the Bible, both the Old and New Testaments, is God's Word to us. It is true, trustworthy, and tells us everything we need to know to be saved and to follow Jesus, and it is our final authority for what we believe and how we live." },
+  { q: 'Christ', a: 'We believe Jesus is fully God and fully human. He was conceived by the Holy Spirit and born of the Virgin Mary, lived a perfect life, died on the cross to pay for our sins, rose from the dead, and is now in heaven, where He represents us before the Father and prays for us.' },
+  { q: 'Humankind', a: "We believe every person, man and woman, was created in the image of God with dignity and worth. But we have all turned away from God through sin, and on our own we cannot find our way back. We need the Rescuer in Jesus to find our way back to God and everything we've been made for." },
+  { q: 'The Gospel', a: "We believe the gospel is the best news in the world: God sent His Son Jesus to live the perfect life we couldn't live, to die in our place for the sins we have committed, and to rise again, defeating sin and death forever. This rescue is not something we earn by being good enough, it is a free gift, received by trusting in Jesus alone." },
+  { q: 'Salvation', a: 'We believe we are made right with God only through what Jesus has done for us, His perfect life and His death on the cross. When we put our trust in Him, we are immediately reconciled to God and the Holy Spirit gives us new life. In this salvation, we begin to be transformed and remade. We believe this process of being transformed requires both the work of God and the work of man.' },
+  { q: 'Sacraments', a: "We believe Jesus gave His Church two sacred practices to remind us of His promises and to strengthen our faith: baptism and the Lord's Supper (Communion). Baptism is a visible sign that we have been united to Jesus and welcomed into His family, and the Lord's Supper is a sacred meal where we remember Jesus' death for us, spiritually feed on Him by faith, and look forward to the day He returns." },
+  { q: 'Church', a: 'We believe that everyone who truly trusts in Jesus is part of one global family called the Church. We belong to one another, we serve one another, and together we make up the Body of Christ, with Jesus Himself as our Head.' },
+  { q: 'Return of Christ', a: 'We believe Jesus is coming back. When He returns, He will make all things right, raise the dead, and welcome His people into everlasting joy with Him. Those who have refused Him will face His just judgment. This hope shapes how we live today.' },
 ]
 
 export default function About() {
@@ -75,14 +93,46 @@ export default function About() {
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader overline="Our Beliefs" heading="What We Believe" centered />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {beliefs.map(({ heading, text }) => (
-              <div key={heading} className="p-6 rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF]">
-                <div className="w-20 h-20 rounded-xl bg-[#0066FF]/10 mb-4" aria-hidden />
-                <h3 className="font-bold text-lg mb-2">{heading}</h3>
-                <p className="text-[#6B7280]">{text}</p>
+            <div className="flex flex-col gap-4 p-6 rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF]">
+              <h3 className="font-bold text-lg text-[#1E2024]">Our Core Values</h3>
+              <ul className="flex flex-wrap gap-2">
+                {CORE_VALUES.map((value) => (
+                  <li
+                    key={value}
+                    className="text-sm font-semibold px-3 py-1 rounded-full bg-[#0066FF]/10 text-[#0041A2]"
+                  >
+                    {value}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[#6B7280]">
+                Mosaic Christian Fellowship makes efforts to keep these core values at the forefront of all that
+                we do. These values fuel our decision making, convictions, and most importantly our vision and
+                mission.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-6">
+              <div className="p-6 rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF]">
+                <h3 className="font-bold text-lg text-[#1E2024] mb-2">Our Vision</h3>
+                <p className="text-[#6B7280]">Reach. Embrace. Disciple.</p>
               </div>
-            ))}
+              <div className="p-6 rounded-2xl border border-[#E5E7EB] bg-[#FFFFFF]">
+                <h3 className="font-bold text-lg text-[#1E2024] mb-2">Our Mission</h3>
+                <p className="text-[#6B7280]">
+                  We reach the lost for Christ, embrace them in the Gospel, and disciple them to Christ.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 max-w-3xl w-full mx-auto">
+            <h3 className="font-bold text-2xl text-[#1E2024] text-center [text-wrap:balance]">
+              Our Statement of Faith
+            </h3>
+            <FaqAccordion items={STATEMENT_OF_FAITH} />
           </div>
         </div>
       </section>
