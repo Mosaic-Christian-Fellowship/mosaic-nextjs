@@ -7,6 +7,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 import JumpLinks from '@/components/JumpLinks'
 import StepRail from '@/components/StepRail'
 import Callout from '@/components/Callout'
+import MinisCapacityNotice from '@/components/MinisCapacityNotice'
 
 export const metadata: Metadata = {
   title: "I'm New",
@@ -14,16 +15,27 @@ export const metadata: Metadata = {
     'Planning your first visit to Mosaic? Service times, what to expect on a Sunday, kids programming, FAQs, and a way to let us know you’re coming.',
 }
 
+const AGE_GROUPS = [
+  'MINIs (ages 2–6)',
+  'PJM (grades 1–2)',
+  'KKM (grades 3–5)',
+  'FFM (grades 6–8)',
+  'Resurgence (grades 9–12)',
+  'SODA (college)',
+  'Young Adult (alumni to age 35)',
+  'Coram Deo (ages 50+)',
+]
+
 const faqs = [
   { q: "What should I wear?", a: "Come as you are — seriously. You'll see everything from jeans and t-shirts to business casual on a Sunday. There's no dress code." },
   { q: "How long is the service?", a: "About 75 minutes — live worship, a teaching that connects scripture to everyday life, and time to connect with people after." },
-  { q: "Will I be called out as a first-time visitor?", a: "Not publicly. We won't put you on the spot. We do hope you'll introduce yourself to someone nearby — everyone's pretty friendly." },
-  { q: "What happens with my kids?", a: "Children's programming runs during the 9:30 and 11:30 AM services. You'll check your kids in at our welcome area — staff will walk you through it." },
-  { q: "Do I need to bring a Bible?", a: "Nope. Scripture is displayed on screen during the message. But bring one if you'd like to follow along." },
+  { q: "Will I be called out as a first-time visitor?", a: "No. We will never call you out publicly. We do hope you'll introduce yourself to someone nearby — everyone's pretty friendly." },
+  { q: "Is there a service my children can go to?", a: "Yes. Our children's program for ages 2–6 is called MINIs, and it runs during the 9:30 and 11:30 AM services. You'll check your kids in at our welcome area — staff will walk you through it. Kids older than 6 can join the education ministries run by Chodae Community Church, our mother church." },
+  { q: "Do I need to bring a Bible?", a: "Nope. Scripture is displayed on screen during the message. But it's always good to bring a Bible and something to take notes on." },
   { q: "I've had a bad experience with church before. Is it safe to try again?", a: "We hear that a lot — and we're sorry. Mosaic isn't a church for people who have it all together. It's a community of broken, ordinary people figuring out faith together. You're not a project. You're welcome at whatever pace feels right." },
   { q: "I'm not sure I believe in God anymore. Is that okay?", a: "Absolutely. Doubt isn't the opposite of faith — it's part of the journey. Our teaching is academically grounded and built for people who have real questions. You don't need to check your brain at the door." },
   { q: "Do I have to give money?", a: "No. Giving is part of our worship, but there's no pressure and no expectation for visitors. If the plate passes by, just pass it along." },
-  { q: "Is there coffee?", a: "Yes. Grab a cup before the service and stick around after — some of the best conversations happen over coffee in the lobby." },
+  { q: "Is there coffee?", a: "Yes. Coffee is out before and after the service — some of the best conversations happen over coffee in the lobby." },
 ]
 
 type ServiceFeature = 'childrens' | 'education' | 'livestream' | 'general'
@@ -105,17 +117,18 @@ export default function ImNew() {
           <div className="flex flex-col gap-6">
             <SectionHeader overline="Families Welcome" heading="Your Kids Are in Good Hands" />
             <p className="text-[#6B7280]">
-              We have dedicated programming for every age group during the 9:30 and 11:30 AM services —
-              from the nursery through 5th grade. All children&apos;s workers are background-checked and trained.
+              Kids ages 2–6 join MINIs during the 9:30 and 11:30 AM services, and every age after that has a
+              ministry of its own. All children&apos;s workers are background-checked and trained.
             </p>
             <div className="flex flex-col gap-2">
-              {['Nursery (0-18 months)', 'Toddlers (18 months - 3 years)', 'Preschool (3-5 years)', 'Elementary (Grades 1-5)'].map((group) => (
+              {AGE_GROUPS.map((group) => (
                 <div key={group} className="flex gap-3 items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
                   <span className="text-[#6B7280]">{group}</span>
                 </div>
               ))}
             </div>
+            <MinisCapacityNotice />
           </div>
         </div>
       </section>
