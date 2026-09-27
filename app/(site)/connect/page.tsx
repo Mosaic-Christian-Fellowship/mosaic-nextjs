@@ -53,7 +53,7 @@ export default function Connect() {
         <div className="max-w-lg mx-auto flex flex-col gap-8">
           <SectionHeader overline="Get in Touch" heading="Contact Us" centered />
           <p className="text-[#6B7280] text-center">
-            Have a question or want to connect? Drop us a message and we&apos;ll get back to you.
+            Have a question or want to connect? Drop us a message and we&apos;ll get back to you within 24 hours.
           </p>
           <ContactForm />
         </div>
