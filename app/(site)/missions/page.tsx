@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
 import PlaceholderImage from '@/components/PlaceholderImage'
@@ -24,9 +25,9 @@ export const metadata = draftAwareMetadata(pageMeta, {
   lib/nav.ts (moving it out of the Ministries menu).
 */
 
-const CURRENT_TRIPS = [
-  { place: 'Africa', work: ['English Camp', 'Prayer Walk'] },
-  { place: 'Córdoba, Argentina', work: ['English Camp', 'Pastors Seminar'] },
+const CURRENT_TRIPS: { place: string; work: string[]; photo?: string }[] = [
+  { place: 'Africa', work: ['English Camp', 'Prayer Walk'], photo: '/missions/trips/africa.webp' },
+  { place: 'Córdoba, Argentina', work: ['English Camp', 'Pastors Seminar'], photo: '/missions/trips/argentina.webp' },
   { place: 'Cambodia', work: ['English Camp', 'Science VBS'] },
 ]
 
@@ -56,9 +57,21 @@ export default function Missions() {
         <div className="max-w-6xl mx-auto flex flex-col gap-12">
           <SectionHeader overline="Short-Term Trips" heading="Where we serve" centered />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {CURRENT_TRIPS.map(({ place, work }) => (
+            {CURRENT_TRIPS.map(({ place, work, photo }) => (
               <div key={place} className="flex flex-col gap-4 p-6 rounded-2xl border border-[#E5E7EB]">
-                <PlaceholderImage label={`${place} trip photo`} aspectRatio="aspect-[4/3]" />
+                {photo ? (
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                    <Image
+                      src={photo}
+                      alt={`${place} trip`}
+                      fill
+                      sizes="(min-width: 1152px) 360px, (min-width: 768px) 33vw, calc(100vw - 96px)"
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <PlaceholderImage label={`${place} trip photo`} aspectRatio="aspect-[4/3]" />
+                )}
                 <h3 className="text-xl font-bold text-[#1E2024] [text-wrap:balance]">{place}</h3>
                 <ul className="flex flex-wrap gap-2">
                   {work.map((w) => (
