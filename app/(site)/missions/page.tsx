@@ -6,7 +6,7 @@ import Callout from '@/components/Callout'
 import CTASection from '@/components/CTASection'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 
-export const pageMeta: PageMeta = { draft: true }
+export const pageMeta: PageMeta = { draft: false }
 
 export const metadata = draftAwareMetadata(pageMeta, {
   title: 'Missions',
