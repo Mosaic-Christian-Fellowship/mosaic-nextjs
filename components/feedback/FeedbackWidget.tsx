@@ -161,7 +161,7 @@ export default function FeedbackWidget() {
 
     setError(null)
     setMode('sending')
-    const image = await captureViewport()
+    const image = await captureViewport(boxOf(target.el))
 
     try {
       const res = await fetch('/api/feedback', {
@@ -214,9 +214,10 @@ export default function FeedbackWidget() {
 
   return (
     <>
-      {/* Outlines sit outside the widget root on purpose: the selected outline shows in the screenshot. */}
+      {/* The screenshot leaves out fixed elements, so capture.ts draws its own outline instead of these. */}
       {mode === 'picking' && hover && (
         <div
+          {...widgetProps}
           aria-hidden
           className="pointer-events-none fixed rounded-sm outline outline-2 outline-offset-2 outline-[#2563EB] bg-[#2563EB]/10"
           style={{ ...hover, zIndex: Z - 1 }}
@@ -224,6 +225,7 @@ export default function FeedbackWidget() {
       )}
       {formOpen && targetBox && (
         <div
+          {...widgetProps}
           aria-hidden
           className="pointer-events-none fixed rounded-sm outline outline-[3px] outline-offset-2 outline-[#E5484D]"
           style={{ ...targetBox, zIndex: Z - 1 }}
