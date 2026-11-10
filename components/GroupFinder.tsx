@@ -28,6 +28,8 @@ export default function GroupFinder() {
   const fetchGroups = useCallback(async () => {
     setLoading(true)
     try {
+      // Planning Center's group type name, not a label. The site calls these
+      // Formation Groups; renaming this breaks the filter unless PCO changes too.
       const params: Record<string, string> = { type: 'Community Groups' }
       if (demographic) params.demographic = demographic
       if (selectedDays.length > 0) params.days = selectedDays.join(',')

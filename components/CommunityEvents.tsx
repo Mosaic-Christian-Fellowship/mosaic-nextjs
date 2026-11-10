@@ -25,7 +25,7 @@ function formatBentoDate(iso: string): string {
 
 const PLACEHOLDER_EVENTS: Event[] = [
   {
-    title: 'Community Groups',
+    title: 'Formation Groups',
     description: 'Add a short description to explain this card.',
     image: '/framer/events/DZe6dlJCd284zYdtTrAhEeA0Eko.png',
     href: '#',

@@ -62,7 +62,7 @@ export default function Hero({
             </p>
           ) : (
             <p className="text-[15px] md:text-base font-normal leading-[1.6] text-white/85 max-w-xl">
-              Visit Mosaic Christian Fellowship for service, every Sunday at 9:30am and 11:30am.
+              Visit Mosaic Christian Fellowship for service, every Sunday (9:30am, 11:30am, and 1:30pm).
               Join our livestream and view past recordings on{' '}
               <a
                 href="https://www.youtube.com/channel/UCgI1-OGVDlM5cXy0xhllT_w"

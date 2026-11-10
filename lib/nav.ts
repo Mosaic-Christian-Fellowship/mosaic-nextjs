@@ -19,16 +19,16 @@ export const NAV_ITEMS: NavItem[] = [
     label: 'Church',
     items: [
       { label: 'Our Beliefs', href: '/about' },
-      { label: 'Our Team', href: '/about' },
+      { label: 'Our Team', href: '/about/staff' },
     ],
   },
   {
     label: 'Community',
     items: [
       { label: 'Events', href: '/events' },
-      { label: 'Community Groups', href: '/connect' },
+      { label: 'Formation Groups', href: '/connect' },
       { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Training', href: '#' },
+      { label: 'Discipleship Academy', href: '#' },
       { label: 'Gallery', href: '#' },
     ],
   },

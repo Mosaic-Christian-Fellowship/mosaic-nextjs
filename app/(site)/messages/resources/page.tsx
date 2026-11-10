@@ -181,7 +181,7 @@ export default function Resources() {
       <CTASection
         overline="Keep going"
         heading="Read alongside other people"
-        subtext="Most of these books land better in conversation. Community groups meet through the week."
+        subtext="Most of these books land better in conversation. Formation groups meet through the week."
         cta="Find a group"
         href="/connect"
       />

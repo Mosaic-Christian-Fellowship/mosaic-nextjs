@@ -43,7 +43,7 @@ export default function ContactForm() {
     return (
       <div className="text-center py-8">
         <p className="text-xl font-bold text-[#1E2024] mb-2">Message sent!</p>
-        <p className="text-[#6B7280]">We'll get back to you soon.</p>
+        <p className="text-[#6B7280]">We'll get back to you within 24 hours.</p>
       </div>
     )
   }
