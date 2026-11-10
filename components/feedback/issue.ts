@@ -146,7 +146,7 @@ export function issueBody(
 ): string {
   const lines: string[] = []
   lines.push(neutralizeComments(input.note), '', '---', '')
-  lines.push(`**From:** ${neutralizeComments(input.name)} (${input.email})`)
+  lines.push(`**From:** ${neutralizeComments(input.name)} (${input.email}), as entered by the reviewer`)
   lines.push(`**Page:** ${neutralizeComments(input.pageUrl)}`)
   lines.push(`**Element:** \`${input.selector.replace(/`/g, "'")}\``)
   lines.push(`**Viewport:** ${input.viewport.width} × ${input.viewport.height}`)

@@ -40,7 +40,26 @@ function clientIp(req: NextRequest): string {
   return req.headers.get('x-real-ip') ?? 'unknown'
 }
 
-/** True when the request is over the limit. Fails open if Redis is unavailable or read-only. */
+// Fallback counter for when Redis can't count. The Preview env's Redis user is
+// read-only, so on previews this is the limit that actually applies. It's per
+// server instance, so it caps a burst rather than giving an exact count.
+const memoryHits = new Map<string, number[]>()
+
+function memoryOverLimit(ip: string, max: number, windowSeconds: number): boolean {
+  const now = Date.now()
+  const windowMs = windowSeconds * 1000
+  const hits = (memoryHits.get(ip) ?? []).filter((t) => now - t < windowMs)
+  hits.push(now)
+  memoryHits.set(ip, hits)
+  if (memoryHits.size > 1000) {
+    for (const [key, times] of memoryHits) {
+      if (times.every((t) => now - t >= windowMs)) memoryHits.delete(key)
+    }
+  }
+  return hits.length > max
+}
+
+/** True when the request is over the limit. Uses Redis, or the in-memory counter if Redis can't count. */
 async function overRateLimit(ip: string): Promise<boolean> {
   const { max, windowSeconds } = FEEDBACK_CONFIG.rateLimit
   try {
@@ -50,8 +69,8 @@ async function overRateLimit(ip: string): Promise<boolean> {
     ])
     return count > max
   } catch (err) {
-    console.warn('Feedback rate limit skipped:', err instanceof Error ? err.message : err)
-    return false
+    console.warn('Feedback rate limit using in-memory counter:', err instanceof Error ? err.message : err)
+    return memoryOverLimit(ip, max, windowSeconds)
   }
 }
 
