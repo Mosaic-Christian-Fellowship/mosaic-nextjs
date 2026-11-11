@@ -61,16 +61,16 @@ export function validateFeedback(body: unknown): ValidationResult {
   const b = body as Record<string, unknown>
 
   const note = str(b.note)
-  if (!note) return { ok: false, error: 'Please write a note.' }
+  if (!note) return { ok: false, error: 'Write a comment before sending.' }
   if (note.length > LIMITS.noteMax) return { ok: false, error: `Notes can be up to ${LIMITS.noteMax} characters.` }
 
   const name = str(b.name)
   if (!name) return { ok: false, error: 'Please enter your name.' }
-  if (name.length > LIMITS.nameMax || /[\r\n<>]/.test(name)) return { ok: false, error: 'That name looks wrong.' }
+  if (name.length > LIMITS.nameMax || /[\r\n<>]/.test(name)) return { ok: false, error: 'Check your name and try again.' }
 
   const email = str(b.email)
   if (!email) return { ok: false, error: 'Please enter your email.' }
-  if (email.length > LIMITS.emailMax || !EMAIL_RE.test(email)) return { ok: false, error: 'That email looks wrong.' }
+  if (email.length > LIMITS.emailMax || !EMAIL_RE.test(email)) return { ok: false, error: "That email address doesn't look right." }
 
   const path = str(b.path)
   if (!path.startsWith('/') || path.length > LIMITS.pathMax || /[\s<>]/.test(path)) {

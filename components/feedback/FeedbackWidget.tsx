@@ -156,8 +156,8 @@ export default function FeedbackWidget() {
     e.preventDefault()
     if (!target) return
     const who = identity ?? { name: name.trim(), email: email.trim() }
-    if (!note.trim()) return setError('Please write a note.')
-    if (!who.name || !who.email) return setError('Please add your name and email.')
+    if (!note.trim()) return setError('Write a comment before sending.')
+    if (!who.name || !who.email) return setError("Add your name and email so we know who it's from.")
 
     setError(null)
     setMode('sending')
@@ -242,14 +242,14 @@ export default function FeedbackWidget() {
             className="fixed inset-x-4 top-4 mx-auto flex max-w-md flex-wrap items-center justify-between gap-2 rounded-lg bg-[#18181B] px-4 py-3 text-sm text-white shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
             style={{ zIndex: Z }}
           >
-            <span>Click the part of the page you mean</span>
+            <span>Click or tap what you want to comment on</span>
             <span className="flex gap-2">
               <button
                 type="button"
                 onClick={() => select(document.querySelector('main') ?? document.body)}
                 className={`rounded-md bg-white/15 px-3 py-1.5 font-medium hover:bg-white/25 ${focusRing}`}
               >
-                Whole page
+                Comment on the whole page
               </button>
               <button
                 type="button"
@@ -273,10 +273,10 @@ export default function FeedbackWidget() {
             style={{ zIndex: Z }}
           >
             <h2 id="feedback-heading" className="text-base font-semibold">
-              Leave feedback
+              Your comment
             </h2>
             <label className="flex flex-col gap-1">
-              <span className="font-medium">Your note</span>
+              <span className="font-medium">What would you change, or what works?</span>
               <textarea
                 ref={noteRef}
                 value={note}
@@ -313,7 +313,7 @@ export default function FeedbackWidget() {
                     className={field}
                   />
                 </label>
-                <p className="text-xs text-[#52525B]">Asked once. This browser remembers it.</p>
+                <p className="text-xs text-[#52525B]">This browser will remember you, so you only enter this once.</p>
               </>
             )}
 
@@ -347,7 +347,7 @@ export default function FeedbackWidget() {
           <div className="fixed bottom-4 right-4 flex flex-col items-end gap-2" style={{ zIndex: Z }}>
             {mode === 'sent' && (
               <p role="status" className="rounded-md bg-[#18181B] px-3 py-2 text-sm text-white shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
-                Sent — thanks
+                Thanks! Your comment was sent.
               </p>
             )}
             <button
@@ -359,7 +359,7 @@ export default function FeedbackWidget() {
               }}
               className={`min-h-11 rounded-full bg-[#18181B] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:bg-[#3F3F46] ${focusRing}`}
             >
-              Feedback
+              Leave a comment
             </button>
           </div>
         )}
