@@ -8,6 +8,7 @@ import { kvGet } from '@/lib/kv'
 import { formatDate, formatEventTime, type EventData } from '@/lib/api'
 import { displayableLocation } from '@/lib/events'
 import SanitizedRichText from '@/components/SanitizedRichText'
+import PageHero from '@/components/PageHero'
 
 export const revalidate = 600
 
@@ -73,12 +74,7 @@ export default async function EventDetail({
 function SanityLandingView({ page }: { page: LandingPage }) {
   return (
     <div>
-      <section className="bg-[#1E2024] text-white py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center flex flex-col gap-4">
-          <h1 className="text-4xl md:text-5xl font-bold">{page.heroHeading || page.title}</h1>
-          {page.heroSubtext && <p className="text-white/70 text-lg">{page.heroSubtext}</p>}
-        </div>
-      </section>
+      <PageHero title={page.heroHeading || page.title} subtitle={page.heroSubtext} align="center" />
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto prose prose-lg">
           {page.body && <PortableText value={page.body} />}
