@@ -7,7 +7,7 @@ import SectionHeader from '@/components/SectionHeader'
 import { SECTIONS, SECTION_NAV, logoFile, type Section } from '@/lib/resources'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 
-export const pageMeta: PageMeta = { draft: true }
+export const pageMeta: PageMeta = { draft: false }
 
 export const metadata = draftAwareMetadata(pageMeta, {
   title: 'Resources',

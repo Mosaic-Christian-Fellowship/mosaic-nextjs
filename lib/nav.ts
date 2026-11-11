@@ -16,10 +16,11 @@ export type NavItem = { label: string; href?: string; items?: SubItem[] }
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    label: 'Church',
+    label: 'Our Church',
     items: [
-      { label: 'Our Beliefs', href: '/about' },
-      { label: 'Our Team', href: '/about/staff' },
+      { label: 'Who We Are', href: '/about' },
+      { label: 'The Team', href: '/about/staff' },
+      { label: 'Discipleship Academy', href: '/discipleship-academy' },
     ],
   },
   {
@@ -27,17 +28,22 @@ export const NAV_ITEMS: NavItem[] = [
     items: [
       { label: 'Events', href: '/events' },
       { label: 'Formation Groups', href: '/connect' },
-      { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Academy', href: '#' },
-      { label: 'Gallery', href: '#' },
+      { label: 'Gallery', href: '/gallery' },
     ],
   },
   {
     label: 'Ministries',
     items: [
       { label: 'Our Ministries', href: '/connect' },
-      { label: 'Education Department', href: '#' },
-      { label: 'Missions', href: '#' },
+      { label: 'Education Department', href: '/education' },
+    ],
+  },
+  {
+    label: 'Missions',
+    items: [
+      { label: 'Missions & Outreach', href: '/missions' },
+      { label: 'Internships', href: '/missions/internships' },
+      { label: 'Counseling', href: '/missions/counseling' },
     ],
   },
   {
@@ -46,7 +52,7 @@ export const NAV_ITEMS: NavItem[] = [
       { label: 'Sermons', href: '/messages/sermons' },
       { label: 'Testimonies', href: '/messages/testimonies' },
       { label: 'Podcasts', href: '/messages/podcasts' },
-      { label: 'Resources', href: '#' },
+      { label: 'Resources', href: '/messages/resources' },
     ],
   },
   { label: 'Give', href: '/give' },
