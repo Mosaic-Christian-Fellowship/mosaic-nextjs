@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
-import Callout from '@/components/Callout'
+import ToFillIn from '@/components/ToFillIn'
 import CTASection from '@/components/CTASection'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 
@@ -15,7 +15,7 @@ export const metadata = draftAwareMetadata(pageMeta, {
 
 /*
   Rebuilt from mosaicnj.org/learn-more ("Internship"). The goal, the three
-  pillars, and the contact are from that page. The amber "To fill in" callouts
+  pillars, and the contact are from that page. The pink "To fill in" callouts
   mark what a prospective intern needs that the old page doesn't say.
 */
 
@@ -118,28 +118,44 @@ export default function Internships() {
       <section className="py-20 px-6 bg-[#FFFFFF]">
         <div className="max-w-3xl mx-auto flex flex-col gap-6">
           <SectionHeader overline="Interested?" heading="What you'd want to know before applying" />
-          <Callout tone="warning" title="To fill in">
-            <p>
-              Who can apply, and is there a minimum age, church membership, or experience? The old page doesn&apos;t
-              say.
-            </p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>How does someone apply, and is there an application or an interview?</p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              How long is the internship, when does it start, and how many hours a week does it take? Is it paid,
-              unpaid, or a stipend?
-            </p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              Who should people contact about the internship? The old page lists one staff member&apos;s email
-              address. We&apos;re using the church&apos;s main address (welcoming@njmosaic.org) until you tell us
-              which one to show.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'Eligibility',
+                question: (
+                  <p>
+                    Who can apply, and is there a minimum age, church membership, or experience? The old page doesn&apos;t
+                    say.
+                  </p>
+                ),
+              },
+              {
+                label: 'Applying',
+                question: (
+                  <p>How does someone apply, and is there an application or an interview?</p>
+                ),
+              },
+              {
+                label: 'Length and pay',
+                question: (
+                  <p>
+                    How long is the internship, when does it start, and how many hours a week does it take? Is it paid,
+                    unpaid, or a stipend?
+                  </p>
+                ),
+              },
+              {
+                label: 'Contact',
+                question: (
+                  <p>
+                    Who should people contact about the internship? The old page lists one staff member&apos;s email
+                    address. We&apos;re using the church&apos;s main address (welcoming@njmosaic.org) until you tell us
+                    which one to show.
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
-import Callout from '@/components/Callout'
+import ToFillIn from '@/components/ToFillIn'
 import CTASection from '@/components/CTASection'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 
@@ -15,7 +15,7 @@ export const metadata = draftAwareMetadata(pageMeta, {
 
 /*
   Rebuilt from mosaicnj.org/learn-more-1 ("Counseling"). The old page's
-  newsletter signup block was broken and is left out. The amber "To fill in"
+  newsletter signup block was broken and is left out. The pink "To fill in"
   callouts mark what someone looking for counseling needs that the old page
   doesn't say.
 */
@@ -73,26 +73,42 @@ export default function Counseling() {
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-6">
           <SectionHeader overline="Getting Started" heading="What to expect when you reach out" />
-          <Callout tone="warning" title="To fill in">
-            <p>
-              What happens after someone emails? Who replies, how fast, and how are they matched with a counselor
-              at one of the partner churches or through Lighthouse?
-            </p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>Is there a cost? Do sessions have a fee, a sliding scale, or help from the church?</p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              What can we promise about confidentiality? People will want to know who at Mosaic sees their request.
-            </p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              Which address should people use, admin@njmosaic.org or welcoming@njmosaic.org? Is there a phone
-              number or form we should offer as well?
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'After you email',
+                question: (
+                  <p>
+                    What happens after someone emails? Who replies, how fast, and how are they matched with a counselor
+                    at one of the partner churches or through Lighthouse?
+                  </p>
+                ),
+              },
+              {
+                label: 'Cost',
+                question: (
+                  <p>Is there a cost? Do sessions have a fee, a sliding scale, or help from the church?</p>
+                ),
+              },
+              {
+                label: 'Confidentiality',
+                question: (
+                  <p>
+                    What can we promise about confidentiality? People will want to know who at Mosaic sees their request.
+                  </p>
+                ),
+              },
+              {
+                label: 'Contact',
+                question: (
+                  <p>
+                    Which address should people use, admin@njmosaic.org or welcoming@njmosaic.org? Is there a phone
+                    number or form we should offer as well?
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
