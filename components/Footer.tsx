@@ -12,11 +12,12 @@ const linkColumns = [
   {
     heading: 'Quick Links',
     links: [
-      { label: 'Our Beliefs', href: '/about' },
-      { label: 'Our Team', href: '/about/staff' },
-      { label: 'Internships & Counseling', href: '#' },
-      { label: 'Discipleship Academy', href: '#' },
-      { label: 'Resources', href: '#' },
+      { label: 'Who We Are', href: '/about' },
+      { label: 'The Team', href: '/about/staff' },
+      { label: 'Discipleship Academy', href: '/discipleship-academy' },
+      { label: 'Internships', href: '/missions/internships' },
+      { label: 'Counseling', href: '/missions/counseling' },
+      { label: 'Resources', href: '/messages/resources' },
     ],
   },
   {
@@ -24,9 +25,9 @@ const linkColumns = [
     links: [
       { label: 'Our Ministries', href: '/connect' },
       { label: 'Formation Groups', href: '/connect' },
-      { label: 'Education Department', href: '#' },
-      { label: 'Missions', href: '#' },
-      { label: 'Gallery', href: '#' },
+      { label: 'Education Department', href: '/education' },
+      { label: 'Missions', href: '/missions' },
+      { label: 'Gallery', href: '/gallery' },
     ],
   },
 ]
