@@ -18,9 +18,17 @@ export const FEEDBACK_CONFIG = {
 export const WIDGET_ATTR = 'data-feedback-widget'
 
 /**
- * The widget and its API exist on preview deploys only. `FEEDBACK_DEV=1`
- * turns them on for local development.
+ * The one branch whose preview deploy shows the widget. Vercel scopes
+ * FEEDBACK_GITHUB_TOKEN to this branch, so previews of other branches
+ * (volunteer PRs included) never receive the token.
+ */
+export const REVIEW_BRANCH = 'review'
+
+/**
+ * The widget and its API exist on the review branch's preview deploy only.
+ * `FEEDBACK_DEV=1` turns them on for local development.
  */
 export function feedbackEnabled(env: Record<string, string | undefined> = process.env): boolean {
-  return env.VERCEL_ENV === 'preview' || env.FEEDBACK_DEV === '1'
+  if (env.FEEDBACK_DEV === '1') return true
+  return env.VERCEL_ENV === 'preview' && env.VERCEL_GIT_COMMIT_REF === REVIEW_BRANCH
 }

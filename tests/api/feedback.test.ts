@@ -46,6 +46,7 @@ const fetchMock = vi.fn<typeof fetch>()
 
 beforeEach(() => {
   vi.stubEnv('VERCEL_ENV', 'preview')
+  vi.stubEnv('VERCEL_GIT_COMMIT_REF', 'review')
   vi.stubEnv('FEEDBACK_DEV', '')
   vi.stubEnv('FEEDBACK_GITHUB_TOKEN', 'test-token')
   vi.stubEnv('VERCEL_GIT_COMMIT_SHA', 'abc1234def')
@@ -158,6 +159,13 @@ describe('issue formatting', () => {
 describe('POST /api/feedback', () => {
   it('returns 404 outside preview deploys', async () => {
     vi.stubEnv('VERCEL_ENV', 'production')
+    const res = await post(await loadRoute(), valid)
+    expect(res.status).toBe(404)
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('returns 404 on previews of other branches', async () => {
+    vi.stubEnv('VERCEL_GIT_COMMIT_REF', 'feat/some-volunteer-pr')
     const res = await post(await loadRoute(), valid)
     expect(res.status).toBe(404)
     expect(fetchMock).not.toHaveBeenCalled()

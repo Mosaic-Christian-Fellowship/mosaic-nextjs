@@ -16,7 +16,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         {children}
       </main>
       <Footer />
-      {/* Preview deploys only. Production never renders it, so the browser never loads its code. */}
+      {/* The review branch's preview deploy only. Production never renders it, so the browser never loads its code. */}
       {feedbackEnabled() && <FeedbackLoader />}
     </div>
   )
