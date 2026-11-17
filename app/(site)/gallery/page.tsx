@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
-import Callout from '@/components/Callout'
+import ToFillIn from '@/components/ToFillIn'
 import CTASection from '@/components/CTASection'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 import { ALBUMS } from './albums'
@@ -17,7 +17,7 @@ export const metadata = draftAwareMetadata(pageMeta, {
 /*
   Rebuilt from mosaicnj.org/gallery. Each album shows a sample of up to 12
   photos from the old site's album. Album order follows the old site.
-  The amber "To fill in" callout must be answered or removed before launch.
+  The pink "To fill in" callout must be answered or removed before launch.
 */
 
 export default function Gallery() {
@@ -84,16 +84,28 @@ export default function Gallery() {
 
       <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <Callout tone="warning" title="To fill in">
-            <p>
-              The newest album is from 2024. Which 2025 and 2026 events should we add, and who will supply the
-              photos?
-            </p>
-            <p className="mt-2">
-              Many of these photos show children. Does the church have a photo-consent policy for the website?
-              If it does, we can check each album against it before launch.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'New albums',
+                question: (
+                  <p>
+                    The newest album is from 2024. Which 2025 and 2026 events should we add, and who will supply the
+                    photos?
+                  </p>
+                ),
+              },
+              {
+                label: 'Photo consent',
+                question: (
+                  <p>
+                    Many of these photos show children. Does the church have a photo-consent policy for the website?
+                    If it does, we can check each album against it before launch.
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 

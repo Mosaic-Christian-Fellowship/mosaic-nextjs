@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
-import Callout from '@/components/Callout'
+import ToFillIn from '@/components/ToFillIn'
 import CTASection from '@/components/CTASection'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 
@@ -15,7 +15,7 @@ export const metadata = draftAwareMetadata(pageMeta, {
 
 /*
   Rebuilt from mosaicnj.org/discipleship-academy. Every fact here comes from
-  that page. The amber "To fill in" callouts mark what staff still need to
+  that page. The pink "To fill in" callouts mark what staff still need to
   supply; answer or remove them before this page goes live.
 */
 
@@ -91,13 +91,20 @@ export default function DiscipleshipAcademy() {
           <p className="text-[#6B7280] leading-relaxed">
             The old site said registration was open until October 17.
           </p>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              Is registration for the 2027 class closed, or has the deadline been extended? If it is closed,
-              should the sign-up button come down, or should it turn into a waitlist or interest form? The
-              button below stays up until we know.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'Registration',
+                question: (
+                  <p>
+                    Is registration for the 2027 class closed, or has the deadline been extended? If it is closed,
+                    should the sign-up button come down, or should it turn into a waitlist or interest form? The
+                    button below stays up until we know.
+                  </p>
+                ),
+              },
+            ]}
+          />
           <a
             href={SIGN_UP_URL}
             target="_blank"
@@ -116,30 +123,49 @@ export default function DiscipleshipAcademy() {
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-6">
           <SectionHeader overline="Before You Sign Up" heading="What we still need to tell you" />
-          <Callout tone="warning" title="To fill in">
-            <p>
-              When does the Academy meet: which day of the week, what time, and where? Does it meet weekly the
-              whole way through, January to June?
-            </p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>Is there a cost, including books or materials? Is there a scholarship or other help?</p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>Who leads the Academy, and who teaches?</p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              Who is it for? Is there an age minimum, a membership requirement, or a limit on class size? Do
-              people apply, or does everyone who registers get in?
-            </p>
-          </Callout>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              What will a week look like, and what will members study? The old page describes the approach but
-              not the curriculum or the time commitment.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'Schedule',
+                question: (
+                  <p>
+                    When does the Academy meet: which day of the week, what time, and where? Does it meet weekly the
+                    whole way through, January to June?
+                  </p>
+                ),
+              },
+              {
+                label: 'Cost',
+                question: (
+                  <p>Is there a cost, including books or materials? Is there a scholarship or other help?</p>
+                ),
+              },
+              {
+                label: 'Leaders',
+                question: (
+                  <p>Who leads the Academy, and who teaches?</p>
+                ),
+              },
+              {
+                label: "Who it's for",
+                question: (
+                  <p>
+                    Who is it for? Is there an age minimum, a membership requirement, or a limit on class size? Do
+                    people apply, or does everyone who registers get in?
+                  </p>
+                ),
+              },
+              {
+                label: 'Curriculum',
+                question: (
+                  <p>
+                    What will a week look like, and what will members study? The old page describes the approach but
+                    not the curriculum or the time commitment.
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
