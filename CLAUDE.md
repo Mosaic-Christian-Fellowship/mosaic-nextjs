@@ -96,6 +96,7 @@ These are hard-won. Each one cost somebody a bad afternoon.
 - **Tailwind arbitrary values need literal hex.** `bg-[#1E2024]` works; `bg-[--color-ink]` does **not** — CSS custom properties don't resolve inside Tailwind v4's arbitrary-value syntax.
 - **Headlines get `text-wrap: balance`.** No headline should end with a single word alone on the last line.
 - **Missing images use `PlaceholderImage`** — a neutral gray "photo coming" block. The old hot-pink `#FF69B4` placeholder convention is **retired**; if you find one, it's a bug.
+- **Pink is reserved for `ToFillIn`** (`#FDF2F8` / `#F9A8D4` / `#9D174D`), the block that marks questions for church staff. It is not the retired `#FF69B4` placeholder. Remove each block once staff answer it.
 - **Mobile first.** Build for phones, then widen. Most visitors arrive on a phone.
 - **Don't propose Framer.** The site was built in Framer once and moved off it in April 2026. The old Framer prototype is a visual reference only — never a build target.
 

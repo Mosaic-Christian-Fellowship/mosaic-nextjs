@@ -3,7 +3,7 @@ import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
 import PlaceholderImage from '@/components/PlaceholderImage'
-import Callout from '@/components/Callout'
+import ToFillIn from '@/components/ToFillIn'
 import CTASection from '@/components/CTASection'
 import { draftAwareMetadata, type PageMeta } from '@/lib/pageMeta'
 
@@ -18,7 +18,7 @@ export const metadata = draftAwareMetadata(pageMeta, {
 /*
   Rebuilt from mosaicnj.org/missions and its "Short Term Trip Opportunities"
   page, plus what staff wrote in the content review doc. Every fact here comes
-  from one of those. The amber "To fill in" callouts mark what the church still
+  from one of those. The pink "To fill in" callouts mark what the church still
   needs to supply; they must be answered or removed before this page goes live.
 
   Publish by setting draft: false and adding Missions as a top-level item in
@@ -86,12 +86,19 @@ export default function Missions() {
               </div>
             ))}
           </div>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              When is the next trip to each place, who can go, what it costs, and how do people sign up? The old
-              site has none of this, and it&apos;s what someone interested in going needs first.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'Trips',
+                question: (
+                  <p>
+                    When is the next trip to each place, who can go, what it costs, and how do people sign up? The old
+                    site has none of this, and it&apos;s what someone interested in going needs first.
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
@@ -122,18 +129,32 @@ export default function Missions() {
               We hold Barnabas Vision Trips to support and encourage our missionaries on the field, and to see
               what God is doing in different nations.
             </p>
-            <Callout tone="warning" title="To fill in">
-              <p>Which missionaries and partner organizations does Mosaic support, and where do they serve?</p>
-            </Callout>
+            <ToFillIn
+              items={[
+                {
+                  label: 'Missionaries',
+                  question: (
+                    <p>Which missionaries and partner organizations does Mosaic support, and where do they serve?</p>
+                  ),
+                },
+              ]}
+            />
           </div>
           <div className="flex flex-col gap-6">
             <SectionHeader overline="Close to Home" heading="Local Outreach" />
-            <Callout tone="warning" title="To fill in">
-              <p>
-                Which local outreach programs should be listed here? Staff noted that outreach programs belong
-                on this page, and discipleship programs don&apos;t.
-              </p>
-            </Callout>
+            <ToFillIn
+              items={[
+                {
+                  label: 'Outreach',
+                  question: (
+                    <p>
+                      Which local outreach programs should be listed here? Staff noted that outreach programs belong
+                      on this page, and discipleship programs don&apos;t.
+                    </p>
+                  ),
+                },
+              ]}
+            />
           </div>
         </div>
       </section>

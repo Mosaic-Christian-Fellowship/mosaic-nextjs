@@ -78,12 +78,14 @@ export default function Nav() {
 
   const headerBg = scrolled
     ? 'bg-white border-b border-[#E2E8F0]'
-    : 'bg-white/95 backdrop-blur-sm border-b border-transparent'
+    : 'bg-[rgba(255,255,255,0.85)] backdrop-blur-[8px] border-b border-transparent'
 
+  // Fixed, so it sits over the hero (Figma frame 28:2). Pages without a hero
+  // get top padding from the site layout so their content clears it.
   return (
     <header
       ref={navRef}
-      className={`sticky top-0 z-50 font-inter transition-[background-color,border-color] duration-200 ${headerBg}`}
+      className={`fixed inset-x-0 top-0 z-50 font-inter transition-[background-color,border-color] duration-200 ${headerBg}`}
     >
       <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-5 px-5 md:px-10 py-5">
         <Link href="/" className="flex items-center text-[#1E2024]">

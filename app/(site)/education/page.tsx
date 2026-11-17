@@ -2,6 +2,7 @@ import Image from 'next/image'
 import PageHero from '@/components/PageHero'
 import SectionHeader from '@/components/SectionHeader'
 import Callout from '@/components/Callout'
+import ToFillIn from '@/components/ToFillIn'
 import CTASection from '@/components/CTASection'
 import FaqAccordion from '@/components/FaqAccordion'
 import MinisCapacityNotice from '@/components/MinisCapacityNotice'
@@ -17,7 +18,7 @@ export const metadata = draftAwareMetadata(pageMeta, {
 
 /*
   Rebuilt from mosaicnj.org/education. Facts come from that page only.
-  The amber "To fill in" callouts mark what staff still need to answer; they
+  The pink "To fill in" callouts mark what staff still need to answer; they
   must be answered or removed before this page goes live. Individual staff
   emails from the old page are deliberately not copied here.
 */
@@ -179,13 +180,20 @@ export default function Education() {
             Our grade school and youth ministries are run in partnership with Chodae Community Church, Mosaic’s
             mother church. New families register at the welcome desk of their child’s ministry.
           </p>
-          <Callout tone="warning" title="To fill in">
-            <p>
-              What should a parent expect at check-in on a first Sunday (where the desk is, ID or security
-              steps, allergy forms)? Is there a child safety or background-check policy we should link to? The
-              old page only says check-in and check-out are required for PJM.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'Check-in',
+                question: (
+                  <p>
+                    What should a parent expect at check-in on a first Sunday (where the desk is, ID or security
+                    steps, allergy forms)? Is there a child safety or background-check policy we should link to? The
+                    old page only says check-in and check-out are required for PJM.
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
@@ -248,13 +256,20 @@ export default function Education() {
               </div>
             </article>
           ))}
-          <Callout tone="warning" title="To fill in">
-            <p>
-              The old page lists individual pastor emails and a Gmail address for MINIS. We left them off. Which
-              contact should each ministry show: a ministry address, welcoming@njmosaic.org, or the Chodae
-              ministry sites linked above? Should MINIS list its board of directors by name?
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'Contacts',
+                question: (
+                  <p>
+                    The old page lists individual pastor emails and a Gmail address for MINIS. We left them off. Which
+                    contact should each ministry show: a ministry address, welcoming@njmosaic.org, or the Chodae
+                    ministry sites linked above? Should MINIS list its board of directors by name?
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
@@ -274,12 +289,19 @@ export default function Education() {
               College students are always welcome at our gatherings and at Sunday services.
             </p>
             <p className="text-sm text-[#6B7280]">Pastor: Patrick Chi</p>
-            <Callout tone="warning" title="To fill in">
-              <p>
-                What day, time, and place does SODA meet each week? What does a first-time student need to know,
-                and which contact should we list instead of Pastor Chi’s email?
-              </p>
-            </Callout>
+            <ToFillIn
+              items={[
+                {
+                  label: 'SODA',
+                  question: (
+                    <p>
+                      What day, time, and place does SODA meet each week? What does a first-time student need to know,
+                      and which contact should we list instead of Pastor Chi’s email?
+                    </p>
+                  ),
+                },
+              ]}
+            />
           </div>
           <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
             <Image
@@ -298,13 +320,20 @@ export default function Education() {
         <div className="max-w-3xl mx-auto flex flex-col gap-8">
           <SectionHeader overline="FAQs" heading="Questions parents ask" centered />
           <FaqAccordion items={FAQS} />
-          <Callout tone="warning" title="To fill in">
-            <p>
-              The old FAQ explains the times as Chodae’s “2nd and 3rd Service.” Is that wording still useful to
-              new families, or should we drop it? Please also confirm the September 2026 pause on new MINIS 9:30
-              AM students is still current.
-            </p>
-          </Callout>
+          <ToFillIn
+            items={[
+              {
+                label: 'FAQ wording',
+                question: (
+                  <p>
+                    The old FAQ explains the times as Chodae’s “2nd and 3rd Service.” Is that wording still useful to
+                    new families, or should we drop it? Please also confirm the September 2026 pause on new MINIS 9:30
+                    AM students is still current.
+                  </p>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
