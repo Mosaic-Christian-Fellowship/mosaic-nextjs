@@ -35,20 +35,12 @@ export default function Nav() {
       setScrolled(true)
       return
     }
-    const getThreshold = () => hero.offsetHeight / 2
-    let threshold = getThreshold()
-    const onScroll = () => setScrolled(window.scrollY > threshold)
-    const onResize = () => {
-      threshold = getThreshold()
-      onScroll()
-    }
+    // Translucent only at the very top. Once the page scrolls, the hero's text
+    // slides under the bar and would show through it, so the bar goes solid.
+    const onScroll = () => setScrolled(window.scrollY > 0)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onResize)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [pathname])
 
   useEffect(() => {
