@@ -67,3 +67,15 @@ export async function kvSetSyncStatus(
 export async function kvGetSyncStatus(dataType: string): Promise<SyncStatus | null> {
   return kvGet<SyncStatus>(`sync:${dataType}`)
 }
+
+/**
+ * Increments a counter and starts its expiry on the first hit. Used for
+ * fixed-window rate limits. Throws if Redis is unreachable or read-only, so
+ * callers decide whether to fail open.
+ */
+export async function kvIncrWithExpiry(key: string, ttlSeconds: number): Promise<number> {
+  const c = getClient()
+  const count = await c.incr(key)
+  if (count === 1) await c.expire(key, ttlSeconds)
+  return count
+}
