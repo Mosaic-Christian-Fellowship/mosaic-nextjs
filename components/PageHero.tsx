@@ -35,7 +35,8 @@ export default function PageHero({
 
   return (
     <>
-      <section className="relative overflow-hidden bg-[#1E2024] text-white">
+      {/* pt-[120px] runs the dark band up under the fixed nav (Figma 28:2). */}
+      <section data-hero className="relative overflow-hidden bg-[#1E2024] text-white pt-[120px]">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_120%_at_50%_0%,rgba(0,102,255,0.20),transparent_70%)]"
